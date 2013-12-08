@@ -34,7 +34,7 @@ class fancy_privacy_list_WT_Module extends WT_Module implements WT_Module_Config
 
     // Extend WT_Module
     public function getDescription() {
-        return WT_I18N::translate('This is a module for site admins only. With this module you easily can see on which persons or families you have set a custom restriction.');
+        return WT_I18N::translate('This is a module for site admins only. With this module you easily can see on which persons you have set a custom restriction.');
     }	
 	
     // Extend WT_Module
@@ -48,9 +48,10 @@ class fancy_privacy_list_WT_Module extends WT_Module implements WT_Module_Config
 					->pageHeader()
 					->addExternalJavascript(WT_JQUERY_DATATABLES_URL)
 					->addInlineJavascript('
+						jQuery("head").append("<style>table td{padding-left:10px;padding-right:10px}table th{padding:5px 10px}</style>");
 						jQuery.fn.dataTableExt.oSort["unicode-asc"  ]=function(a,b) {return a.replace(/<[^<]*>/, "").localeCompare(b.replace(/<[^<]*>/, ""))};
 						jQuery.fn.dataTableExt.oSort["unicode-desc" ]=function(a,b) {return b.replace(/<[^<]*>/, "").localeCompare(a.replace(/<[^<]*>/, ""))};
-						var oTable = jQuery("table#privacy_table").dataTable({
+						var oTable = jQuery("table#privacy_list").dataTable({
 							"sDom": \'<"H"pf<"dt-clear">irl>t<"F"pl>\',
 							'.WT_I18N::datatablesI18N().',
 							"bJQueryUI": true,
@@ -69,26 +70,44 @@ class fancy_privacy_list_WT_Module extends WT_Module implements WT_Module_Config
 							"iDisplayLength": 30,
 							"sPaginationType": "full_numbers"
 						});	
+						jQuery("tbody tr").click(function(){
+							var obj	 = jQuery(this);
+							var xref = obj.attr("id");
+							if(jQuery("tr#details-" + xref).length > 0) {
+								jQuery("tr#details-" + xref).remove();							
+							}
+							else {
+								jQuery.ajax({
+									url: "module.php?mod='. $this->getName().'&mod_action=load_data&id=" + xref,
+									type: "GET",
+									success: function(data) {
+										obj.after("<tr id=\"details-" + xref + "\" class=\"" + obj.attr("class") + "\"><td colspan=\"6\">" + data);
+									}
+								});	
+							}
+						});
 					');
 					
-					$html = '
+					$html = '					
 					<div id="fancy_restrictions_list"><h2>'.$this->getTitle().'</h2>
-					<table id="privacy_table" style="width:100%">
+					<table id="privacy_list" style="width:100%">
 						<thead>
-							<th>'.WT_I18N::translate('ID').'</th>
-							<th>'.WT_I18N::translate('Surname').'</th>
-							<th>'.WT_I18N::translate('Given').'</th>
-							<th>'.WT_I18N::translate('Restrictions').'</th>
-							<th>'.WT_I18N::translate('Reason').'</th>
+							<th><span style="float:left">'.WT_I18N::translate('ID').'</span></th>
+							<th><span style="float:left">'.WT_I18N::translate('Surname').'</span></th>
+							<th><span style="float:left">'.WT_I18N::translate('Given').'</span></th>
+							<th><span style="float:left">'.WT_I18N::translate('Restrictions').'</span></th>
+							<th><span style="float:left">'.WT_I18N::translate('Reason').'</span></th>
 							<th>SURN</th>
 						</thead><tbody>';						
 						$names = $this->getAllNames();						
 						foreach($names as $name) {
-							$record = WT_Individual::getInstance($name['ID']);	
+							$xref = $name['ID'];
+							$record = WT_Individual::getInstance($xref);	
 							$settings = $this->getPrivacySettings($record);	
+							
 							$html .= '
-								<tr>
-									<td>'.$name['ID'].'</td>
+								<tr id="'.$xref.'">
+									<td>'.$xref.'</td>
 									<td>'.$name['SURNAME'].'</td>
 									<td>'.$name['GIVN'].'</td>
 									<td>'.$settings['PRIV'].'</td>
