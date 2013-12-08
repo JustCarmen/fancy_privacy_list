@@ -50,7 +50,7 @@ class fancy_privacy_list_WT_Module extends WT_Module implements WT_Module_Config
 					->addInlineJavascript('
 						jQuery("head").append("<style>table tr{cursor: pointer}table td{padding-left:10px;padding-right:10px}table th{padding:5px 10px}</style>");
 						jQuery.fn.dataTableExt.oSort["unicode-asc"  ]=function(a,b) {return a.replace(/<[^<]*>/, "").localeCompare(b.replace(/<[^<]*>/, ""))};
-						jQuery.fn.dataTableExt.oSort["unicode-desc" ]=function(a,b) {return b.replace(/<[^<]*>/, "").localeCompare(a.replace(/<[^<]*>/, ""))};
+						jQuery.fn.dataTableExt.oSort["unicode-desc" ]=function(a,b) {return b.replace(/<[^<]*>/, "").localeCompare(a.replace(/<[^<]*>/, ""))};						
 						var oTable = jQuery("table#privacy_list").dataTable({
 							"sDom": \'<"H"pf<"dt-clear">irl>t<"F"pl>\',
 							'.WT_I18N::datatablesI18N().',
@@ -59,14 +59,15 @@ class fancy_privacy_list_WT_Module extends WT_Module implements WT_Module_Config
 							"bProcessing": true,
 							"bFilter": true,						
 							"aoColumns": [
-								/* 0-ID */    			{"bSortable": true, "sWidth": "5%"},
+								/* 0-ID */    			{"iDataSort": 6, "sWidth": "5%"},
 								/* 1-Surname */			{"iDataSort": 5, "sWidth": "15%"},
 								/* 2-Given */    		{"bSortable": true, "sWidth": "20%"},
 								/* 3-Restrictions */	{"bSortable": true, "sWidth": "10%"},
 								/* 4-Reason */    		{"bSortable": true, "sWidth": "50%"},
-								/* 5-SURN */    		{"sType": "unicode", "bVisible": false}
+								/* 5-SURN */    		{"sType": "unicode", "bVisible": false},
+								/* 6-NUMBER */    		{"bVisible": false}
 							],
-							"aaSorting": [['.('5, "asc"').']],
+							"aaSorting": [['.('5, "asc"').'], ['.('6, "asc"').']],
 							"iDisplayLength": 30,
 							"sPaginationType": "full_numbers",
 							"fnDrawCallback": function() {
@@ -100,13 +101,14 @@ class fancy_privacy_list_WT_Module extends WT_Module implements WT_Module_Config
 							<th><span style="float:left">'.WT_I18N::translate('Restrictions').'</span></th>
 							<th><span style="float:left">'.WT_I18N::translate('Reason').'</span></th>
 							<th>SURN</th>
+							<th>NUMBER</th>
 						</thead><tbody>';						
 						$names = $this->getAllNames();						
 						foreach($names as $name) {
 							$xref = $name['ID'];
 							$record = WT_Individual::getInstance($xref);	
 							$settings = $this->getPrivacySettings($record);	
-							
+							$i = substr($xref, 1);
 							$html .= '
 								<tr id="'.$xref.'">
 									<td>'.$xref.'</td>
@@ -114,7 +116,8 @@ class fancy_privacy_list_WT_Module extends WT_Module implements WT_Module_Config
 									<td>'.$name['GIVN'].'</td>
 									<td>'.$settings['PRIV'].'</td>
 									<td>'.$settings['TEXT'].'</td>
-									<td>'./* hidden by datables code */ $name['SURN'].'</td>			
+									<td>'./* hidden by datables code */ $name['SURN'].'</td>
+									<td>'./* hidden by datables code */ $i.'</td>				
 								</tr>';	
 						}
 						'</tbody></table>';
