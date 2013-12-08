@@ -48,7 +48,7 @@ class fancy_privacy_list_WT_Module extends WT_Module implements WT_Module_Config
 					->pageHeader()
 					->addExternalJavascript(WT_JQUERY_DATATABLES_URL)
 					->addInlineJavascript('
-						jQuery("head").append("<style>table td{padding-left:10px;padding-right:10px}table th{padding:5px 10px}</style>");
+						jQuery("head").append("<style>table tr{cursor: pointer}table td{padding-left:10px;padding-right:10px}table th{padding:5px 10px}</style>");
 						jQuery.fn.dataTableExt.oSort["unicode-asc"  ]=function(a,b) {return a.replace(/<[^<]*>/, "").localeCompare(b.replace(/<[^<]*>/, ""))};
 						jQuery.fn.dataTableExt.oSort["unicode-desc" ]=function(a,b) {return b.replace(/<[^<]*>/, "").localeCompare(a.replace(/<[^<]*>/, ""))};
 						var oTable = jQuery("table#privacy_list").dataTable({
@@ -68,24 +68,26 @@ class fancy_privacy_list_WT_Module extends WT_Module implements WT_Module_Config
 							],
 							"aaSorting": [['.('5, "asc"').']],
 							"iDisplayLength": 30,
-							"sPaginationType": "full_numbers"
-						});	
-						jQuery("tbody tr").click(function(){
-							var obj	 = jQuery(this);
-							var xref = obj.attr("id");
-							if(jQuery("tr#details-" + xref).length > 0) {
-								jQuery("tr#details-" + xref).remove();							
-							}
-							else {
-								jQuery.ajax({
-									url: "module.php?mod='. $this->getName().'&mod_action=load_data&id=" + xref,
-									type: "GET",
-									success: function(data) {
-										obj.after("<tr id=\"details-" + xref + "\" class=\"" + obj.attr("class") + "\"><td colspan=\"6\">" + data);
+							"sPaginationType": "full_numbers",
+							"fnDrawCallback": function() {
+								jQuery("tbody tr").click(function(){
+									var obj	 = jQuery(this);
+									var xref = obj.attr("id");
+									if(jQuery("tr#details-" + xref).length > 0) {
+										jQuery("tr#details-" + xref).remove();							
 									}
-								});	
+									else {
+										jQuery.ajax({
+											url: "module.php?mod='. $this->getName().'&mod_action=load_data&id=" + xref,
+											type: "GET",
+											success: function(data) {
+												obj.after("<tr id=\"details-" + xref + "\" class=\"" + obj.attr("class") + "\"><td colspan=\"6\">" + data);
+											}
+										});	
+									}
+								});
 							}
-						});
+						});							
 					');
 					
 					$html = '					
