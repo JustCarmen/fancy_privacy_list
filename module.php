@@ -35,13 +35,13 @@ class fancy_privacy_list_WT_Module extends WT_Module implements WT_Module_Config
     // Extend WT_Module
     public function getDescription() {
         return WT_I18N::translate('This is a module for site admins only. With this module you easily can see on which persons you have set a custom restriction.');
-    }	
-	
+    }
+
     // Extend WT_Module
     public function modAction($mod_action) {
         switch ($mod_action) {
             case 'admin_config':
-                $controller = new WT_Controller_Page;				
+                $controller = new WT_Controller_Page;
                 $controller
                     ->requireAdminLogin()
                     ->setPageTitle($this->getTitle())
@@ -50,14 +50,14 @@ class fancy_privacy_list_WT_Module extends WT_Module implements WT_Module_Config
 					->addInlineJavascript('
 						jQuery("head").append("<style>table tr{cursor: pointer}table td{padding-left:10px;padding-right:10px}table th{padding:5px 10px}</style>");
 						jQuery.fn.dataTableExt.oSort["unicode-asc"  ]=function(a,b) {return a.replace(/<[^<]*>/, "").localeCompare(b.replace(/<[^<]*>/, ""))};
-						jQuery.fn.dataTableExt.oSort["unicode-desc" ]=function(a,b) {return b.replace(/<[^<]*>/, "").localeCompare(a.replace(/<[^<]*>/, ""))};						
+						jQuery.fn.dataTableExt.oSort["unicode-desc" ]=function(a,b) {return b.replace(/<[^<]*>/, "").localeCompare(a.replace(/<[^<]*>/, ""))};
 						var oTable = jQuery("table#privacy_list").dataTable({
 							"sDom": \'<"H"pf<"dt-clear">irl>t<"F"pl>\',
 							'.WT_I18N::datatablesI18N().',
 							"bJQueryUI": true,
 							"bAutoWidth":false,
 							"bProcessing": true,
-							"bFilter": true,						
+							"bFilter": true,
 							"aoColumns": [
 								/* 0-ID */    			{"iDataSort": 6, "sWidth": "5%"},
 								/* 1-Surname */			{"iDataSort": 5, "sWidth": "15%"},
@@ -75,7 +75,7 @@ class fancy_privacy_list_WT_Module extends WT_Module implements WT_Module_Config
 									var obj	 = jQuery(this);
 									var xref = obj.attr("id");
 									if(jQuery("tr#details-" + xref).length > 0) {
-										jQuery("tr#details-" + xref).remove();							
+										jQuery("tr#details-" + xref).remove();
 									}
 									else {
 										jQuery.ajax({
@@ -84,14 +84,14 @@ class fancy_privacy_list_WT_Module extends WT_Module implements WT_Module_Config
 											success: function(data) {
 												obj.after("<tr id=\"details-" + xref + "\" class=\"" + obj.attr("class") + "\"><td colspan=\"6\">" + data);
 											}
-										});	
+										});
 									}
 								});
 							}
-						});							
+						});
 					');
-					
-					$html = '					
+
+					$html = '
 					<div id="fancy_restrictions_list"><h2>'.$this->getTitle().'</h2>
 					<table id="privacy_list" style="width:100%">
 						<thead>
@@ -102,12 +102,12 @@ class fancy_privacy_list_WT_Module extends WT_Module implements WT_Module_Config
 							<th><span style="float:left">'.WT_I18N::translate('Reason').'</span></th>
 							<th>SURN</th>
 							<th>NUMBER</th>
-						</thead><tbody>';						
-						$names = $this->getAllNames();						
+						</thead><tbody>';
+						$names = $this->getAllNames();
 						foreach($names as $name) {
 							$xref = $name['ID'];
-							$record = WT_Individual::getInstance($xref);	
-							$settings = $this->getPrivacySettings($record);	
+							$record = WT_Individual::getInstance($xref);
+							$settings = $this->getPrivacySettings($record);
 							$i = substr($xref, 1);
 							$html .= '
 								<tr id="'.$xref.'">
@@ -117,13 +117,13 @@ class fancy_privacy_list_WT_Module extends WT_Module implements WT_Module_Config
 									<td>'.$settings['PRIV'].'</td>
 									<td>'.$settings['TEXT'].'</td>
 									<td>'./* hidden by datables code */ $name['SURN'].'</td>
-									<td>'./* hidden by datables code */ $i.'</td>				
-								</tr>';	
+									<td>'./* hidden by datables code */ $i.'</td>
+								</tr>';
 						}
 						'</tbody></table>';
 						echo $html;
 			exit;
-			case 'load_data':				
+			case 'load_data':
 				// Generate an AJAX response for datatables to load expanded row
 				$xref	= WT_Filter::get('id');
 				$record = WT_Individual::getInstance($xref);
@@ -131,7 +131,7 @@ class fancy_privacy_list_WT_Module extends WT_Module implements WT_Module_Config
 				header('Content-type: text/html; charset=UTF-8');
 				echo '<pre>'.$this->getRecordData($record).'</pre>';
 			exit;
-			
+
     	}
     }
 
@@ -139,13 +139,13 @@ class fancy_privacy_list_WT_Module extends WT_Module implements WT_Module_Config
     public function getConfigLink() {
         return 'module.php?mod=' . $this->getName() . '&amp;mod_action=admin_config';
     }
-	
+
 	// Get a list of all the individuals for the choosen gedcom
 	private function getAllNames() {
-		
-		$sql = "SELECT SQL_CACHE n_id, n_surn, n_surname, n_givn FROM `##name` WHERE n_file=? AND n_type=? AND n_surn IS NOT NULL ORDER BY n_sort ASC"; 
+
+		$sql = "SELECT SQL_CACHE n_id, n_surn, n_surname, n_givn FROM `##name` WHERE n_file=? AND n_type=? AND n_surn IS NOT NULL ORDER BY n_sort ASC";
 		$args = array(WT_GED_ID, 'NAME');
-		
+
 		foreach (WT_DB::prepare($sql)->execute($args)->fetchAll() as $row) {
 			$list[] = array(
 				'ID' 		=> $row->n_id,
@@ -156,14 +156,14 @@ class fancy_privacy_list_WT_Module extends WT_Module implements WT_Module_Config
 		}
 		return $list;
 	}
-	
+
 	// This is a copy, with modifications, of the function isDead() in /library/WT/Individual.php
 	// It is VERY important that the parameters used in both are identical.
 	private function getPrivacySettings($record) {
 		global $MAX_ALIVE_AGE;
-		
+
 		// First check if this record has a RESN
-		$facts = $record->getFacts();		
+		$facts = $record->getFacts();
 		foreach ($facts as $fact) {
 			if ($fact->getTag() == 'RESN' && $fact->getValue() != 'locked') {
 				$RESN=array(
@@ -182,7 +182,7 @@ class fancy_privacy_list_WT_Module extends WT_Module implements WT_Module_Config
 				}
 			}
 		}
-		
+
 		// "1 DEAT Y" or "1 DEAT/2 DATE" or "1 DEAT/2 PLAC"
 		if (preg_match('/\n1 (?:'.WT_EVENTS_DEAT.')(?: Y|(?:\n[2-9].+)*\n2 (DATE|PLAC) )/', $record)) {
 			$settings = array(
@@ -190,7 +190,7 @@ class fancy_privacy_list_WT_Module extends WT_Module implements WT_Module_Config
 				'TEXT' => WT_I18N::translate('Death is recorded with an unknown date.')
 			);
 			return $settings;
-		}		
+		}
 		// If any event occured more than $MAX_ALIVE_AGE years ago, then assume the individual is dead
 		if (preg_match_all('/\n2 DATE (.+)/', $record->getGedcom(), $date_matches)) {
 			foreach ($date_matches[1] as $date_match) {
@@ -213,7 +213,7 @@ class fancy_privacy_list_WT_Module extends WT_Module implements WT_Module_Config
 				return $settings;
 			}
 		}
-		
+
 		// If we found no conclusive dates then check the dates of close relatives.
 
 		// Check parents (birth and adopted)
@@ -229,10 +229,10 @@ class fancy_privacy_list_WT_Module extends WT_Module implements WT_Module_Config
 							'TEXT' => WT_I18N::translate('A parent with a birth date of %s is more than 45 years older than this person.', $date->Display())
 						);
 						return $settings;
-					}				
+					}
 				}
 			}
-		}		
+		}
 		// Check spouses
 		foreach ($record->getSpouseFamilies(WT_PRIV_HIDE) as $family) {
 			preg_match_all('/\n2 DATE (.+)/', $family->getGedcom(), $date_matches);
@@ -301,11 +301,11 @@ class fancy_privacy_list_WT_Module extends WT_Module implements WT_Module_Config
 			'TEXT' => WT_I18N::translate('This person is presumed to be living because the privacy settings of this person could not be calculated.')
 		);
 		return $settings;
-	}	
-	
+	}
+
 	private function getRecordData($record) {
 		$lines = preg_split('/[\n]+/', $record->getGedcom());
-		$gedrec = implode("\n", $lines);		
+		$gedrec = implode("\n", $lines);
 		return preg_replace(
 			"/@([^#@\n]+)@/m",
 			'<a href="#" onclick="return edit_raw(\'\\1\');">@\\1@</a>',
