@@ -231,7 +231,7 @@ class fancy_privacy_list_WT_Module extends WT_Module implements WT_Module_Config
 				foreach($RESN as $key => $value) {
 					if($key == $fact->getValue()) {
 						$settings = array(
-							'STAT' => WT_I18N::translate($fact->getValue()),
+							'STAT' => ucfirst(WT_I18N::translate($fact->getValue())),
 							'TEXT' => WT_I18N::translate('This record has a custom privacy setting.'),
 							'PRIV' => WT_I18N::translate($value)
 						);
@@ -253,14 +253,14 @@ class fancy_privacy_list_WT_Module extends WT_Module implements WT_Module_Config
 
 			$keep_alive_msg = '';
 			if($keep_alive_death == true) {
-				$keep_alive_msg  = ' '.WT_I18N::translate('That is less than %s years ago.', $KEEP_ALIVE_YEARS_DEATH).' ';
+				$keep_alive_msg  = ' '.WT_I18N::translate  /* I18N: %s is a number */ ('That is less than %s years ago.', $KEEP_ALIVE_YEARS_DEATH).' ';
 			}
 			else {
-				if($keep_alive_birth == true) $keep_alive_msg  = ' '.WT_I18N::translate('But this person was born less then %s years ago.', $KEEP_ALIVE_YEARS_BIRTH);
+				if($keep_alive_birth == true) $keep_alive_msg  = ' '.WT_I18N::translate /* I18N: %s is a number */ ('This person was born less then %s years ago.', $KEEP_ALIVE_YEARS_BIRTH);
 			}
 			$settings = array(
 				'STAT' => WT_I18N::translate('Death'),
-				'TEXT' => WT_I18N::translate('Death recorded as %s', $dates).'.'.$keep_alive_msg,
+				'TEXT' => WT_I18N::translate/* I18N: %s is date of death */ ('Died: %s', $dates).'.'.$keep_alive_msg,
 				'PRIV' => $keep_alive ?  WT_I18N::translate('Private') : $ACCESS_LEVEL[$SHOW_DEAD_PEOPLE]
 			);
 			return $settings;
@@ -269,7 +269,7 @@ class fancy_privacy_list_WT_Module extends WT_Module implements WT_Module_Config
 		if (!$record->getEstimatedDeathDate() && $SHOW_EST_LIST_DATES) {
 			$settings = array(
 				'STAT' => WT_I18N::translate('Presumed death'),
-				'TEXT' => WT_I18N::translate('An estimated death date has been calculated as %s', $record->getEstimatedDeathDate()->Display()).'.'.$keep_alive_msg,
+				'TEXT' => WT_I18N::translate /* I18N: %s is a date */ ('An estimated death date has been calculated as %s', $record->getEstimatedDeathDate()->Display()).'.'.$keep_alive_msg,
 				'PRIV' => $keep_alive ?  WT_I18N::translate('Private') : $ACCESS_LEVEL[$SHOW_DEAD_PEOPLE]
 			);
 			return $settings;
@@ -291,7 +291,7 @@ class fancy_privacy_list_WT_Module extends WT_Module implements WT_Module_Config
 				if ($date->isOK() && $date->MaxJD() <= WT_CLIENT_JD - 365*$MAX_ALIVE_AGE) {
 					$settings = array(
 						'STAT' => WT_I18N::translate('Presumed death'),
-						'TEXT' => WT_I18N::translate('An event occurred in this person\'s life more than %s years ago.', $MAX_ALIVE_AGE),
+						'TEXT' => WT_I18N::translate /* %s is a number */('An event occurred in this person\'s life more than %s years ago.', $MAX_ALIVE_AGE),
 						'PRIV' => $ACCESS_LEVEL[$SHOW_DEAD_PEOPLE]
 					);
 					return $settings;
