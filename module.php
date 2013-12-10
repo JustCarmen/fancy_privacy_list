@@ -27,6 +27,27 @@ if (!defined('WT_WEBTREES')) {
 
 class fancy_privacy_list_WT_Module extends WT_Module implements WT_Module_Config {
 
+	public function __construct() {
+		// Load any local user translations
+		if (is_dir(WT_MODULES_DIR.$this->getName().'/language')) {
+			if (file_exists(WT_MODULES_DIR.$this->getName().'/language/'.WT_LOCALE.'.mo')) {
+				Zend_Registry::get('Zend_Translate')->addTranslation(
+					new Zend_Translate('gettext', WT_MODULES_DIR.$this->getName().'/language/'.WT_LOCALE.'.mo', WT_LOCALE)
+				);
+			}
+			if (file_exists(WT_MODULES_DIR.$this->getName().'/language/'.WT_LOCALE.'.php')) {
+				Zend_Registry::get('Zend_Translate')->addTranslation(
+					new Zend_Translate('array', WT_MODULES_DIR.$this->getName().'/language/'.WT_LOCALE.'.php', WT_LOCALE)
+				);
+			}
+			if (file_exists(WT_MODULES_DIR.$this->getName().'/language/'.WT_LOCALE.'.csv')) {
+				Zend_Registry::get('Zend_Translate')->addTranslation(
+					new Zend_Translate('csv', WT_MODULES_DIR.$this->getName().'/language/'.WT_LOCALE.'.csv', WT_LOCALE)
+				);
+			}
+		}
+	}
+
     // Extend WT_Module
     public function getTitle() {
         return WT_I18N::translate('Fancy Privacy List');
@@ -34,7 +55,7 @@ class fancy_privacy_list_WT_Module extends WT_Module implements WT_Module_Config
 
     // Extend WT_Module
     public function getDescription() {
-        return WT_I18N::translate('This is a module for site admins only. With this module you easily can see on which persons you have set a custom restriction.');
+        return WT_I18N::translate('This is a module for site admins only. With this module you easily can see the privacy settings for each individual in your tree.');
     }
 
     // Extend WT_Module
@@ -77,7 +98,7 @@ class fancy_privacy_list_WT_Module extends WT_Module implements WT_Module_Config
 							"aoColumns": [
 								/* 0-ID */    			{"iDataSort": 7, "sWidth": "5%"},
 								/* 1-Surname */			{"iDataSort": 6, "sWidth": "15%"},
-								/* 2-Given */    		{"bSortable": true, "sWidth": "15%"},
+								/* 2-Given name */ 		{"bSortable": true, "sWidth": "15%"},
 								/* 3-Status */			{"bSortable": true, "sWidth": "15%"},
 								/* 4-Privacy settings */{"bSortable": true, "sWidth": "15%"},
 								/* 5-Explanation */ 	{"bSortable": true, "sWidth": "35%"},
@@ -99,7 +120,7 @@ class fancy_privacy_list_WT_Module extends WT_Module implements WT_Module_Config
 						<thead>
 							<th><span style="float:left">'.WT_I18N::translate('ID').'</span></th>
 							<th><span style="float:left">'.WT_I18N::translate('Surname').'</span></th>
-							<th><span style="float:left">'.WT_I18N::translate('Given').'</span></th>
+							<th><span style="float:left">'.WT_I18N::translate('Given name').'</span></th>
 							<th><span style="float:left">'.WT_I18N::translate('Status').'</span></th>
 							<th><span style="float:left">'.WT_I18N::translate('Privacy settings').'</span></th>
 							<th><span style="float:left">'.WT_I18N::translate('Explanation').'</span></th>
@@ -281,7 +302,7 @@ class fancy_privacy_list_WT_Module extends WT_Module implements WT_Module_Config
 			if (preg_match('/\n1 BIRT(?:\n[2-9].+)*\n2 DATE /', $record->getGedcom())) {
 				$settings = array(
 					'STAT' => WT_I18N::translate('Living'),
-					'TEXT' => 'According to the privacy settings this person is alive.',
+					'TEXT' => WT_I18N::translate('According to the privacy settings this person is alive.'),
 					'PRIV' => WT_I18N::translate('Private').$show_name
 				);
 				return $settings;
@@ -364,7 +385,7 @@ class fancy_privacy_list_WT_Module extends WT_Module implements WT_Module_Config
 							$date=new WT_Date($date_match);
 							if ($date->isOK() && $date->MaxJD() <= WT_CLIENT_JD - 365*($MAX_ALIVE_AGE-30)) {
 								$settings = array(
-									'STAT' => WT_I18N::translate('{Presumed death'),
+									'STAT' => WT_I18N::translate('Presumed death'),
 									'TEXT' => WT_I18N::translate('A grandchild with a birth date of %s suggests this person was born at least 30 years earlier than that.', $date->Display()),
 									'PRIV' => $ACCESS_LEVEL[$SHOW_DEAD_PEOPLE]
 								);

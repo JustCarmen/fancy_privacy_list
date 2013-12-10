@@ -1,0 +1,48 @@
+#: modules_v3\fancy_privacy_list/module.php:262
+#: modules_v3\fancy_privacy_list/module.php:281
+msgid "Death"
+msgstr ""
+
+#: modules_v3\fancy_privacy_list/module.php:123
+msgid "Given name"
+msgstr ""
+
+#: modules_v3\fancy_privacy_list/module.php:304
+msgid "Living"
+msgstr ""
+
+#: modules_v3\fancy_privacy_list/module.php:122
+msgid "Surname"
+msgstr ""
+
+#: modules_v3\fancy_privacy_list/module.php:135
+#: modules_v3\fancy_privacy_list/module.php:194
+#: modules_v3\fancy_privacy_list/module.php:227
+msgid "Show to visitors"
+msgstr ""
+
+#: modules_v3\fancy_privacy_list/module.php:195
+#: modules_v3\fancy_privacy_list/module.php:228
+msgid "Show to members"
+msgstr ""
+
+#: modules_v3\fancy_privacy_list/module.php:196
+#: modules_v3\fancy_privacy_list/module.php:229
+msgid "Show to managers"
+msgstr ""
+
+#: modules_v3\fancy_privacy_list/module.php:197
+msgid "Hide from everyone"
+msgstr ""
+
+#: modules_v3\fancy_privacy_list/module.php:264
+#: modules_v3\fancy_privacy_list/module.php:273
+#: modules_v3\fancy_privacy_list/module.php:306
+#: modules_v3\fancy_privacy_list/module.php:402
+msgid "Private"
+msgstr ""
+
+#: modules_v3\fancy_privacy_list/module.php:124
+msgid "Status"
+msgstr ""
+
