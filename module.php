@@ -69,7 +69,7 @@ class fancy_privacy_list_WT_Module extends WT_Module implements WT_Module_Config
 					->pageHeader()
 					->addExternalJavascript(WT_JQUERY_DATATABLES_URL)
 					->addInlineJavascript('
-						jQuery("head").append("<style>table tr{cursor: pointer}table td{padding-left:10px;padding-right:10px}table th{padding:5px 10px}</style>");
+						jQuery("head").append("<style>tr{cursor: pointer}td{padding-left:10px;padding-right:10px}th{padding:5px 10px}.gedcom-data{cursor:default}</style>");
 						jQuery.fn.dataTableExt.oSort["unicode-asc"  ]=function(a,b) {return a.replace(/<[^<]*>/, "").localeCompare(b.replace(/<[^<]*>/, ""))};
 						jQuery.fn.dataTableExt.oSort["unicode-desc" ]=function(a,b) {return b.replace(/<[^<]*>/, "").localeCompare(a.replace(/<[^<]*>/, ""))};
 
@@ -83,7 +83,7 @@ class fancy_privacy_list_WT_Module extends WT_Module implements WT_Module_Config
 								oTable.fnClose(nTr);
 							} else {
 								jQuery.get("module.php?mod='. $this->getName().'&mod_action=load_data&id=" + xref, function(data) {
-									oTable.fnOpen(nTr, data, rowClass);
+									oTable.fnOpen(nTr, data, "gedcom-data " + rowClass);
 								});
 							}
 						});
