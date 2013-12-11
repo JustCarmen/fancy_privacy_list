@@ -111,8 +111,7 @@ class fancy_privacy_list_WT_Module extends WT_Module implements WT_Module_Config
 						});
 					');
 
-					global $HIDE_LIVE_PEOPLE, $SHOW_DEAD_PEOPLE, $REQUIRE_AUTHENTICATION;
-					$REQUIRE_AUTHENTICATION ? $auth = '<br>('.WT_I18N::translate('registered users only').')' : $auth = '';
+					global $HIDE_LIVE_PEOPLE, $REQUIRE_AUTHENTICATION;
 
 					$html = '
 					<h2>'.$this->getTitle().'</h2>
@@ -132,10 +131,13 @@ class fancy_privacy_list_WT_Module extends WT_Module implements WT_Module_Config
 							$xref = $name['ID'];
 							$record = WT_Individual::getInstance($xref);
 							$settings = $this->getPrivacySettings($record);
-							
-							if($settings['PRIV'] == WT_I18N::translate('private') && !$HIDE_LIVE_PEOPLE) $settings['PRIV'] = $ACCESS_LEVEL[$SHOW_DEAD_PEOPLE];
-							if($settings['PRIV'] == WT_I18N::translate('Show to visitors')) $settings['PRIV'] = WT_I18N::translate('Show to visitors').$auth;
-							
+
+							if(!$HIDE_LIVE_PEOPLE && !$settings['RESN']) {
+								$REQUIRE_AUTHENTICATION ? $auth = '<br>('.WT_I18N::translate('registered users only').')' : $auth = '';
+								$settings['PRIV'] = WT_I18N::translate('Show to visitors').$auth;
+								$settings['TEXT'] = WT_I18N::translate('You disabled the privacy options for this tree');
+							}
+
 							$i = substr($xref, 1);
 							$html .= '
 								<tr id="'.$xref.'">
@@ -189,12 +191,17 @@ class fancy_privacy_list_WT_Module extends WT_Module implements WT_Module_Config
 	// This is a copy, with modifications, of the function isDead() in /library/WT/Individual.php
 	// It is VERY important that the parameters used in both are identical.
 	private function getPrivacySettings($record) {
-		global $MAX_ALIVE_AGE,$SHOW_DEAD_PEOPLE, $KEEP_ALIVE_YEARS_BIRTH, $KEEP_ALIVE_YEARS_DEATH, $SHOW_LIVING_NAMES;
+		global $MAX_ALIVE_AGE, $REQUIRE_AUTHENTICATION, $SHOW_DEAD_PEOPLE, $KEEP_ALIVE_YEARS_BIRTH, $KEEP_ALIVE_YEARS_DEATH, $SHOW_LIVING_NAMES;
+
+		$REQUIRE_AUTHENTICATION ? $auth = ' ('.WT_I18N::translate('registered users only').')' : $auth = '';
 		$SHOW_EST_LIST_DATES = get_gedcom_setting(WT_GED_ID, 'SHOW_EST_LIST_DATES');
-		$SHOW_LIVING_NAMES ? $show_name = ' ('.WT_I18N::translate('the name is displayed').')' : $show_name = '';
+
+		$show_name = '';
+		if($SHOW_LIVING_NAMES == 1) $show_name = ' ('.WT_I18N::translate('the name is displayed to %s', WT_I18N::translate('members')).')';
+		if($SHOW_LIVING_NAMES == 2) $show_name = ' ('.WT_I18N::translate('the name is displayed to %s', WT_I18N::translate('visitors').$auth).')';
 
 		$ACCESS_LEVEL=array(
-			WT_PRIV_PUBLIC=>WT_I18N::translate('Show to visitors'),
+			WT_PRIV_PUBLIC=>WT_I18N::translate('Show to visitors').$auth,
 			WT_PRIV_USER  =>WT_I18N::translate('Show to members'),
 			WT_PRIV_NONE  =>WT_I18N::translate('Show to managers'),
 			WT_PRIV_HIDE  =>WT_I18N::translate('Hide from everyone')
@@ -234,7 +241,8 @@ class fancy_privacy_list_WT_Module extends WT_Module implements WT_Module_Config
 				foreach($RESN as $key => $value) {
 					if($key == $fact->getValue()) {
 						$settings = array(
-							'STAT'=>$value[0],							
+							'RESN'=>1,
+							'STAT'=>$value[0],
 							'PRIV'=>$value[1],
 							'TEXT'=>WT_I18N::translate('This record has a custom privacy setting.')
 						);
@@ -262,6 +270,7 @@ class fancy_privacy_list_WT_Module extends WT_Module implements WT_Module_Config
 				if($keep_alive_birth == true) $keep_alive_msg  = ' '.WT_I18N::translate /* I18N: %s is a number */ ('This person was born less then %s years ago.', $KEEP_ALIVE_YEARS_BIRTH);
 			}
 			$settings = array(
+				'RESN'=>0,
 				'STAT'=>WT_I18N::translate('Death'),
 				'PRIV'=>$keep_alive ?  WT_I18N::translate('Private') : $ACCESS_LEVEL[$SHOW_DEAD_PEOPLE],
 				'TEXT'=>WT_I18N::translate/* I18N: %s is date of death */ ('Died: %s', $dates).'.'.$keep_alive_msg
@@ -271,7 +280,8 @@ class fancy_privacy_list_WT_Module extends WT_Module implements WT_Module_Config
 
 		if (!$record->getEstimatedDeathDate() && $SHOW_EST_LIST_DATES) {
 			$settings = array(
-				'STAT'=>WT_I18N::translate('Presumed death'),				
+				'RESN'=>0,
+				'STAT'=>WT_I18N::translate('Presumed death'),
 				'PRIV'=>$keep_alive ?  WT_I18N::translate('Private') : $ACCESS_LEVEL[$SHOW_DEAD_PEOPLE],
 				'TEXT'=>WT_I18N::translate /* I18N: %s is a date */ ('An estimated death date has been calculated as %s', $record->getEstimatedDeathDate()->Display()).'.'.$keep_alive_msg
 			);
@@ -281,7 +291,8 @@ class fancy_privacy_list_WT_Module extends WT_Module implements WT_Module_Config
 		// "1 DEAT Y" or "1 DEAT/2 DATE" or "1 DEAT/2 PLAC"
 		if (preg_match('/\n1 (?:'.WT_EVENTS_DEAT.')(?: Y|(?:\n[2-9].+)*\n2 (DATE|PLAC) )/', $record)) {
 			$settings = array(
-				'STAT'=>WT_I18N::translate('Death'),				
+				'RESN'=>0,
+				'STAT'=>WT_I18N::translate('Death'),
 				'PRIV'=>$ACCESS_LEVEL[$SHOW_DEAD_PEOPLE],
 				'TEXT'=>WT_I18N::translate('Death is recorded with an unknown date.'),
 			);
@@ -293,6 +304,7 @@ class fancy_privacy_list_WT_Module extends WT_Module implements WT_Module_Config
 				$date=new WT_Date($date_match);
 				if ($date->isOK() && $date->MaxJD() <= WT_CLIENT_JD - 365*$MAX_ALIVE_AGE) {
 					$settings = array(
+						'RESN'=>0,
 						'STAT'=>WT_I18N::translate('Presumed death'),
 						'PRIV'=>$ACCESS_LEVEL[$SHOW_DEAD_PEOPLE],
 						'TEXT'=>WT_I18N::translate /* %s is a number */('An event occurred in this person\'s life more than %s years ago.', $MAX_ALIVE_AGE),
@@ -304,7 +316,8 @@ class fancy_privacy_list_WT_Module extends WT_Module implements WT_Module_Config
 			// If one of these is a birth, the individual must be alive.
 			if (preg_match('/\n1 BIRT(?:\n[2-9].+)*\n2 DATE /', $record->getGedcom())) {
 				$settings = array(
-					'STAT'=>WT_I18N::translate('Living'),					
+					'RESN'=>0,
+					'STAT'=>WT_I18N::translate('Living'),
 					'PRIV'=>WT_I18N::translate('Private').$show_name,
 					'TEXT'=>WT_I18N::translate('According to the privacy settings this person is alive.'),
 				);
@@ -323,9 +336,10 @@ class fancy_privacy_list_WT_Module extends WT_Module implements WT_Module_Config
 					$date=new WT_Date($date_match);
 					if ($date->isOK() && $date->MaxJD() <= WT_CLIENT_JD - 365*($MAX_ALIVE_AGE+45)) {
 						$settings = array(
+							'RESN'=>0,
 							'STAT'=>WT_I18N::translate('Presumed death'),
 							'PRIV'=>$ACCESS_LEVEL[$SHOW_DEAD_PEOPLE],
-							'TEXT'=>WT_I18N::translate('A parent with a birth date of %s is more than 45 years older than this person.', $date->Display())							
+							'TEXT'=>WT_I18N::translate('A parent with a birth date of %s is more than 45 years older than this person.', $date->Display())
 						);
 						return $settings;
 					}
@@ -340,7 +354,8 @@ class fancy_privacy_list_WT_Module extends WT_Module implements WT_Module_Config
 				// Assume marriage occurs after age of 10
 				if ($date->isOK() && $date->MaxJD() <= WT_CLIENT_JD - 365*($MAX_ALIVE_AGE-10)) {
 					$settings = array(
-						'STAT'=>WT_I18N::translate('Presumed death'),						
+						'RESN'=>0,
+						'STAT'=>WT_I18N::translate('Presumed death'),
 						'PRIV'=>$ACCESS_LEVEL[$SHOW_DEAD_PEOPLE],
 						'TEXT'=>WT_I18N::translate('A marriage with a date of %s suggests they were born at least 10 years earlier than that.', $date->Display())
 					);
@@ -356,9 +371,10 @@ class fancy_privacy_list_WT_Module extends WT_Module implements WT_Module_Config
 					// Assume max age difference between spouses of 40 years
 					if ($date->isOK() && $date->MaxJD() <= WT_CLIENT_JD - 365*($MAX_ALIVE_AGE+40)) {
 						$settings = array(
+							'RESN'=>0,
 							'STAT'=>WT_I18N::translate('Presumed death'),
 							'PRIV'=>$ACCESS_LEVEL[$SHOW_DEAD_PEOPLE],
-							'TEXT'=>WT_I18N::translate('A spouse with a date of %s is more than 40 years older than this person.', $date->Display())							
+							'TEXT'=>WT_I18N::translate('A spouse with a date of %s is more than 40 years older than this person.', $date->Display())
 						);
 						return $settings;
 					}
@@ -372,9 +388,10 @@ class fancy_privacy_list_WT_Module extends WT_Module implements WT_Module_Config
 					$date=new WT_Date($date_match);
 					if ($date->isOK() && $date->MaxJD() <= WT_CLIENT_JD - 365*($MAX_ALIVE_AGE-15)) {
 						$settings = array(
+							'RESN'=>0,
 							'STAT'=>WT_I18N::translate('Presumed death'),
 							'PRIV'=>$ACCESS_LEVEL[$SHOW_DEAD_PEOPLE],
-							'TEXT'=>WT_I18N::translate('A child with a birth date of %s suggests this person was born at least 15 years earlier than that.', $date->Display())							
+							'TEXT'=>WT_I18N::translate('A child with a birth date of %s suggests this person was born at least 15 years earlier than that.', $date->Display())
 						);
 						return $settings;
 					}
@@ -388,7 +405,8 @@ class fancy_privacy_list_WT_Module extends WT_Module implements WT_Module_Config
 							$date=new WT_Date($date_match);
 							if ($date->isOK() && $date->MaxJD() <= WT_CLIENT_JD - 365*($MAX_ALIVE_AGE-30)) {
 								$settings = array(
-									'STAT'=>WT_I18N::translate('Presumed death'),									
+									'RESN'=>0,
+									'STAT'=>WT_I18N::translate('Presumed death'),
 									'PRIV'=>$ACCESS_LEVEL[$SHOW_DEAD_PEOPLE],
 									'TEXT'=>WT_I18N::translate('A grandchild with a birth date of %s suggests this person was born at least 30 years earlier than that.', $date->Display())
 								);
@@ -400,9 +418,10 @@ class fancy_privacy_list_WT_Module extends WT_Module implements WT_Module_Config
 			}
 		}
 		$settings = array(
+			'RESN'=>0,
 			'STAT'=>WT_I18N::translate('Presumably still alive'),
 			'PRIV'=>WT_I18N::translate('Private').$show_name,
-			'TEXT'=>WT_I18N::translate('This person is assumed to be alive because the privacy settings of this person could not be calculated.')			
+			'TEXT'=>WT_I18N::translate('This person is assumed to be alive because the privacy settings of this person could not be calculated.')
 		);
 		return $settings;
 	}
