@@ -135,7 +135,7 @@ class fancy_privacy_list_WT_Module extends WT_Module implements WT_Module_Config
 							if(!$HIDE_LIVE_PEOPLE && !$settings['RESN']) {
 								$REQUIRE_AUTHENTICATION ? $auth = '<br>('.WT_I18N::translate('registered users only').')' : $auth = '';
 								$settings['PRIV'] = WT_I18N::translate('Show to visitors').$auth;
-								$settings['TEXT'] = WT_I18N::translate('You disabled the privacy options for this tree');
+								$settings['TEXT'] = WT_I18N::translate('You disabled the privacy options for this tree.');
 							}
 
 							$i = substr($xref, 1);
