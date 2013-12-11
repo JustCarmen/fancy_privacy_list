@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Fancy Privacy List\n"
-"POT-Creation-Date: 2013-12-10 21:28+0100\n"
-"PO-Revision-Date: 2013-12-10 21:35+0100\n"
+"POT-Creation-Date: 2013-12-10 22:33+0100\n"
+"PO-Revision-Date: 2013-12-10 22:48+0100\n"
 "Last-Translator: Carmen Pijpers <carmen@justcarmen.nl>\n"
 "Language-Team: \n"
 "Language: nl\n"
@@ -55,6 +55,10 @@ msgstr "Een geschatte overlijdensdatum is berekend als %s"
 #, php-format
 msgid "An event occurred in this person's life more than %s years ago."
 msgstr "In het leven van deze persoon vond meer dan %s jaar geleden een gebeurtenis plaats."
+
+#: modules_v3\fancy_privacy_list/module.php:229
+msgid "Confidential"
+msgstr "Vertrouwelijk"
 
 #: modules_v3\fancy_privacy_list/module.php:282
 msgid "Death is recorded with an unknown date."
@@ -130,3 +134,9 @@ msgstr "De naam wordt getoond"
 
 #~ msgid "Death recorded as %s"
 #~ msgstr "Het overlijden is vastgelegd als %s"
+
+#~ msgid "confidential"
+#~ msgstr "vertrouwelijk"
+
+#~ msgid "privacy"
+#~ msgstr "privacy"

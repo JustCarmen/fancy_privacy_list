@@ -1,3 +1,10 @@
+
+===============================================================================================================
+#The strings below exists in the Fancy Privacy List module but are part of the core translation of webtrees.
+#Do not translate these strings within the module. Remove them if they exists in the module language files.
+#Note: the line number may be different from the current line number in the fancy_privacy_list files.
+===============================================================================================================
+
 #: modules_v3\fancy_privacy_list/module.php:262
 #: modules_v3\fancy_privacy_list/module.php:281
 msgid "Death"
@@ -44,5 +51,9 @@ msgstr ""
 
 #: modules_v3\fancy_privacy_list/module.php:124
 msgid "Status"
+msgstr ""
+
+#: modules_v3\fancy_privacy_list/module.php:227
+msgid "none"
 msgstr ""
 
