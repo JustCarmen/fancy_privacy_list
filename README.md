@@ -12,6 +12,8 @@ You can view the current status: Living, Presumably still alive, Death and Presu
 The next column shows you the privacy settings for this individual. Here you can find out who can view the individual.
 In the last column you will find an explanation why a certain status or privacy setting is applicable.
 
+You can filter or sort the list. Clicking on a row will give you the raw gedcom data of this individual which you can edit directly. To edit the raw gedcom data just click on one of the xrefs to open the 'edit raw gedcom' popup screen.
+
 Warning: this module is only tested on my own tree with about 1000 individuals. I don't give any guarantees of the performance of this module on large or very large trees.
 
 At the moment this module will only work on single tree sites. I will add the possibility to use this module on a multi tree site later.
