@@ -28,6 +28,7 @@ if (!defined('WT_WEBTREES')) {
 class fancy_privacy_list_WT_Module extends WT_Module implements WT_Module_Config {
 
 	public function __construct() {
+		parent::__construct();
 		// Load any local user translations
 		if (is_dir(WT_MODULES_DIR.$this->getName().'/language')) {
 			if (file_exists(WT_MODULES_DIR.$this->getName().'/language/'.WT_LOCALE.'.mo')) {
