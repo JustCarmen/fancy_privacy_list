@@ -3,6 +3,12 @@ Fancy Privacy List
 
 Fancy Privacy List Module for webtrees
 
+The development version of the module requires webtrees 1.5.2 or later.
+
+Download the latest stable release for webtrees 1.5.1 here: https://github.com/JustCarmen/fancy_privacy_list/releases/tag/1.0
+
+Description
+-----------
 This module is for site admins only. When this module is activated, an extra menu-item is added to the sidebar of the administration page.
 
 Clicking on the menu link opens a datatable list with all individuals in your tree. You can now review the privacy settings of each individual.
@@ -17,3 +23,11 @@ You can filter or sort the list. Clicking on a row will give you the raw gedcom 
 Warning: this module is only tested on my own tree with about 1000 individuals. I don't give any guarantees of the performance of this module on large or very large trees.
 
 At the moment this module will only work on single tree sites. I will add the possibility to use this module on a multi tree site later.
+
+Installation, updating and translations
+---------------------------------------
+For more information about these subjects go to the JustCarmen help pages: http://www.justcarmen.nl/help
+
+Bugs and feature requests
+-------------------------
+If you experience any bugs or have a feature request for this module you can [create a new issue](https://github.com/JustCarmen/fancy_privacy_list/issues?state=open) or [use the webtrees subforum 'customising'](http://www.webtrees.net/index.php/en/forum/4-customising) to contact me.
