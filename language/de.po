@@ -60,6 +60,11 @@ msgstr "Ein Ereignis im Leben dieser Person liegt mehr als %s Jahre zurück."
 msgid "Confidential"
 msgstr "Vertraulich"
 
+#: modules_v3\fancy_privacy_list/module.php:274
+#: modules_v3\fancy_privacy_list/module.php:295
+msgid "Death"
+msgstr "Verstorben"
+
 #: modules_v3\fancy_privacy_list/module.php:297
 msgid "Death is recorded with an unknown date."
 msgstr "Unbekanntes Todesdatum gespeichert."
@@ -81,6 +86,10 @@ msgstr "Fancy Privacy List"
 #: modules_v3\fancy_privacy_list/module.php:120
 msgid "ID"
 msgstr "ID"
+
+#: modules_v3\fancy_privacy_list/module.php:320
+msgid "Living"
+msgstr "Lebt noch"
 
 #: modules_v3\fancy_privacy_list/module.php:422
 msgid "Presumably still alive"
