@@ -174,7 +174,7 @@ class fancy_privacy_list_WT_Module extends WT_Module implements WT_Module_Config
 	// Get a list of all the individuals for the choosen gedcom
 	private function getAllNames() {
 
-		$sql = "SELECT SQL_CACHE n_id, n_surn, n_surname, n_givn FROM `##name` WHERE n_file=? AND n_type=? AND n_surn IS NOT NULL ORDER BY n_sort ASC";
+		$sql = "SELECT SQL_CACHE n_id, n_surn, n_surname, n_givn FROM `##name` WHERE n_num=0 AND n_file=? AND n_type=? AND n_surn IS NOT NULL ORDER BY n_sort ASC";
 		$args = array(WT_GED_ID, 'NAME');
 
 		foreach (WT_DB::prepare($sql)->execute($args)->fetchAll() as $row) {
