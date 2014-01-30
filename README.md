@@ -3,9 +3,9 @@ Fancy Privacy List
 
 Fancy Privacy List Module for webtrees
 
-The development version of the module requires webtrees 1.5.2 or later.
+The development version of the module requires [webtrees 1.5.3](https://github.com/fisharebest/webtrees).
 
-Download the latest stable release for webtrees 1.5.1 here: https://github.com/JustCarmen/fancy_privacy_list/releases/tag/1.0
+Download the latest stable release for webtrees 1.5.2 here: https://github.com/JustCarmen/fancy_privacy_list/releases/tag/1.5.2
 
 Description
 -----------
