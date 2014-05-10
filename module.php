@@ -66,7 +66,7 @@ class fancy_privacy_list_WT_Module extends WT_Module implements WT_Module_Config
             case 'admin_config':
                 $controller = new WT_Controller_Page;
                 $controller
-                    ->requireAdminLogin()
+                    ->restrictAccess(\WT\Auth::isAdmin())
                     ->setPageTitle($this->getTitle())
 					->pageHeader()
 					->addExternalJavascript(WT_JQUERY_DATATABLES_URL)
