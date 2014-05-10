@@ -89,25 +89,25 @@ class fancy_privacy_list_WT_Module extends WT_Module implements WT_Module_Config
 						});
 
 						oTable = jQuery("table#privacy_list").dataTable({
-							"sDom": \'<"H"pf<"dt-clear">irl>t<"F"pl>\',
+							dom: \'<"H"pf<"dt-clear">irl>t<"F"pl>\',
 							'.WT_I18N::datatablesI18N().',
-							"bJQueryUI": true,
-							"bAutoWidth":false,
-							"bProcessing": true,
-							"bFilter": true,
-							"aoColumns": [
-								/* 0-ID */    			{"iDataSort": 7, "sWidth": "5%"},
-								/* 1-Surname */			{"iDataSort": 6, "sWidth": "15%"},
-								/* 2-Given name */ 		{"bSortable": true, "sWidth": "15%"},
-								/* 3-Status */			{"bSortable": true, "sWidth": "15%"},
-								/* 4-Privacy settings */{"bSortable": true, "sWidth": "15%"},
-								/* 5-Explanation */ 	{"bSortable": true, "sWidth": "35%"},
-								/* 6-SURN */    		{"sType": "unicode", "bVisible": false},
-								/* 7-NUMBER */    		{"bVisible": false}
+							jQueryUI: true,
+							autoWidth:false,
+							processing: true,
+							filter: true,
+							columns: [
+								/* 0-ID */              {dataSort: 7, width: "5%"},
+								/* 1-Surname */         {dataSort: 6, width: "15%"},
+								/* 2-Given name */      {width: "15%"},
+								/* 3-Status */          {width: "15%"},
+								/* 4-Privacy settings */{width: "15%"},
+								/* 5-Explanation */     {width: "35%"},
+								/* 6-SURN */            {type: "unicode", visible: false},
+								/* 7-NUMBER */          {visible: false}
 							],
-							"aaSorting": [['.('6, "asc"').'], ['.('7, "asc"').']],
-							"iDisplayLength": 30,
-							"sPaginationType": "full_numbers"
+							sorting: [['.('6, "asc"').'], ['.('7, "asc"').']],
+							pageLength: 30,
+							pagingType: "full_numbers"
 						});
 					');
 
