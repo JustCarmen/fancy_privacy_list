@@ -80,7 +80,7 @@ class fancy_privacy_list_WT_Module extends WT_Module implements WT_Module_Config
 							html_doc.appendChild(css);
 						}
 						include_css("'.WT_MODULES_DIR.$this->getName().'/style.css");
-						
+
 						jQuery.fn.dataTableExt.oSort["unicode-asc"  ]=function(a,b) {return a.replace(/<[^<]*>/, "").localeCompare(b.replace(/<[^<]*>/, ""))};
 						jQuery.fn.dataTableExt.oSort["unicode-desc" ]=function(a,b) {return b.replace(/<[^<]*>/, "").localeCompare(a.replace(/<[^<]*>/, ""))};
 
