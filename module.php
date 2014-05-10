@@ -69,7 +69,16 @@ class fancy_privacy_list_WT_Module extends WT_Module implements WT_Module_Config
 					->pageHeader()
 					->addExternalJavascript(WT_JQUERY_DATATABLES_URL)
 					->addInlineJavascript('
-						jQuery("head").append("<style>tr{cursor: pointer}td{padding-left:10px;padding-right:10px}th{padding:5px 10px}.gedcom-data{cursor:default}</style>");
+						function include_css(css_file) {
+							var html_doc = document.getElementsByTagName("head")[0];
+							var css = document.createElement("link");
+							css.setAttribute("rel", "stylesheet");
+							css.setAttribute("type", "text/css");
+							css.setAttribute("href", css_file);
+							html_doc.appendChild(css);
+						}
+						include_css("'.WT_MODULES_DIR.$this->getName().'/style.css");
+						
 						jQuery.fn.dataTableExt.oSort["unicode-asc"  ]=function(a,b) {return a.replace(/<[^<]*>/, "").localeCompare(b.replace(/<[^<]*>/, ""))};
 						jQuery.fn.dataTableExt.oSort["unicode-desc" ]=function(a,b) {return b.replace(/<[^<]*>/, "").localeCompare(a.replace(/<[^<]*>/, ""))};
 
