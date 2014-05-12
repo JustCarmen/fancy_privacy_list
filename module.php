@@ -208,8 +208,12 @@ class fancy_privacy_list_WT_Module extends WT_Module implements WT_Module_Config
 		$SHOW_EST_LIST_DATES = get_gedcom_setting(WT_GED_ID, 'SHOW_EST_LIST_DATES');
 
 		$show_name = '';
-		if($SHOW_LIVING_NAMES == 1) $show_name = ' ('.WT_I18N::translate('the name is displayed to %s', WT_I18N::translate('members')).')';
-		if($SHOW_LIVING_NAMES == 2) $show_name = ' ('.WT_I18N::translate('the name is displayed to %s', WT_I18N::translate('visitors').$auth).')';
+		if ($SHOW_LIVING_NAMES == 1) {
+			$show_name = ' (' . WT_I18N::translate('the name is displayed to %s', WT_I18N::translate('members')) . ')';
+		}
+		if ($SHOW_LIVING_NAMES == 2) {
+			$show_name = ' (' . WT_I18N::translate('the name is displayed to %s', WT_I18N::translate('visitors') . $auth) . ')';
+		}
 
 		$ACCESS_LEVEL=array(
 			WT_PRIV_PUBLIC=>WT_I18N::translate('Show to visitors').$auth,
@@ -238,7 +242,9 @@ class fancy_privacy_list_WT_Module extends WT_Module implements WT_Module_Config
 				}
 			}
 		}
-		if($keep_alive_birth == true || $keep_alive_death == true) $keep_alive = true;
+		if ($keep_alive_birth == true || $keep_alive_death == true) {
+			$keep_alive = true;
+		}
 
 		// First check if this record has a RESN
 		$facts = $record->getFacts();
@@ -278,7 +284,9 @@ class fancy_privacy_list_WT_Module extends WT_Module implements WT_Module_Config
 				$keep_alive_msg  = ' '.WT_I18N::translate  /* I18N: %s is a number */ ('That is less than %s years ago.', $KEEP_ALIVE_YEARS_DEATH).' ';
 			}
 			else {
-				if($keep_alive_birth == true) $keep_alive_msg  = ' '.WT_I18N::translate /* I18N: %s is a number */ ('This person was born less then %s years ago.', $KEEP_ALIVE_YEARS_BIRTH);
+				if ($keep_alive_birth == true) {
+					$keep_alive_msg = ' ' . WT_I18N::translate /* I18N: %s is a number */('This person was born less then %s years ago.', $KEEP_ALIVE_YEARS_BIRTH);
+				}
 			}
 			$settings = array(
 				'RESN'=>0,
