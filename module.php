@@ -224,6 +224,7 @@ class fancy_privacy_list_WT_Module extends WT_Module implements WT_Module_Config
 
 		$keep_alive = false; $keep_alive_birth = false; $keep_alive_death = false;
 		if ($KEEP_ALIVE_YEARS_BIRTH) {
+			$matches = null;
 			preg_match_all('/\n1 (?:'.WT_EVENTS_BIRT.').*(?:\n[2-9].*)*(?:\n2 DATE (.+))/', $record->getGedcom(), $matches, PREG_SET_ORDER);
 			foreach ($matches as $match) {
 				$date=new WT_Date($match[1]);
@@ -233,6 +234,7 @@ class fancy_privacy_list_WT_Module extends WT_Module implements WT_Module_Config
 			}
 		}
 		if ($KEEP_ALIVE_YEARS_DEATH) {
+			$matches = null;
 			preg_match_all('/\n1 (?:'.WT_EVENTS_DEAT.').*(?:\n[2-9].*)*(?:\n2 DATE (.+))/', $record->getGedcom(), $matches, PREG_SET_ORDER);
 			foreach ($matches as $match) {
 				$date=new WT_Date($match[1]);
@@ -270,7 +272,8 @@ class fancy_privacy_list_WT_Module extends WT_Module implements WT_Module_Config
 		}
 
 		// Check if this person has a recorded death date.
-		if ($death_dates=$record->getAllDeathDates()) {
+		$death_dates = $record->getAllDeathDates();
+		if ($death_dates) {
 			$dates = '';
 			foreach ($death_dates as $key => $date) {
 				if ($key) {
@@ -318,6 +321,7 @@ class fancy_privacy_list_WT_Module extends WT_Module implements WT_Module_Config
 			return $settings;
 		}
 		// If any event occured more than $MAX_ALIVE_AGE years ago, then assume the individual is dead
+		$date_matches = null;
 		if (preg_match_all('/\n2 DATE (.+)/', $record->getGedcom(), $date_matches)) {
 			foreach ($date_matches[1] as $date_match) {
 				$date=new WT_Date($date_match);
