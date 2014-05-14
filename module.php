@@ -144,7 +144,7 @@ class fancy_privacy_list_WT_Module extends WT_Module implements WT_Module_Config
 							$settings = $this->getPrivacySettings($record);
 
 							if(!$HIDE_LIVE_PEOPLE && !$settings['RESN']) {
-								$REQUIRE_AUTHENTICATION ? $auth = '<br>('.WT_I18N::translate('registered users only').')' : $auth = '';
+								$auth = $REQUIRE_AUTHENTICATION ? '('.WT_I18N::translate('registered users only').')' : '';
 								$settings['PRIV'] = WT_I18N::translate('Show to visitors').$auth;
 								$settings['TEXT'] = WT_I18N::translate('You disabled the privacy options for this tree.');
 							}
@@ -204,15 +204,21 @@ class fancy_privacy_list_WT_Module extends WT_Module implements WT_Module_Config
 	private function getPrivacySettings($record) {
 		global $MAX_ALIVE_AGE, $REQUIRE_AUTHENTICATION, $SHOW_DEAD_PEOPLE, $KEEP_ALIVE_YEARS_BIRTH, $KEEP_ALIVE_YEARS_DEATH, $SHOW_LIVING_NAMES;
 
-		$REQUIRE_AUTHENTICATION ? $auth = ' ('.WT_I18N::translate('registered users only').')' : $auth = '';
+		$auth = $REQUIRE_AUTHENTICATION ? ' ('.WT_I18N::translate('registered users only').')' : '';
 		$SHOW_EST_LIST_DATES = get_gedcom_setting(WT_GED_ID, 'SHOW_EST_LIST_DATES');
 
-		$show_name = '';
-		if ($SHOW_LIVING_NAMES == 1) {
-			$show_name = ' (' . WT_I18N::translate('the name is displayed to %s', WT_I18N::translate('members')) . ')';
-		}
-		if ($SHOW_LIVING_NAMES == 2) {
-			$show_name = ' (' . WT_I18N::translate('the name is displayed to %s', WT_I18N::translate('visitors') . $auth) . ')';
+		switch ($SHOW_LIVING_NAMES) {
+			case 0:
+				$show_name_to = ' (' . WT_I18N::translate('the name is displayed to %s', WT_I18N::translate('managers')) . ')';
+				break;
+			case 1:
+				$show_name_to = ' (' . WT_I18N::translate('the name is displayed to %s', WT_I18N::translate('members')) . ')';
+				break;
+			case 2:
+				$show_name_to = ' (' . WT_I18N::translate('the name is displayed to %s', WT_I18N::translate('visitors') . $auth) . ')';
+				break;
+			default:
+				$show_name_to = '';				
 		}
 
 		$ACCESS_LEVEL=array(
@@ -341,7 +347,7 @@ class fancy_privacy_list_WT_Module extends WT_Module implements WT_Module_Config
 				$settings = array(
 					'RESN'=>0,
 					'STAT'=>WT_I18N::translate('Living'),
-					'PRIV'=>WT_I18N::translate('Private').$show_name,
+					'PRIV'=>WT_I18N::translate('Private').$show_name_to,
 					'TEXT'=>WT_I18N::translate('According to the privacy settings this person is alive.'),
 				);
 				return $settings;
@@ -443,7 +449,7 @@ class fancy_privacy_list_WT_Module extends WT_Module implements WT_Module_Config
 		$settings = array(
 			'RESN'=>0,
 			'STAT'=>WT_I18N::translate('Presumably still alive'),
-			'PRIV'=>WT_I18N::translate('Private').$show_name,
+			'PRIV'=>WT_I18N::translate('Private').$show_name_to,
 			'TEXT'=>WT_I18N::translate('This person is assumed to be alive because the privacy settings of this person could not be calculated.')
 		);
 		return $settings;
