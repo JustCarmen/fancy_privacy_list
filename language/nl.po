@@ -135,7 +135,7 @@ msgstr "leden"
 #: modules_v3\fancy_privacy_list/module.php:136
 #: modules_v3\fancy_privacy_list/module.php:196
 msgid "registered users only"
-msgstr "Alleen geregistreerde gebruikers"
+msgstr "alleen geregistreerde gebruikers"
 
 #: modules_v3\fancy_privacy_list/module.php:200
 #: modules_v3\fancy_privacy_list/module.php:201
