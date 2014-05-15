@@ -64,6 +64,7 @@ class fancy_privacy_list_WT_Module extends WT_Module implements WT_Module_Config
     public function modAction($mod_action) {
         switch ($mod_action) {
             case 'admin_config':
+				require WT_ROOT.'includes/functions/functions_edit.php';
                 $controller = new WT_Controller_Page;
                 $controller
                     ->restrictAccess(\WT\Auth::isAdmin())
@@ -99,7 +100,7 @@ class fancy_privacy_list_WT_Module extends WT_Module implements WT_Module_Config
 							}
 						});
 
-						oTable = jQuery("table#privacy_list").dataTable({
+						oTable = jQuery("#privacy_list").dataTable({
 							dom: \'<"H"pf<"dt-clear">irl>t<"F"pl>\',
 							'.WT_I18N::datatablesI18N().',
 							jQueryUI: true,
@@ -118,7 +119,14 @@ class fancy_privacy_list_WT_Module extends WT_Module implements WT_Module_Config
 							],
 							sorting: [['.('6, "asc"').'], ['.('7, "asc"').']],
 							pageLength: 30,
-							pagingType: "full_numbers"
+							pagingType: "full_numbers"							
+						});
+						
+						jQuery("select#ged").change(function(){						
+							var ged = jQuery(this).val();
+							jQuery.get("module.php?mod='.$this->getName().'&mod_action=admin_config&ged=" + ged, function(data){
+								jQuery("#privacy_list_wrapper").replaceWith(jQuery(data).find("#privacy_list"));
+							}); 
 						});
 					');
 
@@ -126,6 +134,12 @@ class fancy_privacy_list_WT_Module extends WT_Module implements WT_Module_Config
 
 					$html = '
 					<h2>'.$this->getTitle().'</h2>
+					<div id="selectbar">';
+						if (count(WT_TREE::getIdList()) > 1) {
+							$html .= select_edit_control('ged', WT_Tree::getNameList(), null, WT_GEDCOM);
+						}
+					$html .= '
+					</div>
 					<table id="privacy_list" style="width:100%">
 						<thead>
 							<th><span style="float:left">'.WT_I18N::translate('ID').'</span></th>
