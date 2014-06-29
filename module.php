@@ -142,14 +142,16 @@ class fancy_privacy_list_WT_Module extends WT_Module implements WT_Module_Config
 					</div>
 					<table id="privacy_list" style="width:100%">
 						<thead>
-							<th><span style="float:left">'.WT_I18N::translate('ID').'</span></th>
-							<th><span style="float:left">'.WT_I18N::translate('Surname').'</span></th>
-							<th><span style="float:left">'.WT_I18N::translate('Given name').'</span></th>
-							<th><span style="float:left">'.WT_I18N::translate('Status').'</span></th>
-							<th><span style="float:left">'.WT_I18N::translate('Privacy settings').'</span></th>
-							<th><span style="float:left">'.WT_I18N::translate('Explanation').'</span></th>
-							<th>SURN</th>
-							<th>NUMBER</th>
+							<tr>
+								<th><span style="float:left">'.WT_I18N::translate('ID').'</span></th>
+								<th><span style="float:left">'.WT_I18N::translate('Surname').'</span></th>
+								<th><span style="float:left">'.WT_I18N::translate('Given name').'</span></th>
+								<th><span style="float:left">'.WT_I18N::translate('Status').'</span></th>
+								<th><span style="float:left">'.WT_I18N::translate('Privacy settings').'</span></th>
+								<th><span style="float:left">'.WT_I18N::translate('Explanation').'</span></th>
+								<th>SURN</th>
+								<th>NUMBER</th>
+							</tr>
 						</thead><tbody>';
 						$names = $this->getAllNames();
 						foreach($names as $name) {
@@ -176,7 +178,7 @@ class fancy_privacy_list_WT_Module extends WT_Module implements WT_Module_Config
 									<td>'./* hidden by datables code */ $i.'</td>
 								</tr>';
 						}
-						'</tbody></table>';
+						$html .= '</tbody></table>';
 						echo $html;
 			exit;
 			case 'load_data':
