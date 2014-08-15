@@ -23,11 +23,6 @@
 
 use WT\Auth;
 
-if (!defined('WT_WEBTREES')) {
-    header('HTTP/1.0 403 Forbidden');
-    exit;
-}
-
 class fancy_privacy_list_WT_Module extends WT_Module implements WT_Module_Config {
 
 	public function __construct() {
