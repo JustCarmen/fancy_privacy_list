@@ -21,6 +21,8 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
  */
 
+use WT\Auth;
+
 if (!defined('WT_WEBTREES')) {
     header('HTTP/1.0 403 Forbidden');
     exit;
@@ -67,7 +69,7 @@ class fancy_privacy_list_WT_Module extends WT_Module implements WT_Module_Config
 				require WT_ROOT.'includes/functions/functions_edit.php';
                 $controller = new WT_Controller_Page;
                 $controller
-                    ->restrictAccess(\WT\Auth::isAdmin())
+                    ->restrictAccess(Auth::isAdmin())
                     ->setPageTitle($this->getTitle())
 					->pageHeader()
 					->addExternalJavascript(WT_JQUERY_DATATABLES_URL)
