@@ -405,7 +405,7 @@ class fancy_privacy_list_WT_Module extends WT_Module implements WT_Module_Config
 				}
 			}
 			// Check spouse dates
-			$spouse = $family->getSpouse($record, WT_PRIV_HIDE);
+			$spouse = $family->getSpouse($record);
 			if ($spouse) {
 				preg_match_all('/\n2 DATE (.+)/', $spouse->getGedcom(), $date_matches);
 				foreach ($date_matches[1] as $date_match) {
