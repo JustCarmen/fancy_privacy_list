@@ -218,7 +218,7 @@ class fancy_privacy_list_WT_Module extends WT_Module implements WT_Module_Config
 		global $MAX_ALIVE_AGE, $REQUIRE_AUTHENTICATION, $SHOW_DEAD_PEOPLE, $KEEP_ALIVE_YEARS_BIRTH, $KEEP_ALIVE_YEARS_DEATH, $SHOW_LIVING_NAMES;
 
 		$auth = $REQUIRE_AUTHENTICATION ? ' ('.WT_I18N::translate('registered users only').')' : '';
-		$SHOW_EST_LIST_DATES = get_gedcom_setting(WT_GED_ID, 'SHOW_EST_LIST_DATES');
+		$SHOW_EST_LIST_DATES = $WT_TREE->getPreference('SHOW_EST_LIST_DATES');
 
 		switch ($SHOW_LIVING_NAMES) {
 			case 0:
