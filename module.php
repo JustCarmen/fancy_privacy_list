@@ -215,7 +215,7 @@ class fancy_privacy_list_WT_Module extends WT_Module implements WT_Module_Config
 	// This is a copy, with modifications, of the function isDead() in /library/WT/Individual.php
 	// It is VERY important that the parameters used in both are identical.
 	private function getPrivacySettings($record) {
-		global $MAX_ALIVE_AGE, $REQUIRE_AUTHENTICATION, $SHOW_DEAD_PEOPLE, $KEEP_ALIVE_YEARS_BIRTH, $KEEP_ALIVE_YEARS_DEATH, $SHOW_LIVING_NAMES;
+		global $MAX_ALIVE_AGE, $REQUIRE_AUTHENTICATION, $SHOW_DEAD_PEOPLE, $KEEP_ALIVE_YEARS_BIRTH, $KEEP_ALIVE_YEARS_DEATH, $SHOW_LIVING_NAMES, $WT_TREE;
 
 		$auth = $REQUIRE_AUTHENTICATION ? ' ('.WT_I18N::translate('registered users only').')' : '';
 		$SHOW_EST_LIST_DATES = $WT_TREE->getPreference('SHOW_EST_LIST_DATES');
