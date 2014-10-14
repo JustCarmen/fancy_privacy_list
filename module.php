@@ -119,10 +119,10 @@ class fancy_privacy_list_WT_Module extends WT_Module implements WT_Module_Config
 						});
 					');
 
-					global $HIDE_LIVE_PEOPLE, $REQUIRE_AUTHENTICATION;
+					global $WT_TREE, $HIDE_LIVE_PEOPLE, $REQUIRE_AUTHENTICATION;
 
 					$html = '
-					<h2>'.$this->getTitle().'</h2>
+					<h2>'.$this->getTitle().' - '.$WT_TREE->tree_title.'</h2>
 					<table id="privacy_list" style="width:100%">
 						<thead>
 							<tr>
