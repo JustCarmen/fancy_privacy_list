@@ -114,7 +114,7 @@ class fancy_privacy_list_WT_Module extends WT_Module implements WT_Module_Config
 					<li><a href="admin_modules.php"><?php echo WT_I18N::translate('Module administration'); ?></a></li>
 					<li class="active"><?php echo $controller->getPageTitle(); ?></li>
 				</ol>
-				<h2><?php echo $this->getTitle() . ' - ' . $WT_TREE->titleHtml(); ?></h2>
+				<h2><?php echo $this->getTitle(); ?> <small><?php echo $WT_TREE->titleHtml(); ?></small></h2>
 				<table id="privacy_list" class="table table-condensed table-bordered table-striped" style="width:100%">
 					<thead>
 						<tr>
