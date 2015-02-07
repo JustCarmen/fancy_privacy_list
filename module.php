@@ -132,8 +132,8 @@ class fancy_privacy_list_WT_Module extends Module implements ModuleConfigInterfa
 							$record = Individual::getInstance($xref);
 							$settings = $this->getPrivacySettings($record);
 
-							if (!$WT_TREE->getPreference('HIDE_LIVE_PEOPLE') && !$settings['RESN']) {
-								$auth = $WT_TREE->getPreference('REQUIRE_AUTHENTICATION') ? '(' . I18N::translate('registered users only') . ')' : '';
+							if (!$record->getTree()->getPreference('HIDE_LIVE_PEOPLE') && !$settings['RESN']) {
+								$auth = $record->getTree()->getPreference('REQUIRE_AUTHENTICATION') ? '(' . I18N::translate('registered users only') . ')' : '';
 								$settings['PRIV'] = I18N::translate('Show to visitors') . $auth;
 								$settings['TEXT'] = I18N::translate('You disabled the privacy options for this tree.');
 							}
@@ -190,14 +190,13 @@ class fancy_privacy_list_WT_Module extends Module implements ModuleConfigInterfa
 		return $list;
 	}
 
-	// This is a copy, with modifications, of the functions canShowByType() and isDead() in /library/WT/Individual.php
+	// This is a copy, with modifications, of the functions canShowByType() and isDead() in /app/Individual.php
 	// It is VERY important that the parameters used in both are identical.
 	private function getPrivacySettings($record) {
-		global $WT_TREE;
 
-		$auth = $WT_TREE->getPreference('REQUIRE_AUTHENTICATION') ? ' (' . I18N::translate('registered users only') . ')' : '';
+		$auth = $record->getTree()->getPreference('REQUIRE_AUTHENTICATION') ? ' (' . I18N::translate('registered users only') . ')' : '';
 
-		switch ($WT_TREE->getPreference('SHOW_LIVING_NAMES')) {
+		switch ($record->getTree()->getPreference('SHOW_LIVING_NAMES')) {
 			case 0:
 				$show_name_to = ' (' . I18N::translate('the name is displayed to %s', I18N::translate('managers')) . ')';
 				break;
@@ -219,20 +218,20 @@ class fancy_privacy_list_WT_Module extends Module implements ModuleConfigInterfa
 		);
 
 		$keep_alive = false; $keep_alive_birth = false; $keep_alive_death = false;
-		if ($WT_TREE->getPreference('KEEP_ALIVE_YEARS_BIRTH')) {
+		if ($record->getTree()->getPreference('KEEP_ALIVE_YEARS_BIRTH')) {
 			preg_match_all('/\n1 (?:' . WT_EVENTS_BIRT . ').*(?:\n[2-9].*)*(?:\n2 DATE (.+))/', $record->getGedcom(), $matches, PREG_SET_ORDER);
 			foreach ($matches as $match) {
 				$date = new Date($match[1]);
-				if ($date->isOK() && $date->gregorianYear() + $WT_TREE->getPreference('KEEP_ALIVE_YEARS_BIRTH') > date('Y')) {
+				if ($date->isOK() && $date->gregorianYear() + $record->getTree()->getPreference('KEEP_ALIVE_YEARS_BIRTH') > date('Y')) {
 					$keep_alive_birth = true;
 				}
 			}
 		}
-		if ($WT_TREE->getPreference('KEEP_ALIVE_YEARS_DEATH')) {
+		if ($record->getTree()->getPreference('KEEP_ALIVE_YEARS_DEATH')) {
 			preg_match_all('/\n1 (?:' . WT_EVENTS_DEAT . ').*(?:\n[2-9].*)*(?:\n2 DATE (.+))/', $record->getGedcom(), $matches, PREG_SET_ORDER);
 			foreach ($matches as $match) {
 				$date = new Date($match[1]);
-				if ($date->isOK() && $date->gregorianYear() + $WT_TREE->getPreference('KEEP_ALIVE_YEARS_DEATH') > date('Y')) {
+				if ($date->isOK() && $date->gregorianYear() + $record->getTree()->getPreference('KEEP_ALIVE_YEARS_DEATH') > date('Y')) {
 					$keep_alive_death = true;
 					break;
 				}
@@ -278,26 +277,26 @@ class fancy_privacy_list_WT_Module extends Module implements ModuleConfigInterfa
 
 			$keep_alive_msg = '';
 			if ($keep_alive_death == true) {
-				$keep_alive_msg = ' ' . I18N::translate /* I18N: %s is a number */('That is less than %s years ago.', $WT_TREE->getPreference('KEEP_ALIVE_YEARS_DEATH')) . ' ';
+				$keep_alive_msg = ' ' . I18N::translate /* I18N: %s is a number */('That is less than %s years ago.', $record->getTree()->getPreference('KEEP_ALIVE_YEARS_DEATH')) . ' ';
 			} else {
 				if ($keep_alive_birth == true) {
-					$keep_alive_msg = ' ' . I18N::translate /* I18N: %s is a number */('This person was born less then %s years ago.', $WT_TREE->getPreference('KEEP_ALIVE_YEARS_BIRTH'));
+					$keep_alive_msg = ' ' . I18N::translate /* I18N: %s is a number */('This person was born less then %s years ago.', $record->getTree()->getPreference('KEEP_ALIVE_YEARS_BIRTH'));
 				}
 			}
 			$settings = array(
 				'RESN'	 => 0,
 				'STAT'	 => I18N::translate('Death'),
-				'PRIV'	 => $keep_alive ? I18N::translate('Private') : $ACCESS_LEVEL[$WT_TREE->getPreference('SHOW_DEAD_PEOPLE')],
+				'PRIV'	 => $keep_alive ? I18N::translate('Private') : $ACCESS_LEVEL[$record->getTree()->getPreference('SHOW_DEAD_PEOPLE')],
 				'TEXT'	 => I18N::translate/* I18N: %s is date of death */('Died: %s', $dates) . '.' . $keep_alive_msg
 			);
 			return $settings;
 		}
 
-		if (!$record->getEstimatedDeathDate() && $WT_TREE->getPreference('SHOW_EST_LIST_DATES')) {
+		if (!$record->getEstimatedDeathDate() && $record->getTree()->getPreference('SHOW_EST_LIST_DATES')) {
 			$settings = array(
 				'RESN'	 => 0,
 				'STAT'	 => I18N::translate('Presumed death'),
-				'PRIV'	 => $keep_alive ? I18N::translate('Private') : $ACCESS_LEVEL[$WT_TREE->getPreference('SHOW_DEAD_PEOPLE')],
+				'PRIV'	 => $keep_alive ? I18N::translate('Private') : $ACCESS_LEVEL[$record->getTree()->getPreference('SHOW_DEAD_PEOPLE')],
 				'TEXT'	 => I18N::translate /* I18N: %s is a date */('An estimated death date has been calculated as %s', $record->getEstimatedDeathDate()->Display()) . '.' . $keep_alive_msg
 			);
 			return $settings;
@@ -308,26 +307,26 @@ class fancy_privacy_list_WT_Module extends Module implements ModuleConfigInterfa
 			$settings = array(
 				'RESN'	 => 0,
 				'STAT'	 => I18N::translate('Death'),
-				'PRIV'	 => $ACCESS_LEVEL[$WT_TREE->getPreference('SHOW_DEAD_PEOPLE')],
+				'PRIV'	 => $ACCESS_LEVEL[$record->getTree()->getPreference('SHOW_DEAD_PEOPLE')],
 				'TEXT'	 => I18N::translate('Death is recorded with an unknown date.'),
 			);
 			return $settings;
 		}
-		// If any event occured more than $WT_TREE->getPreference('MAX_ALIVE_AGE') years ago, then assume the individual is dead
+		// If any event occured more than $record->getTree()->getPreference('MAX_ALIVE_AGE') years ago, then assume the individual is dead
 		if (preg_match_all('/\n2 DATE (.+)/', $record->getGedcom(), $date_matches)) {
 			foreach ($date_matches[1] as $date_match) {
 				$date = new Date($date_match);
-				if ($date->isOK() && $date->MaxJD() <= WT_CLIENT_JD - 365 * $WT_TREE->getPreference('MAX_ALIVE_AGE')) {
+				if ($date->isOK() && $date->MaxJD() <= WT_CLIENT_JD - 365 * $record->getTree()->getPreference('MAX_ALIVE_AGE')) {
 					$settings = array(
 						'RESN'	 => 0,
 						'STAT'	 => I18N::translate('Presumed death'),
-						'PRIV'	 => $ACCESS_LEVEL[$WT_TREE->getPreference('SHOW_DEAD_PEOPLE')],
-						'TEXT'	 => I18N::translate /* %s is a number */('An event occurred in this person\'s life more than %s years ago.', $WT_TREE->getPreference('MAX_ALIVE_AGE')),
+						'PRIV'	 => $ACCESS_LEVEL[$record->getTree()->getPreference('SHOW_DEAD_PEOPLE')],
+						'TEXT'	 => I18N::translate /* %s is a number */('An event occurred in this person\'s life more than %s years ago.', $record->getTree()->getPreference('MAX_ALIVE_AGE')),
 					);
 					return $settings;
 				}
 			}
-			// The individual has one or more dated events.  All are less than $WT_TREE->getPreference('MAX_ALIVE_AGE') years ago.
+			// The individual has one or more dated events.  All are less than $record->getTree()->getPreference('MAX_ALIVE_AGE') years ago.
 			// If one of these is a birth, the individual must be alive.
 			if (preg_match('/\n1 BIRT(?:\n[2-9].+)*\n2 DATE /', $record->getGedcom())) {
 				$settings = array(
@@ -348,11 +347,11 @@ class fancy_privacy_list_WT_Module extends Module implements ModuleConfigInterfa
 				preg_match_all('/\n2 DATE (.+)/', $parent->getGedcom(), $date_matches);
 				foreach ($date_matches[1] as $date_match) {
 					$date = new Date($date_match);
-					if ($date->isOK() && $date->MaxJD() <= WT_CLIENT_JD - 365 * ($WT_TREE->getPreference('MAX_ALIVE_AGE') + 45)) {
+					if ($date->isOK() && $date->MaxJD() <= WT_CLIENT_JD - 365 * ($record->getTree()->getPreference('MAX_ALIVE_AGE') + 45)) {
 						$settings = array(
 							'RESN'	 => 0,
 							'STAT'	 => I18N::translate('Presumed death'),
-							'PRIV'	 => $ACCESS_LEVEL[$WT_TREE->getPreference('SHOW_DEAD_PEOPLE')],
+							'PRIV'	 => $ACCESS_LEVEL[$record->getTree()->getPreference('SHOW_DEAD_PEOPLE')],
 							'TEXT'	 => I18N::translate('A parent with a birth date of %s is more than 45 years older than this person.', $date->Display())
 						);
 						return $settings;
@@ -366,11 +365,11 @@ class fancy_privacy_list_WT_Module extends Module implements ModuleConfigInterfa
 			foreach ($date_matches[1] as $date_match) {
 				$date = new Date($date_match);
 				// Assume marriage occurs after age of 10
-				if ($date->isOK() && $date->MaxJD() <= WT_CLIENT_JD - 365 * ($WT_TREE->getPreference('MAX_ALIVE_AGE') - 10)) {
+				if ($date->isOK() && $date->MaxJD() <= WT_CLIENT_JD - 365 * ($record->getTree()->getPreference('MAX_ALIVE_AGE') - 10)) {
 					$settings = array(
 						'RESN'	 => 0,
 						'STAT'	 => I18N::translate('Presumed death'),
-						'PRIV'	 => $ACCESS_LEVEL[$WT_TREE->getPreference('SHOW_DEAD_PEOPLE')],
+						'PRIV'	 => $ACCESS_LEVEL[$record->getTree()->getPreference('SHOW_DEAD_PEOPLE')],
 						'TEXT'	 => I18N::translate('A marriage with a date of %s suggests they were born at least 10 years earlier than that.', $date->Display())
 					);
 					return $settings;
@@ -383,11 +382,11 @@ class fancy_privacy_list_WT_Module extends Module implements ModuleConfigInterfa
 				foreach ($date_matches[1] as $date_match) {
 					$date = new Date($date_match);
 					// Assume max age difference between spouses of 40 years
-					if ($date->isOK() && $date->MaxJD() <= WT_CLIENT_JD - 365 * ($WT_TREE->getPreference('MAX_ALIVE_AGE') + 40)) {
+					if ($date->isOK() && $date->MaxJD() <= WT_CLIENT_JD - 365 * ($record->getTree()->getPreference('MAX_ALIVE_AGE') + 40)) {
 						$settings = array(
 							'RESN'	 => 0,
 							'STAT'	 => I18N::translate('Presumed death'),
-							'PRIV'	 => $ACCESS_LEVEL[$WT_TREE->getPreference('SHOW_DEAD_PEOPLE')],
+							'PRIV'	 => $ACCESS_LEVEL[$record->getTree()->getPreference('SHOW_DEAD_PEOPLE')],
 							'TEXT'	 => I18N::translate('A spouse with a date of %s is more than 40 years older than this person.', $date->Display())
 						);
 						return $settings;
@@ -400,11 +399,11 @@ class fancy_privacy_list_WT_Module extends Module implements ModuleConfigInterfa
 				// Assume children born after age of 15
 				foreach ($date_matches[1] as $date_match) {
 					$date = new Date($date_match);
-					if ($date->isOK() && $date->MaxJD() <= WT_CLIENT_JD - 365 * ($WT_TREE->getPreference('MAX_ALIVE_AGE') - 15)) {
+					if ($date->isOK() && $date->MaxJD() <= WT_CLIENT_JD - 365 * ($record->getTree()->getPreference('MAX_ALIVE_AGE') - 15)) {
 						$settings = array(
 							'RESN'	 => 0,
 							'STAT'	 => I18N::translate('Presumed death'),
-							'PRIV'	 => $ACCESS_LEVEL[$WT_TREE->getPreference('SHOW_DEAD_PEOPLE')],
+							'PRIV'	 => $ACCESS_LEVEL[$record->getTree()->getPreference('SHOW_DEAD_PEOPLE')],
 							'TEXT'	 => I18N::translate('A child with a birth date of %s suggests this person was born at least 15 years earlier than that.', $date->Display())
 						);
 						return $settings;
@@ -417,11 +416,11 @@ class fancy_privacy_list_WT_Module extends Module implements ModuleConfigInterfa
 						// Assume grandchildren born after age of 30
 						foreach ($date_matches[1] as $date_match) {
 							$date = new Date($date_match);
-							if ($date->isOK() && $date->MaxJD() <= WT_CLIENT_JD - 365 * ($WT_TREE->getPreference('MAX_ALIVE_AGE') - 30)) {
+							if ($date->isOK() && $date->MaxJD() <= WT_CLIENT_JD - 365 * ($record->getTree()->getPreference('MAX_ALIVE_AGE') - 30)) {
 								$settings = array(
 									'RESN'	 => 0,
 									'STAT'	 => I18N::translate('Presumed death'),
-									'PRIV'	 => $ACCESS_LEVEL[$WT_TREE->getPreference('SHOW_DEAD_PEOPLE')],
+									'PRIV'	 => $ACCESS_LEVEL[$record->getTree()->getPreference('SHOW_DEAD_PEOPLE')],
 									'TEXT'	 => I18N::translate('A grandchild with a birth date of %s suggests this person was born at least 30 years earlier than that.', $date->Display())
 								);
 								return $settings;
