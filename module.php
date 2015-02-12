@@ -56,113 +56,118 @@ class fancy_privacy_list_WT_Module extends Module implements ModuleConfigInterfa
 	// Extend Module
 	public function modAction($mod_action) {
 		switch ($mod_action) {
-			case 'admin_config':
-				$controller = new PageController;
-				$controller
-					->restrictAccess(Auth::isAdmin())
-					->setPageTitle($this->getTitle())
-					->pageHeader()
-					->addExternalJavascript(WT_JQUERY_DATATABLES_JS_URL)
-					->addExternalJavascript(WT_DATATABLES_BOOTSTRAP_JS_URL)
-					->addInlineJavascript('
-						var oTable;
-						// open a row with the gedcom data of this person when the row is clicked on
-						jQuery("#privacy_list tbody tr").click( function () {
-							var xref = jQuery(this).attr("id");
-							var rowClass = jQuery(this).attr("class");
-							var nTr = this;
-							if (oTable.fnIsOpen(nTr)) {
-								oTable.fnClose(nTr);
-							} else {
-								jQuery.get("module.php?mod=' . $this->getName() . '&mod_action=load_data&id=" + xref, function(data) {
-									oTable.fnOpen(nTr, data, "gedcom-data " + rowClass);
-								});
-							}
-						});
+		case 'admin_config':
+			$controller = new PageController;
+			$controller
+				->restrictAccess(Auth::isAdmin())
+				->setPageTitle($this->getTitle())
+				->pageHeader()
+				->addExternalJavascript(WT_JQUERY_DATATABLES_JS_URL)
+				->addExternalJavascript(WT_DATATABLES_BOOTSTRAP_JS_URL)
+				->addInlineJavascript('
+					var oTable;
+					// open a row with the gedcom data of this person when the row is clicked on
+					jQuery("#privacy_list tbody tr").click( function () {
+						var xref = jQuery(this).attr("id");
+						var rowClass = jQuery(this).attr("class");
+						var nTr = this;
+						if (oTable.fnIsOpen(nTr)) {
+							oTable.fnClose(nTr);
+						} else {
+							jQuery.get("module.php?mod=' . $this->getName() . '&mod_action=load_data&id=" + xref, function(data) {
+								oTable.fnOpen(nTr, data, "gedcom-data " + rowClass);
+							});
+						}
+					});
 
-						oTable = jQuery("table#privacy_list").dataTable({
-							sDom: \'<"pull-left"ip><"pull-right text-right"lf><"dt-clear">rt\',
-							' . I18N::datatablesI18N() . ',
-							autoWidth:false,
-							processing: true,
-							filter: true,
-							columns: [
-								/* 0-ID */              {dataSort: 7, width: "5%"},
-								/* 1-Surname */         {dataSort: 6, width: "15%"},
-								/* 2-Given name */      {width: "15%"},
-								/* 3-Status */          {width: "15%"},
-								/* 4-Privacy settings */{width: "15%"},
-								/* 5-Explanation */     {width: "35%"},
-								/* 6-SURN */            {type: "unicode", visible: false},
-								/* 7-NUMBER */          {visible: false}
-							],
-							sorting: [[' . ('6, "asc"') . '], [' . ('7, "asc"') . ']],
-							pageLength: 20,
-							pagingType: "full_numbers"
-						});
-					');
+					oTable = jQuery("table#privacy_list").dataTable({
+						sDom: \'<"pull-left"ip><"pull-right text-right"lf><"dt-clear">rt\',
+						' . I18N::datatablesI18N() . ',
+						autoWidth:false,
+						processing: true,
+						filter: true,
+						columns: [
+							/* 0-ID */              {dataSort: 7, width: "5%"},
+							/* 1-Surname */         {dataSort: 6, width: "15%"},
+							/* 2-Given name */      {width: "15%"},
+							/* 3-Status */          {width: "15%"},
+							/* 4-Privacy settings */{width: "15%"},
+							/* 5-Explanation */     {width: "35%"},
+							/* 6-SURN */            {type: "unicode", visible: false},
+							/* 7-NUMBER */          {visible: false}
+						],
+						sorting: [[' . ('6, "asc"') . '], [' . ('7, "asc"') . ']],
+						pageLength: 20,
+						pagingType: "full_numbers"
+					});
+				');
 
-				global $WT_TREE;
-				?>
+			global $WT_TREE;
+			?>
 
-				<ol class="breadcrumb small">
-					<li><a href="admin.php"><?php echo I18N::translate('Control panel'); ?></a></li>
-					<li><a href="admin_modules.php"><?php echo I18N::translate('Module administration'); ?></a></li>
-					<li class="active"><?php echo $controller->getPageTitle(); ?></li>
-				</ol>
-				<h2><?php echo $this->getTitle(); ?> <small><?php echo $WT_TREE->getTitleHtml(); ?></small></h2>
-				<table id="privacy_list" class="table table-condensed table-bordered table-striped" style="width:100%">
-					<thead>
-						<tr>
-							<th><span style="float:left"><?php echo I18N::translate('ID'); ?></span></th>
-							<th><span style="float:left"><?php echo I18N::translate('Surname'); ?></span></th>
-							<th><span style="float:left"><?php echo I18N::translate('Given name'); ?></span></th>
-							<th><span style="float:left"><?php echo I18N::translate('Status'); ?></span></th>
-							<th><span style="float:left"><?php echo I18N::translate('Privacy settings'); ?></span></th>
-							<th><span style="float:left"><?php echo I18N::translate('Explanation'); ?></span></th>
-							<th>SURN</th>
-							<th>NUMBER</th>
+			<ol class="breadcrumb small">
+				<li><a href="admin.php"><?php echo I18N::translate('Control panel'); ?></a></li>
+				<li><a href="admin_modules.php"><?php echo I18N::translate('Module administration'); ?></a></li>
+				<li class="active"><?php echo $controller->getPageTitle(); ?></li>
+			</ol>
+			<h2><?php echo $this->getTitle(); ?> <small><?php echo $WT_TREE->getTitleHtml(); ?></small></h2>
+			<table id="privacy_list" class="table table-condensed table-bordered table-striped" style="width:100%">
+				<thead>
+					<tr>
+						<th><span style="float:left"><?php echo I18N::translate('ID'); ?></span></th>
+						<th><span style="float:left"><?php echo I18N::translate('Surname'); ?></span></th>
+						<th><span style="float:left"><?php echo I18N::translate('Given name'); ?></span></th>
+						<th><span style="float:left"><?php echo I18N::translate('Status'); ?></span></th>
+						<th><span style="float:left"><?php echo I18N::translate('Privacy settings'); ?></span></th>
+						<th><span style="float:left"><?php echo I18N::translate('Explanation'); ?></span></th>
+						<th>SURN</th>
+						<th>NUMBER</th>
+					</tr>
+				</thead>
+				<tbody>
+					<?php $names = $this->getAllNames(); ?>
+					<?php foreach ($names as $name): ?>
+						<?php
+						$xref = $name['ID'];
+						$record = Individual::getInstance($xref);
+						$settings = $this->getPrivacySettings($record);
+
+						if (!$record->getTree()->getPreference('HIDE_LIVE_PEOPLE') && !$settings['RESN']) {
+							$auth = $record->getTree()->getPreference('REQUIRE_AUTHENTICATION') ? '(' . I18N::translate('registered users only') . ')' : '';
+							$settings['PRIV'] = I18N::translate('Show to visitors') . $auth;
+							$settings['TEXT'] = I18N::translate('You disabled the privacy options for this tree.');
+						}
+
+						$i = substr($xref, 1);
+						?>
+						<tr id="<?php echo $xref; ?>">
+							<td><?php echo $xref; ?></td>
+							<td><?php echo $name['SURNAME']; ?></td>
+							<td><?php echo $name['GIVN']; ?></td>
+							<td><?php echo $settings['STAT']; ?></td>
+							<td><?php echo $settings['PRIV']; ?></td>
+							<td><?php echo $settings['TEXT']; ?></td>
+							<td><?php echo /* hidden by datables code */ $name['SURN']; ?></td>
+							<td><?php echo /* hidden by datables code */ $i; ?></td>
 						</tr>
-					</thead>
-					<tbody>
-						<?php $names = $this->getAllNames(); ?>
-						<?php foreach ($names as $name): ?>
-							<?php
-							$xref = $name['ID'];
-							$record = Individual::getInstance($xref);
-							$settings = $this->getPrivacySettings($record);
+					<?php endforeach; ?>
+				</tbody>
+			</table>
+			<?php
+			break;
 
-							if (!$record->getTree()->getPreference('HIDE_LIVE_PEOPLE') && !$settings['RESN']) {
-								$auth = $record->getTree()->getPreference('REQUIRE_AUTHENTICATION') ? '(' . I18N::translate('registered users only') . ')' : '';
-								$settings['PRIV'] = I18N::translate('Show to visitors') . $auth;
-								$settings['TEXT'] = I18N::translate('You disabled the privacy options for this tree.');
-							}
+		case 'load_data':
+			// Generate an AJAX response for datatables to load expanded row
+			$xref = Filter::get('id');
+			$record = Individual::getInstance($xref);
+			Zend_Session::writeClose();
+			header('Content-type: text/html; charset=UTF-8');
+			echo '<pre>' . $this->getRecordData($record) . '</pre>';
+			break;
 
-							$i = substr($xref, 1);
-							?>
-							<tr id="<?php echo $xref; ?>">
-								<td><?php echo $xref; ?></td>
-								<td><?php echo $name['SURNAME']; ?></td>
-								<td><?php echo $name['GIVN']; ?></td>
-								<td><?php echo $settings['STAT']; ?></td>
-								<td><?php echo $settings['PRIV']; ?></td>
-								<td><?php echo $settings['TEXT']; ?></td>
-								<td><?php echo /* hidden by datables code */ $name['SURN']; ?></td>
-								<td><?php echo /* hidden by datables code */ $i; ?></td>
-							</tr>
-						<?php endforeach; ?>
-					</tbody>
-				</table>
-				<?php
-				exit;
-			case 'load_data':
-				// Generate an AJAX response for datatables to load expanded row
-				$xref = Filter::get('id');
-				$record = Individual::getInstance($xref);
-				Zend_Session::writeClose();
-				header('Content-type: text/html; charset=UTF-8');
-				echo '<pre>' . $this->getRecordData($record) . '</pre>';
-				exit;
+		default:
+			http_response_code(404);
+			break;
 		}
 	}
 
