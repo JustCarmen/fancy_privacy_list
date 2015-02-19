@@ -125,7 +125,7 @@ class fancy_privacy_list_WT_Module extends Module implements ModuleConfigInterfa
 					</tr>
 				</thead>
 				<tbody>
-					<?php $names = $this->getAllNames(); ?>
+					<?php $names = $this->getAllNames($WT_TREE); ?>
 					<?php foreach ($names as $name): ?>
 						<?php
 						$xref = $name['ID'];
@@ -177,11 +177,11 @@ class fancy_privacy_list_WT_Module extends Module implements ModuleConfigInterfa
 	}
 
 	// Get a list of all the individuals for the choosen gedcom
-	private function getAllNames() {
+	private function getAllNames(Tree $tree) {
 
-		$sql = "SELECT SQL_CACHE n_id, n_surn, n_surname, n_givn FROM `##name` WHERE n_num = 0 AND n_file = :ged_id AND n_type = 'NAME' AND n_surn IS NOT NULL ORDER BY n_sort ASC";
+		$sql = "SELECT SQL_CACHE n_id, n_surn, n_surname, n_givn FROM `##name` WHERE n_num = 0 AND n_file = :tree_id AND n_type = 'NAME' AND n_surn IS NOT NULL ORDER BY n_sort ASC";
 		$args = array(
-			'ged_id' => WT_GED_ID
+			'tree_id' => $tree->getTreeId()
 		);
 
 		foreach (Database::prepare($sql)->execute($args)->fetchAll() as $row) {
