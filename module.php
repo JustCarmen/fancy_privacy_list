@@ -321,7 +321,7 @@ class FancyPrivacyListModule extends Module implements ModuleConfigInterface {
 		if (preg_match_all('/\n2 DATE (.+)/', $record->getGedcom(), $date_matches)) {
 			foreach ($date_matches[1] as $date_match) {
 				$date = new Date($date_match);
-				if ($date->isOK() && $date->MaxJD() <= WT_CLIENT_JD - 365 * $record->getTree()->getPreference('MAX_ALIVE_AGE')) {
+				if ($date->isOK() && $date->maximumJulianDay() <= WT_CLIENT_JD - 365 * $record->getTree()->getPreference('MAX_ALIVE_AGE')) {
 					$settings = array(
 						'RESN'	 => 0,
 						'STAT'	 => I18N::translate('Presumed death'),
@@ -352,7 +352,7 @@ class FancyPrivacyListModule extends Module implements ModuleConfigInterface {
 				preg_match_all('/\n2 DATE (.+)/', $parent->getGedcom(), $date_matches);
 				foreach ($date_matches[1] as $date_match) {
 					$date = new Date($date_match);
-					if ($date->isOK() && $date->MaxJD() <= WT_CLIENT_JD - 365 * ($record->getTree()->getPreference('MAX_ALIVE_AGE') + 45)) {
+					if ($date->isOK() && $date->maximumJulianDay() <= WT_CLIENT_JD - 365 * ($record->getTree()->getPreference('MAX_ALIVE_AGE') + 45)) {
 						$settings = array(
 							'RESN'	 => 0,
 							'STAT'	 => I18N::translate('Presumed death'),
@@ -370,7 +370,7 @@ class FancyPrivacyListModule extends Module implements ModuleConfigInterface {
 			foreach ($date_matches[1] as $date_match) {
 				$date = new Date($date_match);
 				// Assume marriage occurs after age of 10
-				if ($date->isOK() && $date->MaxJD() <= WT_CLIENT_JD - 365 * ($record->getTree()->getPreference('MAX_ALIVE_AGE') - 10)) {
+				if ($date->isOK() && $date->maximumJulianDay() <= WT_CLIENT_JD - 365 * ($record->getTree()->getPreference('MAX_ALIVE_AGE') - 10)) {
 					$settings = array(
 						'RESN'	 => 0,
 						'STAT'	 => I18N::translate('Presumed death'),
@@ -387,7 +387,7 @@ class FancyPrivacyListModule extends Module implements ModuleConfigInterface {
 				foreach ($date_matches[1] as $date_match) {
 					$date = new Date($date_match);
 					// Assume max age difference between spouses of 40 years
-					if ($date->isOK() && $date->MaxJD() <= WT_CLIENT_JD - 365 * ($record->getTree()->getPreference('MAX_ALIVE_AGE') + 40)) {
+					if ($date->isOK() && $date->maximumJulianDay() <= WT_CLIENT_JD - 365 * ($record->getTree()->getPreference('MAX_ALIVE_AGE') + 40)) {
 						$settings = array(
 							'RESN'	 => 0,
 							'STAT'	 => I18N::translate('Presumed death'),
@@ -404,7 +404,7 @@ class FancyPrivacyListModule extends Module implements ModuleConfigInterface {
 				// Assume children born after age of 15
 				foreach ($date_matches[1] as $date_match) {
 					$date = new Date($date_match);
-					if ($date->isOK() && $date->MaxJD() <= WT_CLIENT_JD - 365 * ($record->getTree()->getPreference('MAX_ALIVE_AGE') - 15)) {
+					if ($date->isOK() && $date->maximumJulianDay() <= WT_CLIENT_JD - 365 * ($record->getTree()->getPreference('MAX_ALIVE_AGE') - 15)) {
 						$settings = array(
 							'RESN'	 => 0,
 							'STAT'	 => I18N::translate('Presumed death'),
@@ -421,7 +421,7 @@ class FancyPrivacyListModule extends Module implements ModuleConfigInterface {
 						// Assume grandchildren born after age of 30
 						foreach ($date_matches[1] as $date_match) {
 							$date = new Date($date_match);
-							if ($date->isOK() && $date->MaxJD() <= WT_CLIENT_JD - 365 * ($record->getTree()->getPreference('MAX_ALIVE_AGE') - 30)) {
+							if ($date->isOK() && $date->maximumJulianDay() <= WT_CLIENT_JD - 365 * ($record->getTree()->getPreference('MAX_ALIVE_AGE') - 30)) {
 								$settings = array(
 									'RESN'	 => 0,
 									'STAT'	 => I18N::translate('Presumed death'),
