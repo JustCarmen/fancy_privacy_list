@@ -19,10 +19,10 @@ namespace Fisharebest\Webtrees;
 
 use Zend_Translate;
 
-class fancy_privacy_list_WT_Module extends Module implements ModuleConfigInterface {
+class FancyPrivacyListModule extends Module implements ModuleConfigInterface {
 
 	public function __construct() {
-		parent::__construct();
+		parent::__construct('fancy_privacy_list');
 		// Load any local user translations
 		if (is_dir(WT_MODULES_DIR . $this->getName() . '/language')) {
 			if (file_exists(WT_MODULES_DIR . $this->getName() . '/language/' . WT_LOCALE . '.mo')) {
@@ -453,3 +453,5 @@ class fancy_privacy_list_WT_Module extends Module implements ModuleConfigInterfa
 	}
 
 }
+
+return new FancyPrivacyListModule;
