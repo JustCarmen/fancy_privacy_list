@@ -216,10 +216,10 @@ class FancyPrivacyListModule extends Module implements ModuleConfigInterface {
 		}
 
 		$ACCESS_LEVEL = array(
-			WT_PRIV_PUBLIC	 => I18N::translate('Show to visitors') . $auth,
-			WT_PRIV_USER	 => I18N::translate('Show to members'),
-			WT_PRIV_NONE	 => I18N::translate('Show to managers'),
-			WT_PRIV_HIDE	 => I18N::translate('Hide from everyone')
+			Auth::PRIV_PRIVATE		=> I18N::translate('Show to visitors') . $auth,
+			Auth::PRIV_USER			=> I18N::translate('Show to members'),
+			Auth::PRIV_NONE			=> I18N::translate('Show to managers'),
+			Auth::PRIV_HIDE			=> I18N::translate('Hide from everyone')
 		);
 
 		$keep_alive = false; $keep_alive_birth = false; $keep_alive_death = false;
@@ -251,9 +251,9 @@ class FancyPrivacyListModule extends Module implements ModuleConfigInterface {
 		foreach ($facts as $fact) {
 			if ($fact->getTag() == 'RESN' && $fact->getValue() != 'locked') {
 				$RESN = array(
-					'none'			 => array(I18N::translate('None'), $ACCESS_LEVEL[WT_PRIV_PUBLIC]),
-					'privacy'		 => array(I18N::translate('Private'), $ACCESS_LEVEL[WT_PRIV_USER]),
-					'confidential'	 => array(I18N::translate('Confidential'), $ACCESS_LEVEL[WT_PRIV_NONE])
+					'none'			 => array(I18N::translate('None'), $ACCESS_LEVEL[Auth::PRIV_PRIVATE]),
+					'privacy'		 => array(I18N::translate('Private'), $ACCESS_LEVEL[Auth::PRIV_USER]),
+					'confidential'	 => array(I18N::translate('Confidential'), $ACCESS_LEVEL[Auth::PRIV_NONE])
 				);
 				foreach ($RESN as $key => $value) {
 					if ($key == $fact->getValue()) {
@@ -346,8 +346,8 @@ class FancyPrivacyListModule extends Module implements ModuleConfigInterface {
 
 		// If we found no conclusive dates then check the dates of close relatives.
 		// Check parents (birth and adopted)
-		foreach ($record->getChildFamilies(WT_PRIV_HIDE) as $family) {
-			foreach ($family->getSpouses(WT_PRIV_HIDE) as $parent) {
+		foreach ($record->getChildFamilies(Auth::PRIV_HIDE) as $family) {
+			foreach ($family->getSpouses(Auth::PRIV_HIDE) as $parent) {
 				// Assume parents are no more than 45 years older than their children
 				preg_match_all('/\n2 DATE (.+)/', $parent->getGedcom(), $date_matches);
 				foreach ($date_matches[1] as $date_match) {
@@ -365,7 +365,7 @@ class FancyPrivacyListModule extends Module implements ModuleConfigInterface {
 			}
 		}
 		// Check spouses
-		foreach ($record->getSpouseFamilies(WT_PRIV_HIDE) as $family) {
+		foreach ($record->getSpouseFamilies(Auth::PRIV_HIDE) as $family) {
 			preg_match_all('/\n2 DATE (.+)/', $family->getGedcom(), $date_matches);
 			foreach ($date_matches[1] as $date_match) {
 				$date = new Date($date_match);
@@ -399,7 +399,7 @@ class FancyPrivacyListModule extends Module implements ModuleConfigInterface {
 				}
 			}
 			// Check child dates
-			foreach ($family->getChildren(WT_PRIV_HIDE) as $child) {
+			foreach ($family->getChildren(Auth::PRIV_HIDE) as $child) {
 				preg_match_all('/\n2 DATE (.+)/', $child->getGedcom(), $date_matches);
 				// Assume children born after age of 15
 				foreach ($date_matches[1] as $date_match) {
@@ -415,8 +415,8 @@ class FancyPrivacyListModule extends Module implements ModuleConfigInterface {
 					}
 				}
 				// Check grandchildren
-				foreach ($child->getSpouseFamilies(WT_PRIV_HIDE) as $child_family) {
-					foreach ($child_family->getChildren(WT_PRIV_HIDE) as $grandchild) {
+				foreach ($child->getSpouseFamilies(Auth::PRIV_HIDE) as $child_family) {
+					foreach ($child_family->getChildren(Auth::PRIV_HIDE) as $grandchild) {
 						preg_match_all('/\n2 DATE (.+)/', $grandchild->getGedcom(), $date_matches);
 						// Assume grandchildren born after age of 30
 						foreach ($date_matches[1] as $date_match) {
