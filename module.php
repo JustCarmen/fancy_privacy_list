@@ -55,6 +55,7 @@ class FancyPrivacyListModule extends Module implements ModuleConfigInterface {
 
 	// Extend Module
 	public function modAction($mod_action) {
+		global $WT_TREE;
 		switch ($mod_action) {
 		case 'admin_config':
 			$controller = new PageController;
@@ -101,8 +102,6 @@ class FancyPrivacyListModule extends Module implements ModuleConfigInterface {
 						pagingType: "full_numbers"
 					});
 				');
-
-			global $WT_TREE;
 			?>
 
 			<ol class="breadcrumb small">
@@ -129,7 +128,7 @@ class FancyPrivacyListModule extends Module implements ModuleConfigInterface {
 					<?php foreach ($names as $name): ?>
 						<?php
 						$xref = $name['ID'];
-						$record = Individual::getInstance($xref);
+						$record = Individual::getInstance($xref, $WT_TREE);
 						$settings = $this->getPrivacySettings($record);
 
 						if (!$record->getTree()->getPreference('HIDE_LIVE_PEOPLE') && !$settings['RESN']) {
@@ -159,7 +158,7 @@ class FancyPrivacyListModule extends Module implements ModuleConfigInterface {
 		case 'load_data':
 			// Generate an AJAX response for datatables to load expanded row
 			$xref = Filter::get('id');
-			$record = Individual::getInstance($xref);
+			$record = Individual::getInstance($xref, $WT_TREE);
 			Zend_Session::writeClose();
 			header('Content-type: text/html; charset=UTF-8');
 			echo '<pre>' . $this->getRecordData($record) . '</pre>';
