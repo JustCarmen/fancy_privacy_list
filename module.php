@@ -19,7 +19,7 @@ namespace Fisharebest\Webtrees;
 
 use Zend_Translate;
 
-class FancyPrivacyListModule extends Module implements ModuleConfigInterface {
+class FancyPrivacyListModule extends AbstractModule implements ModuleConfigInterface {
 
 	public function __construct() {
 		parent::__construct('fancy_privacy_list');
