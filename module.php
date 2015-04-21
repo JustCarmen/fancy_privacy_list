@@ -62,9 +62,10 @@ class FancyPrivacyListModule extends AbstractModule implements ModuleConfigInter
 							});
 						}
 					});
-
+					
+					var oldStart = 0;
 					oTable = jQuery("table#privacy_list").dataTable({
-						sDom: \'<"pull-left"ip><"pull-right text-right"lf><"dt-clear">rt\',
+						sDom: \'<"top"<"pull-left"li>fp>rt<"bottom"p>\',
 						' . I18N::datatablesI18N() . ',
 						autoWidth:false,
 						processing: true,
@@ -81,8 +82,18 @@ class FancyPrivacyListModule extends AbstractModule implements ModuleConfigInter
 						],
 						sorting: [[' . ('6, "asc"') . '], [' . ('7, "asc"') . ']],
 						pageLength: 20,
-						pagingType: "full_numbers"
+						pagingType: "full_numbers",
+						"fnDrawCallback": function (o) {
+							if ( o._iDisplayStart != oldStart ) {
+								var targetOffset = jQuery("body").offset().top;
+								jQuery("html,body").animate({scrollTop: targetOffset},500);
+								oldStart = o._iDisplayStart;
+							}
+						}
 					});
+					
+					// correction - turn selectbox into a bootstrap selectbox
+					jQuery("select").addClass("form-control");
 				');
 			?>
 
