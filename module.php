@@ -18,7 +18,6 @@ namespace Fisharebest\Webtrees;
  */
 
 use Zend_Session;
-use Zend_Translate;
 
 class FancyPrivacyListModule extends AbstractModule implements ModuleConfigInterface {
 
