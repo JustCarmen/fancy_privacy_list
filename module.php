@@ -39,15 +39,15 @@ class FancyPrivacyListModule extends AbstractModule implements ModuleConfigInter
 	public function modAction($mod_action) {
 		global $WT_TREE;
 		switch ($mod_action) {
-		case 'admin_config':
-			$controller = new PageController;
-			$controller
-				->restrictAccess(Auth::isAdmin())
-				->setPageTitle($this->getTitle())
-				->pageHeader()
-				->addExternalJavascript(WT_JQUERY_DATATABLES_JS_URL)
-				->addExternalJavascript(WT_DATATABLES_BOOTSTRAP_JS_URL)
-				->addInlineJavascript('
+			case 'admin_config':
+				$controller = new PageController;
+				$controller
+					->restrictAccess(Auth::isAdmin())
+					->setPageTitle($this->getTitle())
+					->pageHeader()
+					->addExternalJavascript(WT_JQUERY_DATATABLES_JS_URL)
+					->addExternalJavascript(WT_DATATABLES_BOOTSTRAP_JS_URL)
+					->addInlineJavascript('
 					var oTable;
 					// open a row with the gedcom data of this person when the row is clicked on
 					jQuery("#privacy_list tbody tr").click( function () {
@@ -95,71 +95,71 @@ class FancyPrivacyListModule extends AbstractModule implements ModuleConfigInter
 					// correction - turn selectbox into a bootstrap selectbox
 					jQuery("select").addClass("form-control");
 				');
-			?>
+				?>
 
-			<ol class="breadcrumb small">
-				<li><a href="admin.php"><?php echo I18N::translate('Control panel'); ?></a></li>
-				<li><a href="admin_modules.php"><?php echo I18N::translate('Module administration'); ?></a></li>
-				<li class="active"><?php echo $controller->getPageTitle(); ?></li>
-			</ol>
-			<h2><?php echo $this->getTitle(); ?> <small><?php echo $WT_TREE->getTitleHtml(); ?></small></h2>
-			<table id="privacy_list" class="table table-condensed table-bordered table-striped" style="width:100%">
-				<thead>
-					<tr>
-						<th><span style="float:left"><?php echo I18N::translate('ID'); ?></span></th>
-						<th><span style="float:left"><?php echo I18N::translate('Surname'); ?></span></th>
-						<th><span style="float:left"><?php echo I18N::translate('Given name'); ?></span></th>
-						<th><span style="float:left"><?php echo I18N::translate('Status'); ?></span></th>
-						<th><span style="float:left"><?php echo I18N::translate('Privacy settings'); ?></span></th>
-						<th><span style="float:left"><?php echo I18N::translate('Explanation'); ?></span></th>
-						<th>SURN</th>
-						<th>NUMBER</th>
-					</tr>
-				</thead>
-				<tbody>
-					<?php $names = $this->getAllNames($WT_TREE); ?>
-					<?php foreach ($names as $name): ?>
-						<?php
-						$xref = $name['ID'];
-						$record = Individual::getInstance($xref, $WT_TREE);
-						$settings = $this->getPrivacySettings($record);
-
-						if (!$record->getTree()->getPreference('HIDE_LIVE_PEOPLE') && !$settings['RESN']) {
-							$auth = $record->getTree()->getPreference('REQUIRE_AUTHENTICATION') ? '(' . I18N::translate('registered users only') . ')' : '';
-							$settings['PRIV'] = I18N::translate('Show to visitors') . $auth;
-							$settings['TEXT'] = I18N::translate('You disabled the privacy options for this tree.');
-						}
-
-						$i = substr($xref, 1);
-						?>
-						<tr id="<?php echo $xref; ?>">
-							<td><?php echo $xref; ?></td>
-							<td><?php echo $name['SURNAME']; ?></td>
-							<td><?php echo $name['GIVN']; ?></td>
-							<td><?php echo $settings['STAT']; ?></td>
-							<td><?php echo $settings['PRIV']; ?></td>
-							<td><?php echo $settings['TEXT']; ?></td>
-							<td><?php echo /* hidden by datables code */ $name['SURN']; ?></td>
-							<td><?php echo /* hidden by datables code */ $i; ?></td>
+				<ol class="breadcrumb small">
+					<li><a href="admin.php"><?php echo I18N::translate('Control panel'); ?></a></li>
+					<li><a href="admin_modules.php"><?php echo I18N::translate('Module administration'); ?></a></li>
+					<li class="active"><?php echo $controller->getPageTitle(); ?></li>
+				</ol>
+				<h2><?php echo $this->getTitle(); ?> <small><?php echo $WT_TREE->getTitleHtml(); ?></small></h2>
+				<table id="privacy_list" class="table table-condensed table-bordered table-striped" style="width:100%">
+					<thead>
+						<tr>
+							<th><span style="float:left"><?php echo I18N::translate('ID'); ?></span></th>
+							<th><span style="float:left"><?php echo I18N::translate('Surname'); ?></span></th>
+							<th><span style="float:left"><?php echo I18N::translate('Given name'); ?></span></th>
+							<th><span style="float:left"><?php echo I18N::translate('Status'); ?></span></th>
+							<th><span style="float:left"><?php echo I18N::translate('Privacy settings'); ?></span></th>
+							<th><span style="float:left"><?php echo I18N::translate('Explanation'); ?></span></th>
+							<th>SURN</th>
+							<th>NUMBER</th>
 						</tr>
-					<?php endforeach; ?>
-				</tbody>
-			</table>
-			<?php
-			break;
+					</thead>
+					<tbody>
+						<?php $names = $this->getAllNames($WT_TREE); ?>
+						<?php foreach ($names as $name): ?>
+							<?php
+							$xref = $name['ID'];
+							$record = Individual::getInstance($xref, $WT_TREE);
+							$settings = $this->getPrivacySettings($record);
 
-		case 'load_data':
-			// Generate an AJAX response for datatables to load expanded row
-			$xref = Filter::get('id');
-			$record = Individual::getInstance($xref, $WT_TREE);
-			Zend_Session::writeClose();
-			header('Content-type: text/html; charset=UTF-8');
-			echo '<pre>' . $this->getRecordData($record) . '</pre>';
-			break;
+							if (!$record->getTree()->getPreference('HIDE_LIVE_PEOPLE') && !$settings['RESN']) {
+								$auth = $record->getTree()->getPreference('REQUIRE_AUTHENTICATION') ? '(' . I18N::translate('registered users only') . ')' : '';
+								$settings['PRIV'] = I18N::translate('Show to visitors') . $auth;
+								$settings['TEXT'] = I18N::translate('You disabled the privacy options for this tree.');
+							}
 
-		default:
-			http_response_code(404);
-			break;
+							$i = substr($xref, 1);
+							?>
+							<tr id="<?php echo $xref; ?>">
+								<td><?php echo $xref; ?></td>
+								<td><?php echo $name['SURNAME']; ?></td>
+								<td><?php echo $name['GIVN']; ?></td>
+								<td><?php echo $settings['STAT']; ?></td>
+								<td><?php echo $settings['PRIV']; ?></td>
+								<td><?php echo $settings['TEXT']; ?></td>
+								<td><?php echo /* hidden by datables code */ $name['SURN']; ?></td>
+								<td><?php echo /* hidden by datables code */ $i; ?></td>
+							</tr>
+						<?php endforeach; ?>
+					</tbody>
+				</table>
+				<?php
+				break;
+
+			case 'load_data':
+				// Generate an AJAX response for datatables to load expanded row
+				$xref = Filter::get('id');
+				$record = Individual::getInstance($xref, $WT_TREE);
+				Zend_Session::writeClose();
+				header('Content-type: text/html; charset=UTF-8');
+				echo '<pre>' . $this->getRecordData($record) . '</pre>';
+				break;
+
+			default:
+				http_response_code(404);
+				break;
 		}
 	}
 
@@ -208,10 +208,10 @@ class FancyPrivacyListModule extends AbstractModule implements ModuleConfigInter
 		}
 
 		$ACCESS_LEVEL = array(
-			Auth::PRIV_PRIVATE		=> I18N::translate('Show to visitors') . $auth,
-			Auth::PRIV_USER			=> I18N::translate('Show to members'),
-			Auth::PRIV_NONE			=> I18N::translate('Show to managers'),
-			Auth::PRIV_HIDE			=> I18N::translate('Hide from everyone')
+			Auth::PRIV_PRIVATE	 => I18N::translate('Show to visitors') . $auth,
+			Auth::PRIV_USER		 => I18N::translate('Show to members'),
+			Auth::PRIV_NONE		 => I18N::translate('Show to managers'),
+			Auth::PRIV_HIDE		 => I18N::translate('Hide from everyone')
 		);
 
 		$keep_alive = false; $keep_alive_birth = false; $keep_alive_death = false;
