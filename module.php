@@ -17,8 +17,6 @@ namespace Fisharebest\Webtrees;
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-use Zend_Session;
-
 class FancyPrivacyListModule extends AbstractModule implements ModuleConfigInterface {
 
 	public function __construct() {
@@ -152,7 +150,7 @@ class FancyPrivacyListModule extends AbstractModule implements ModuleConfigInter
 				// Generate an AJAX response for datatables to load expanded row
 				$xref = Filter::get('id');
 				$record = Individual::getInstance($xref, $WT_TREE);
-				Zend_Session::writeClose();
+				
 				header('Content-type: text/html; charset=UTF-8');
 				echo '<pre>' . $this->getRecordData($record) . '</pre>';
 				break;
