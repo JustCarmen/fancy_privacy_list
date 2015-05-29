@@ -60,10 +60,10 @@ class FancyPrivacyListModule extends AbstractModule implements ModuleConfigInter
 							});
 						}
 					});
-					
+
 					var oldStart = 0;
 					oTable = jQuery("table#privacy_list").dataTable({
-						sDom: \'<"top"<"pull-left"li>fp>rt<"bottom"p>\',
+						sDom: \'<"top"<"pull-left"li>fp>rt\',
 						' . I18N::datatablesI18N() . ',
 						autoWidth:false,
 						processing: true,
@@ -80,16 +80,9 @@ class FancyPrivacyListModule extends AbstractModule implements ModuleConfigInter
 						],
 						sorting: [[' . ('6, "asc"') . '], [' . ('7, "asc"') . ']],
 						pageLength: 20,
-						pagingType: "full_numbers",
-						"fnDrawCallback": function (o) {
-							if ( o._iDisplayStart != oldStart ) {
-								var targetOffset = jQuery("body").offset().top;
-								jQuery("html,body").animate({scrollTop: targetOffset},500);
-								oldStart = o._iDisplayStart;
-							}
-						}
+						pagingType: "full_numbers"
 					});
-					
+
 					// correction - turn selectbox into a bootstrap selectbox
 					jQuery("select").addClass("form-control");
 				');
@@ -150,7 +143,7 @@ class FancyPrivacyListModule extends AbstractModule implements ModuleConfigInter
 				// Generate an AJAX response for datatables to load expanded row
 				$xref = Filter::get('id');
 				$record = Individual::getInstance($xref, $WT_TREE);
-				
+
 				header('Content-type: text/html; charset=UTF-8');
 				echo '<pre>' . $this->getRecordData($record) . '</pre>';
 				break;
