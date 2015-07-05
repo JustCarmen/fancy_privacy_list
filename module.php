@@ -27,16 +27,16 @@ use JustCarmen\WebtreesAddOns\FancyPrivacyList\Template\AdminTemplate;
 class FancyPrivacyListModule extends AbstractModule implements ModuleConfigInterface {
 
 	/** @var string location of the fancy Privacy List module files */
-	var $module;
+	var $directory;
 
 	public function __construct() {
 		parent::__construct('fancy_privacy_list');
 
-		$this->module = WT_MODULES_DIR . $this->getName();
+		$this->directory = WT_MODULES_DIR . $this->getName();
 
 		// register the namespaces
 		$loader = new ClassLoader();
-		$loader->addPsr4('JustCarmen\\WebtreesAddOns\\FancyPrivacyList\\', $this->module . '/src');
+		$loader->addPsr4('JustCarmen\\WebtreesAddOns\\FancyPrivacyList\\', $this->directory . '/src');
 		$loader->register();
 	}
 

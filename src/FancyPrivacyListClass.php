@@ -304,7 +304,7 @@ class FancyPrivacyListClass extends FancyPrivacyListModule {
 	}
 
 	protected function getStylesheet() {
-		return $this->includeCss($this->module . '/css/style.css');
+		return $this->includeCss($this->directory . '/css/style.css');
 	}
 
 	private function includeCss($css) {
