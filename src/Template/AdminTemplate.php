@@ -24,14 +24,14 @@ use JustCarmen\WebtreesAddOns\FancyPrivacyList\FancyPrivacyListClass;
 
 class AdminTemplate extends FancyPrivacyListClass {
 
-	public function pageContent() {
+	protected function pageContent() {
 		$controller = new PageController;
 		return
 			$this->pageHeader($controller) .
 			$this->pageBody($controller);
 	}
 
-	protected function pageHeader(PageController $controller) {
+	private function pageHeader(PageController $controller) {
 		$controller
 			->restrictAccess(Auth::isAdmin())
 			->setPageTitle($this->getTitle())
@@ -82,7 +82,7 @@ class AdminTemplate extends FancyPrivacyListClass {
 		echo $this->getStylesheet();
 	}
 
-	protected function pageBody(PageController $controller) {
+	private function pageBody(PageController $controller) {
 		global $WT_TREE;
 		$names = $this->getAllNames($WT_TREE);
 		?>
