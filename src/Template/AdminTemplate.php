@@ -80,6 +80,7 @@ class AdminTemplate extends FancyPrivacyListClass {
 			// correction - turn selectbox into a bootstrap selectbox
 			jQuery("select").addClass("form-control");
 		');
+		echo $this->getStylesheet();
 	}
 	
 	protected function pageBody(PageController $controller) {

@@ -302,4 +302,20 @@ class FancyPrivacyListClass extends FancyPrivacyListModule {
 			"/@([^#@\n]+)@/m", '<a href="#" onclick="return edit_raw(\'\\1\');">@\\1@</a>', $gedrec
 		);
 	}
+	
+	protected function getStylesheet() {
+		return $this->includeCss($this->module . '/css/style.css');
+	}
+	
+	private function includeCss($css) {
+		return
+			'<script class="fancy-privacy-list-script">
+				var newSheet=document.createElement("link");
+				newSheet.setAttribute("href","' . $css . '");
+				newSheet.setAttribute("type","text/css");
+				newSheet.setAttribute("rel","stylesheet");
+				newSheet.setAttribute("media","all");
+				document.getElementsByTagName("head")[0].appendChild(newSheet);
+			</script>';
+	}
 }
