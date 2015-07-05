@@ -58,7 +58,7 @@ class FancyPrivacyListModule extends AbstractModule implements ModuleConfigInter
 				$record = Individual::getInstance($xref, $WT_TREE);
 
 				header('Content-type: text/html; charset=UTF-8');
-				echo '<pre>' . $this->getRecordData($record) . '</pre>';
+				echo '<pre>' . FancyPrivacyListClass::getRecordData($record) . '</pre>';
 				break;
 
 			default:
