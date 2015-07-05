@@ -123,26 +123,28 @@ class FancyPrivacyListModule extends AbstractModule implements ModuleConfigInter
 							<?php
 							$xref = $name['ID'];
 							$record = Individual::getInstance($xref, $WT_TREE);
-							$settings = $this->getPrivacySettings($record);
+							if($record):
+								$settings = $this->getPrivacySettings($record);
 
-							if (!$record->getTree()->getPreference('HIDE_LIVE_PEOPLE') && !$settings['RESN']) {
-								$auth = $record->getTree()->getPreference('REQUIRE_AUTHENTICATION') ? '(' . I18N::translate('registered users only') . ')' : '';
-								$settings['PRIV'] = I18N::translate('Show to visitors') . $auth;
-								$settings['TEXT'] = I18N::translate('You disabled the privacy options for this tree.');
-							}
+								if (!$record->getTree()->getPreference('HIDE_LIVE_PEOPLE') && !$settings['RESN']) {
+									$auth = $record->getTree()->getPreference('REQUIRE_AUTHENTICATION') ? '(' . I18N::translate('registered users only') . ')' : '';
+									$settings['PRIV'] = I18N::translate('Show to visitors') . $auth;
+									$settings['TEXT'] = I18N::translate('You disabled the privacy options for this tree.');
+								}
 
-							$i = substr($xref, 1);
-							?>
-							<tr id="<?php echo $xref; ?>">
-								<td><?php echo $xref; ?></td>
-								<td><?php echo $name['SURNAME']; ?></td>
-								<td><?php echo $name['GIVN']; ?></td>
-								<td><?php echo $settings['STAT']; ?></td>
-								<td><?php echo $settings['PRIV']; ?></td>
-								<td><?php echo $settings['TEXT']; ?></td>
-								<td><?php echo /* hidden by datables code */ $name['SURN']; ?></td>
-								<td><?php echo /* hidden by datables code */ $i; ?></td>
-							</tr>
+								$i = substr($xref, 1);
+								?>
+								<tr id="<?php echo $xref; ?>">
+									<td><?php echo $xref; ?></td>
+									<td><?php echo $name['SURNAME']; ?></td>
+									<td><?php echo $name['GIVN']; ?></td>
+									<td><?php echo $settings['STAT']; ?></td>
+									<td><?php echo $settings['PRIV']; ?></td>
+									<td><?php echo $settings['TEXT']; ?></td>
+									<td><?php echo /* hidden by datables code */ $name['SURN']; ?></td>
+									<td><?php echo /* hidden by datables code */ $i; ?></td>
+								</tr>
+							<?php endif; ?>
 						<?php endforeach; ?>
 					</tbody>
 				</table>
