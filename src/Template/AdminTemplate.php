@@ -14,7 +14,6 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-
 namespace JustCarmen\WebtreesAddOns\FancyPrivacyList\Template;
 
 use Fisharebest\Webtrees\Auth;
@@ -24,7 +23,7 @@ use Fisharebest\Webtrees\Individual;
 use JustCarmen\WebtreesAddOns\FancyPrivacyList\FancyPrivacyListClass;
 
 class AdminTemplate extends FancyPrivacyListClass {
-	
+
 	public function pageContent() {
 		$controller = new PageController;
 		return
@@ -82,7 +81,7 @@ class AdminTemplate extends FancyPrivacyListClass {
 		');
 		echo $this->getStylesheet();
 	}
-	
+
 	protected function pageBody(PageController $controller) {
 		global $WT_TREE;
 		$names = $this->getAllNames($WT_TREE);
@@ -107,37 +106,37 @@ class AdminTemplate extends FancyPrivacyListClass {
 					<th>NUMBER</th>
 				</tr>
 			</thead>
-							
-				<?php foreach ($names as $name): ?>
-					<?php
-					$xref = $name['ID'];
-					$record = Individual::getInstance($xref, $WT_TREE);
-					if($record):
-						$settings = $this->getPrivacySettings($record);
 
-						if (!$record->getTree()->getPreference('HIDE_LIVE_PEOPLE') && !$settings['RESN']) {
-							$auth = $record->getTree()->getPreference('REQUIRE_AUTHENTICATION') ? '(' . I18N::translate('registered users only') . ')' : '';
-							$settings['PRIV'] = I18N::translate('Show to visitors') . $auth;
-							$settings['TEXT'] = I18N::translate('You disabled the privacy options for this tree.');
-						}
+			<?php foreach ($names as $name): ?>
+				<?php
+				$xref = $name['ID'];
+				$record = Individual::getInstance($xref, $WT_TREE);
+				if ($record):
+					$settings = $this->getPrivacySettings($record);
 
-						$i = substr($xref, 1);
-						?>
-						<tr data-xref="<?php echo $xref; ?>">
-							<td><?php echo $xref; ?></td>
-							<td><?php echo $name['SURNAME']; ?></td>
-							<td><?php echo $name['GIVN']; ?></td>
-							<td><?php echo $settings['STAT']; ?></td>
-							<td><?php echo $settings['PRIV']; ?></td>
-							<td><?php echo $settings['TEXT']; ?></td>
-							<td><?php echo /* hidden by datables code */ $name['SURN']; ?></td>
-							<td><?php echo /* hidden by datables code */ $i; ?></td>
-						</tr>
-					<?php endif; ?>
-				<?php endforeach; ?>
-			
+					if (!$record->getTree()->getPreference('HIDE_LIVE_PEOPLE') && !$settings['RESN']) {
+						$auth = $record->getTree()->getPreference('REQUIRE_AUTHENTICATION') ? '(' . I18N::translate('registered users only') . ')' : '';
+						$settings['PRIV'] = I18N::translate('Show to visitors') . $auth;
+						$settings['TEXT'] = I18N::translate('You disabled the privacy options for this tree.');
+					}
+
+					$i = substr($xref, 1);
+					?>
+					<tr data-xref="<?php echo $xref; ?>">
+						<td><?php echo $xref; ?></td>
+						<td><?php echo $name['SURNAME']; ?></td>
+						<td><?php echo $name['GIVN']; ?></td>
+						<td><?php echo $settings['STAT']; ?></td>
+						<td><?php echo $settings['PRIV']; ?></td>
+						<td><?php echo $settings['TEXT']; ?></td>
+						<td><?php echo /* hidden by datables code */ $name['SURN']; ?></td>
+						<td><?php echo /* hidden by datables code */ $i; ?></td>
+					</tr>
+				<?php endif; ?>
+			<?php endforeach; ?>
+
 		</table>
 		<?php
 	}
-}
 
+}

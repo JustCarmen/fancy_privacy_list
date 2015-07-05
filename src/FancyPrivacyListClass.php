@@ -14,7 +14,6 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-
 namespace JustCarmen\WebtreesAddOns\FancyPrivacyList;
 
 use Fisharebest\Webtrees\Auth;
@@ -27,6 +26,7 @@ use Fisharebest\Webtrees\Tree;
  * Class Fancy Privacy List
  */
 class FancyPrivacyListClass extends FancyPrivacyListModule {
+
 	// Get a list of all the individuals for the choosen gedcom
 	protected function getAllNames(Tree $tree) {
 
@@ -302,11 +302,11 @@ class FancyPrivacyListClass extends FancyPrivacyListModule {
 			"/@([^#@\n]+)@/m", '<a href="#" onclick="return edit_raw(\'\\1\');">@\\1@</a>', $gedrec
 		);
 	}
-	
+
 	protected function getStylesheet() {
 		return $this->includeCss($this->module . '/css/style.css');
 	}
-	
+
 	private function includeCss($css) {
 		return
 			'<script class="fancy-privacy-list-script">
@@ -318,4 +318,5 @@ class FancyPrivacyListClass extends FancyPrivacyListModule {
 				document.getElementsByTagName("head")[0].appendChild(newSheet);
 			</script>';
 	}
+
 }

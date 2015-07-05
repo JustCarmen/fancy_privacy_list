@@ -25,15 +25,15 @@ use Fisharebest\Webtrees\Module\ModuleConfigInterface;
 use JustCarmen\WebtreesAddOns\FancyPrivacyList\Template\AdminTemplate;
 
 class FancyPrivacyListModule extends AbstractModule implements ModuleConfigInterface {
-	
+
 	/** @var string location of the fancy Privacy List module files */
 	var $module;
 
 	public function __construct() {
 		parent::__construct('fancy_privacy_list');
-		
+
 		$this->module = WT_MODULES_DIR . $this->getName();
-		
+
 		// register the namespaces
 		$loader = new ClassLoader();
 		$loader->addPsr4('JustCarmen\\WebtreesAddOns\\FancyPrivacyList\\', $this->module . '/src');
@@ -76,6 +76,7 @@ class FancyPrivacyListModule extends AbstractModule implements ModuleConfigInter
 	public function getConfigLink() {
 		return 'module.php?mod=' . $this->getName() . '&amp;mod_action=admin_config';
 	}
+
 }
 
 return new FancyPrivacyListModule;
