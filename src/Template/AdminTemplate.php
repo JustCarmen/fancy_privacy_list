@@ -43,7 +43,7 @@ class AdminTemplate extends FancyPrivacyListClass {
 			var oTable;
 			// open a row with the gedcom data of this person when the row is clicked on
 			jQuery("#privacy_list tbody tr").click( function () {
-				var xref = jQuery(this).attr("id");
+				var xref = jQuery(this).data("xref");
 				var rowClass = jQuery(this).attr("class");
 				var nTr = this;
 				if (oTable.fnIsOpen(nTr)) {
@@ -106,7 +106,7 @@ class AdminTemplate extends FancyPrivacyListClass {
 					<th>NUMBER</th>
 				</tr>
 			</thead>
-			<tbody>				
+							
 				<?php foreach ($names as $name): ?>
 					<?php
 					$xref = $name['ID'];
@@ -122,7 +122,7 @@ class AdminTemplate extends FancyPrivacyListClass {
 
 						$i = substr($xref, 1);
 						?>
-						<tr id="<?php echo $xref; ?>">
+						<tr data-xref="<?php echo $xref; ?>">
 							<td><?php echo $xref; ?></td>
 							<td><?php echo $name['SURNAME']; ?></td>
 							<td><?php echo $name['GIVN']; ?></td>
@@ -134,7 +134,7 @@ class AdminTemplate extends FancyPrivacyListClass {
 						</tr>
 					<?php endif; ?>
 				<?php endforeach; ?>
-			</tbody>
+			
 		</table>
 		<?php
 	}
