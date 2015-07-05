@@ -295,7 +295,7 @@ class FancyPrivacyListClass extends FancyPrivacyListModule {
 		return $settings;
 	}
 
-	protected static function getRecordData($record) {
+	protected function getRecordData($record) {
 		$lines = preg_split('/[\n]+/', $record->getGedcom());
 		$gedrec = implode("\n", $lines);
 		return preg_replace(

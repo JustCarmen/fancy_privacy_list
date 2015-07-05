@@ -40,6 +40,15 @@ class FancyPrivacyListModule extends AbstractModule implements ModuleConfigInter
 		$loader->register();
 	}
 
+	/**
+	 * Get the module class.
+	 * 
+	 * Class functions are called with $this inside the source directory.
+	 */
+	private function module() {
+		return new FancyPrivacyListClass;
+	}
+
 	// Extend Module
 	public function getTitle() {
 		return I18N::translate('Fancy Privacy List');
@@ -53,6 +62,7 @@ class FancyPrivacyListModule extends AbstractModule implements ModuleConfigInter
 	// Extend Module
 	public function modAction($mod_action) {
 		global $WT_TREE;
+
 		switch ($mod_action) {
 			case 'admin_config':
 				$template = new AdminTemplate;
@@ -63,7 +73,7 @@ class FancyPrivacyListModule extends AbstractModule implements ModuleConfigInter
 				$record = Individual::getInstance($xref, $WT_TREE);
 
 				header('Content-type: text/html; charset=UTF-8');
-				echo '<pre>' . FancyPrivacyListClass::getRecordData($record) . '</pre>';
+				echo '<pre>' . $this->module()->getRecordData($record) . '</pre>';
 				break;
 
 			default:
