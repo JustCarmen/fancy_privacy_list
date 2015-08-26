@@ -159,7 +159,7 @@ class FancyPrivacyListClass extends FancyPrivacyListModule {
 		}
 
 		// "1 DEAT Y" or "1 DEAT/2 DATE" or "1 DEAT/2 PLAC"
-		if (preg_match('/\n1 (?:' . WT_EVENTS_DEAT . ')(?: Y|(?:\n[2-9].+)*\n2 (DATE|PLAC) )/', $record)) {
+		if (preg_match('/\n1 (?:' . WT_EVENTS_DEAT . ')(?: Y|(?:\n[2-9].+)*\n2 (DATE|PLAC) )/', $record->getGedcom())) {
 			$settings = array(
 				'RESN'	 => 0,
 				'STAT'	 => I18N::translate('Death'),
