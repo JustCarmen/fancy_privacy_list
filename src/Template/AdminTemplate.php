@@ -88,20 +88,20 @@ class AdminTemplate extends FancyPrivacyListClass {
 		?>
 		<!-- ADMIN PAGE CONTENT -->
 		<ol class="breadcrumb small">
-			<li><a href="admin.php"><?php echo I18N::translate('Control panel'); ?></a></li>
-			<li><a href="admin_modules.php"><?php echo I18N::translate('Module administration'); ?></a></li>
-			<li class="active"><?php echo $controller->getPageTitle(); ?></li>
+			<li><a href="admin.php"><?php echo I18N::translate('Control panel') ?></a></li>
+			<li><a href="admin_modules.php"><?php echo I18N::translate('Module administration') ?></a></li>
+			<li class="active"><?php echo $controller->getPageTitle() ?></li>
 		</ol>
-		<h2><?php echo $this->getTitle(); ?> <small><?php echo $WT_TREE->getTitleHtml(); ?></small></h2>
+		<h2><?php echo $this->getTitle(); ?> <small><?php echo $WT_TREE->getTitleHtml() ?></small></h2>
 		<table id="privacy_list" class="table table-condensed table-bordered table-striped" style="width:100%">
 			<thead>
 				<tr>
-					<th><span style="float:left"><?php echo I18N::translate('ID'); ?></span></th>
-					<th><span style="float:left"><?php echo I18N::translate('Surname'); ?></span></th>
-					<th><span style="float:left"><?php echo I18N::translate('Given name'); ?></span></th>
-					<th><span style="float:left"><?php echo I18N::translate('Status'); ?></span></th>
-					<th><span style="float:left"><?php echo I18N::translate('Privacy settings'); ?></span></th>
-					<th><span style="float:left"><?php echo I18N::translate('Explanation'); ?></span></th>
+					<th><span style="float:left"><?php echo I18N::translate('ID') ?></span></th>
+					<th><span style="float:left"><?php echo I18N::translate('Surname') ?></span></th>
+					<th><span style="float:left"><?php echo I18N::translate('Given name') ?></span></th>
+					<th><span style="float:left"><?php echo I18N::translate('Status') ?></span></th>
+					<th><span style="float:left"><?php echo I18N::translate('Privacy settings') ?></span></th>
+					<th><span style="float:left"><?php echo I18N::translate('Explanation') ?></span></th>
 					<th>SURN</th>
 					<th>NUMBER</th>
 				</tr>
@@ -122,15 +122,15 @@ class AdminTemplate extends FancyPrivacyListClass {
 
 					$i = substr($xref, 1);
 					?>
-					<tr data-xref="<?php echo $xref; ?>">
-						<td><?php echo $xref; ?></td>
-						<td><?php echo $name['SURNAME']; ?></td>
-						<td><?php echo $name['GIVN']; ?></td>
-						<td><?php echo $settings['STAT']; ?></td>
-						<td><?php echo $settings['PRIV']; ?></td>
-						<td><?php echo $settings['TEXT']; ?></td>
-						<td><?php echo /* hidden by datables code */ $name['SURN']; ?></td>
-						<td><?php echo /* hidden by datables code */ $i; ?></td>
+					<tr data-xref="<?php echo $xref ?>">
+						<td><?php echo $xref ?></td>
+						<td><?php echo $name['SURNAME'] ?></td>
+						<td><?php echo $name['GIVN'] ?></td>
+						<td><?php echo $settings['STAT'] ?></td>
+						<td><?php echo $settings['PRIV'] ?></td>
+						<td><?php echo $settings['TEXT'] ?></td>
+						<td><?php echo /* hidden by datables code */ $name['SURN'] ?></td>
+						<td><?php echo /* hidden by datables code */ $i ?></td>
 					</tr>
 				<?php endif; ?>
 			<?php endforeach; ?>
