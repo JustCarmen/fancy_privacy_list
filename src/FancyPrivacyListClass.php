@@ -30,8 +30,8 @@ class FancyPrivacyListClass extends FancyPrivacyListModule {
 	// Get a list of all the individuals for the choosen gedcom
 	protected function getAllNames(Tree $tree) {
 
-		$sql = "SELECT SQL_CACHE n_id, n_surn, n_surname, n_givn FROM `##name` WHERE n_num = 0 AND n_file = :tree_id AND n_type = 'NAME' AND n_surn IS NOT NULL ORDER BY n_sort ASC";
-		$args = array(
+		$sql	 = "SELECT SQL_CACHE n_id, n_surn, n_surname, n_givn FROM `##name` WHERE n_num = 0 AND n_file = :tree_id AND n_type = 'NAME' AND n_surn IS NOT NULL ORDER BY n_sort ASC";
+		$args	 = array(
 			'tree_id' => $tree->getTreeId()
 		);
 
@@ -54,16 +54,16 @@ class FancyPrivacyListClass extends FancyPrivacyListModule {
 
 		switch ($record->getTree()->getPreference('SHOW_LIVING_NAMES')) {
 			case 0:
-				$show_name_to = ' (' . I18N::translate('the name is displayed to %s', I18N::translate('managers')) . ')';
+				$show_name_to	 = ' (' . I18N::translate('the name is displayed to %s', I18N::translate('managers')) . ')';
 				break;
 			case 1:
-				$show_name_to = ' (' . I18N::translate('the name is displayed to %s', I18N::translate('members')) . ')';
+				$show_name_to	 = ' (' . I18N::translate('the name is displayed to %s', I18N::translate('members')) . ')';
 				break;
 			case 2:
-				$show_name_to = ' (' . I18N::translate('the name is displayed to %s', I18N::translate('visitors') . $auth) . ')';
+				$show_name_to	 = ' (' . I18N::translate('the name is displayed to %s', I18N::translate('visitors') . $auth) . ')';
 				break;
 			default:
-				$show_name_to = '';
+				$show_name_to	 = '';
 		}
 
 		$ACCESS_LEVEL = array(
@@ -73,7 +73,7 @@ class FancyPrivacyListClass extends FancyPrivacyListModule {
 			Auth::PRIV_HIDE		 => I18N::translate('Hide from everyone')
 		);
 
-		$keep_alive = false; $keep_alive_birth = false; $keep_alive_death = false;
+		$keep_alive			 = false; $keep_alive_birth	 = false; $keep_alive_death	 = false;
 		if ($record->getTree()->getPreference('KEEP_ALIVE_YEARS_BIRTH')) {
 			preg_match_all('/\n1 (?:' . WT_EVENTS_BIRT . ').*(?:\n[2-9].*)*(?:\n2 DATE (.+))/', $record->getGedcom(), $matches, PREG_SET_ORDER);
 			foreach ($matches as $match) {
@@ -296,8 +296,8 @@ class FancyPrivacyListClass extends FancyPrivacyListModule {
 	}
 
 	protected function getRecordData($record) {
-		$lines = preg_split('/[\n]+/', $record->getGedcom());
-		$gedrec = implode("\n", $lines);
+		$lines	 = preg_split('/[\n]+/', $record->getGedcom());
+		$gedrec	 = implode("\n", $lines);
 		return preg_replace(
 			"/@([^#@\n]+)@/m", '<a href="#" onclick="return edit_raw(\'\\1\');">@\\1@</a>', $gedrec
 		);

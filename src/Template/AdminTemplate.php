@@ -109,15 +109,15 @@ class AdminTemplate extends FancyPrivacyListClass {
 
 			<?php foreach ($names as $name): ?>
 				<?php
-				$xref = $name['ID'];
-				$record = Individual::getInstance($xref, $WT_TREE);
+				$xref	 = $name['ID'];
+				$record	 = Individual::getInstance($xref, $WT_TREE);
 				if ($record):
 					$settings = $this->getPrivacySettings($record);
 
 					if (!$record->getTree()->getPreference('HIDE_LIVE_PEOPLE') && !$settings['RESN']) {
-						$auth = $record->getTree()->getPreference('REQUIRE_AUTHENTICATION') ? '(' . I18N::translate('registered users only') . ')' : '';
-						$settings['PRIV'] = I18N::translate('Show to visitors') . $auth;
-						$settings['TEXT'] = I18N::translate('You disabled the privacy options for this tree.');
+						$auth				 = $record->getTree()->getPreference('REQUIRE_AUTHENTICATION') ? '(' . I18N::translate('registered users only') . ')' : '';
+						$settings['PRIV']	 = I18N::translate('Show to visitors') . $auth;
+						$settings['TEXT']	 = I18N::translate('You disabled the privacy options for this tree.');
 					}
 
 					$i = substr($xref, 1);
