@@ -24,6 +24,8 @@ use Fisharebest\Webtrees\Module\AbstractModule;
 use Fisharebest\Webtrees\Module\ModuleConfigInterface;
 use JustCarmen\WebtreesAddOns\FancyPrivacyList\Template\AdminTemplate;
 
+define('FPL_VERSION', '1.7.4');
+
 class FancyPrivacyListModule extends AbstractModule implements ModuleConfigInterface {
 
 	/** @var string location of the fancy Privacy List module files */
@@ -56,7 +58,7 @@ class FancyPrivacyListModule extends AbstractModule implements ModuleConfigInter
 
 	// Extend Module
 	public function getDescription() {
-		return I18N::translate('This is a module for site admins only. With this module you easily can see the privacy settings for each individual in your tree.');
+		return I18N::translate('This is a module for site admins only. With this module you easily can see the privacy settings for each individual in your tree.') . '<br><span class="small text-muted">' . I18N::translate('Version') . ' ' . FPL_VERSION . ' | by JustCarmen | <a href="http://www.justcarmen.nl/fancy-modules/fancy-privacy-list/">' . I18N::translate('Show details') . '</a></span>';
 	}
 
 	// Extend Module
@@ -65,12 +67,12 @@ class FancyPrivacyListModule extends AbstractModule implements ModuleConfigInter
 
 		switch ($mod_action) {
 			case 'admin_config':
-				$template = new AdminTemplate;
+				$template	 = new AdminTemplate;
 				return $template->pageContent();
 			case 'load_data':
 				// Generate an AJAX response for datatables to load expanded row
-				$xref = Filter::get('id');
-				$record = Individual::getInstance($xref, $WT_TREE);
+				$xref		 = Filter::get('id');
+				$record		 = Individual::getInstance($xref, $WT_TREE);
 
 				header('Content-type: text/html; charset=UTF-8');
 				echo '<pre>' . $this->module()->getRecordData($record) . '</pre>';
