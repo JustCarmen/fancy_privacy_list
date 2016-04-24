@@ -18,8 +18,12 @@ In the last column you will find an explanation why a certain status or privacy 
 
 You can filter or sort the list. Clicking on a row will give you the raw gedcom data of this individual which you can edit directly. To edit the raw gedcom data just click on one of the xrefs to open the 'edit raw gedcom' popup screen.
 
-Installation, updating and translations
----------------------------------------
+Translations
+------------
+You can help to translate this module. Updates to translations should be made at https://translate.webtrees.net/projects/justcarmen/. Changes made there will be pushed to the git repository periodically and will be available on the development version of the module. They will be included in the next release of this module.
+
+Installation & upgrading
+------------------------
 For more information about these subjects go to the JustCarmen help pages: http://www.justcarmen.nl/help
 
 Bugs and feature requests
