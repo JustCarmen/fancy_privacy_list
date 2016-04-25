@@ -1,27 +1,27 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Fancy Privacy List\n"
-"POT-Creation-Date: 2016-03-20 22:30+0100\n"
-"PO-Revision-Date: 2015-07-04 17:53+0200\n"
+"POT-Creation-Date: 2016-04-25 07:47+0200\n"
+"PO-Revision-Date: 2016-04-25 07:54+0200\n"
 "Last-Translator: Carmen Pijpers <carmen@justcarmen.nl>\n"
 "Language-Team: \n"
 "Language: nl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 1.8.2\n"
+"X-Generator: Poedit 1.8.7\n"
 "X-Poedit-KeywordsList: translate;noop;plural:1,2\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Poedit-SourceCharset: UTF-8\n"
 
 #: src/FancyPrivacyListClass.php:263
 #, php-format
-msgid "A child with a birth date of %s suggests this person was born at least 15 years earlier than that."
+msgid "A child with a birth date of %s suggests this individual was born at least 15 years earlier than that."
 msgstr "Een kind met een geboortedatum van %s geeft aan dat deze persoon tenminste 15 jaar eerder geboren is."
 
 #: src/FancyPrivacyListClass.php:280
 #, php-format
-msgid "A grandchild with a birth date of %s suggests this person was born at least 30 years earlier than that."
+msgid "A grandchild with a birth date of %s suggests this individual was born at least 30 years earlier than that."
 msgstr "Een kleinkind met een geboortedatum van %s geeft aan dat deze persoon tenminste 30 jaar eerder geboren is."
 
 #: src/FancyPrivacyListClass.php:229
@@ -31,16 +31,16 @@ msgstr "Een huwelijk met een datum van %s geeft aan dat deze persoon tenminste 1
 
 #: src/FancyPrivacyListClass.php:211
 #, php-format
-msgid "A parent with a birth date of %s is more than 45 years older than this person."
+msgid "A parent with a birth date of %s is more than 45 years older than this individual."
 msgstr "Een ouder met een geboortedatum van %s is meer dan 45 jaar ouder dan deze persoon."
 
 #: src/FancyPrivacyListClass.php:246
 #, php-format
-msgid "A spouse with a date of %s is more than 40 years older than this person."
+msgid "A spouse with a date of %s is more than 40 years older than this individual."
 msgstr "Een partner met een geboortedatum van %s is meer dan 40 jaar ouder dan deze persoon."
 
 #: src/FancyPrivacyListClass.php:192
-msgid "According to the privacy settings this person is alive."
+msgid "According to the privacy settings this individual is alive."
 msgstr "Volgens de privacy instellingen is deze persoon nog in leven."
 
 #. I18N: %s is a date
@@ -51,8 +51,10 @@ msgstr "Een geschatte overlijdensdatum is berekend als %s"
 
 #: src/FancyPrivacyListClass.php:180
 #, php-format
-msgid "An event occurred in this person's life more than %s years ago."
-msgstr "In het leven van deze persoon vond meer dan %s jaar geleden een gebeurtenis plaats."
+msgid "An event occurred in the life of this individual more than %s year ago."
+msgid_plural "An event occurred in the life of this individual more than %s years ago."
+msgstr[0] "In het leven van deze persoon vond meer dan %s jaar geleden een gebeurtenis plaats."
+msgstr[1] "In het leven van deze persoon vond meer dan %s jaar geleden een gebeurtenis plaats."
 
 #: src/FancyPrivacyListClass.php:107
 msgid "Confidential"
@@ -98,22 +100,26 @@ msgstr "Privacy instellingen"
 #. I18N: %s is a number
 #: src/FancyPrivacyListClass.php:136
 #, php-format
-msgid "That is less than %s years ago."
-msgstr "Dat is minder dan %s jaar geleden."
-
-#: module.php:61
-msgid "This is a module for site admins only. With this module you easily can see the privacy settings for each individual in your tree."
-msgstr "Deze module is alleen voor website beheerders. Met deze module kunt u makkelijk de privacy instellingen van elk individu in uw stamboom bekijken."
+msgid "That is less than %s year ago."
+msgid_plural "That is less than %s years ago."
+msgstr[0] "Dat is minder dan %s jaar geleden."
+msgstr[1] "Dat is minder dan %s jaar geleden."
 
 #: src/FancyPrivacyListClass.php:293
-msgid "This person is assumed to be alive because the privacy settings of this person could not be calculated."
-msgstr "Deze persoon wordt verondersteld nog in leven te zijn omdat de privacy instellingen van deze persoon niet kunnen worden berekend."
+msgid "This individual is assumed to be alive because the privacy settings could not be calculated."
+msgstr "Deze persoon wordt verondersteld nog in leven te zijn omdat de privacy instellingen niet kunnen worden berekend."
 
 #. I18N: %s is a number
 #: src/FancyPrivacyListClass.php:139
 #, php-format
-msgid "This person was born less then %s years ago."
-msgstr "Deze persoon is minder dan %s jaar geleden geboren."
+msgid "This individual was born less then %s year ago."
+msgid_plural "This individual was born less then %s years ago."
+msgstr[0] "Deze persoon is minder dan %s jaar geleden geboren."
+msgstr[1] "Deze persoon is minder dan %s jaar geleden geboren."
+
+#: module.php:61
+msgid "This is a module for site admins only. With this module you easily can see the privacy settings for each individual in your tree."
+msgstr "Deze module is alleen voor website beheerders. Met deze module kunt u makkelijk de privacy instellingen van elk individu in uw stamboom bekijken."
 
 #: src/FancyPrivacyListClass.php:115
 msgid "This record has a custom privacy setting."
