@@ -40,7 +40,7 @@ class AdminTemplate extends FancyPrivacyListClass {
 			->addExternalJavascript(WT_DATATABLES_BOOTSTRAP_JS_URL)
 			->addInlineJavascript('
 			var oTable;
-			// open a row with the gedcom data of this person when the row is clicked on
+			// open a row with the gedcom data of this individual when the row is clicked on
 			jQuery("#privacy_list tbody tr").click( function () {
 				var xref = jQuery(this).data("xref");
 				var rowClass = jQuery(this).attr("class");
