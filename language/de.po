@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Fancy Privacy List\n"
 "POT-Creation-Date: 2016-04-25 07:47+0200\n"
-"PO-Revision-Date: 2016-04-27 16:19+0000\n"
+"PO-Revision-Date: 2016-04-29 09:07+0000\n"
 "Last-Translator: Martin Pannier <der@bauschaffen.de>\n"
 "Language-Team: German <https://translate.webtrees.net/projects/justcarmen/fancy-privacy-list/de/>\n"
 "Language: de\n"
@@ -17,17 +17,17 @@ msgstr ""
 #: src/FancyPrivacyListClass.php:263
 #, php-format
 msgid "A child with a birth date of %s suggests this individual was born at least 15 years earlier than that."
-msgstr "Ein Kind mit dem Geburtsdatum %s läßt vermuten, dass diese Person mindestens 15 Jahre früher geboren wurde."
+msgstr "Ein Kind mit dem Geburtsdatum %s läßt vermuten, dass diese Person mindestens 15 Jahre früher als dieses geboren wurde."
 
 #: src/FancyPrivacyListClass.php:280
 #, php-format
 msgid "A grandchild with a birth date of %s suggests this individual was born at least 30 years earlier than that."
-msgstr "Ein Enkelkind mit dem Geburtsdatum %s läßt vermuten, dass diese Person mindestens 30 Jahre früher geboren wurde."
+msgstr "Ein Enkelkind mit dem Geburtsdatum %s läßt vermuten, dass diese Person mindestens 30 Jahre früher als dieses geboren wurde."
 
 #: src/FancyPrivacyListClass.php:229
 #, php-format
 msgid "A marriage with a date of %s suggests they were born at least 10 years earlier than that."
-msgstr "Eine Heirat mit dem Datum %s läßt vermuten, dass diese Person mindestens 10 Jahre früher geboren wurde."
+msgstr "Eine Heirat mit dem Datum %s läßt vermuten, dass sie mindestens 10 Jahre früher als diese geboren wurden."
 
 #: src/FancyPrivacyListClass.php:211
 #, php-format
@@ -62,17 +62,17 @@ msgstr "Vertraulich"
 
 #: src/FancyPrivacyListClass.php:167
 msgid "Death is recorded with an unknown date."
-msgstr "Unbekanntes Todesdatum gespeichert."
+msgstr "Das Sterbedatum ist nicht angegeben."
 
 #. I18N: %s is date of death
 #: src/FancyPrivacyListClass.php:146
 #, php-format
 msgid "Died: %s"
-msgstr "%s verstorben"
+msgstr "Gestorben: %s"
 
 #: src/Template/AdminTemplate.php:104
 msgid "Explanation"
-msgstr "Erläuterungen"
+msgstr "Erläuterung"
 
 #: module.php:56
 msgid "Fancy Privacy List"
@@ -84,18 +84,18 @@ msgstr "ID"
 
 #: src/FancyPrivacyListClass.php:291
 msgid "Presumably still alive"
-msgstr "lebt vermutlich noch"
+msgstr "vermutlich am Leben"
 
 #: src/FancyPrivacyListClass.php:154 src/FancyPrivacyListClass.php:178
 #: src/FancyPrivacyListClass.php:209 src/FancyPrivacyListClass.php:227
 #: src/FancyPrivacyListClass.php:244 src/FancyPrivacyListClass.php:261
 #: src/FancyPrivacyListClass.php:278
 msgid "Presumed death"
-msgstr "ist vermutlich verstorben"
+msgstr "vermutlich verstorben"
 
 #: src/Template/AdminTemplate.php:103
 msgid "Privacy settings"
-msgstr "Datenschutz-Einstellungen"
+msgstr "Datenschutzeinstellungen"
 
 #. I18N: %s is a number
 #: src/FancyPrivacyListClass.php:136
@@ -107,7 +107,7 @@ msgstr[1] "Das ist weniger als %s Jahre her."
 
 #: src/FancyPrivacyListClass.php:293
 msgid "This individual is assumed to be alive because the privacy settings could not be calculated."
-msgstr "Diese Person lebt vermutlich noch, da die Datenschutzeinstellungen nicht berechnet werden können."
+msgstr "Diese Person ist vermutlich am Leben. Es sind keine Lebensdaten angegeben."
 
 #. I18N: %s is a number
 #: src/FancyPrivacyListClass.php:139
@@ -119,15 +119,15 @@ msgstr[1] "Diese Person wurde vor weniger als %s Jahren geboren."
 
 #: module.php:61
 msgid "This is a module for site admins only. With this module you easily can see the privacy settings for each individual in your tree."
-msgstr "Dieses Modul ist nur für Webseiten-Administratoren. Mit diesem Modul können Sie leicht die Datenschutz-Einstellungen für jede Person in Ihrem Stammbaum überprüfen."
+msgstr "Dieses Modul ist nur für Webseiten-Verwalter. Mit ihm können Sie die Datenschutzeinstellungen für jede Person in Ihrem Stammbaum überprüfen."
 
 #: src/FancyPrivacyListClass.php:115
 msgid "This record has a custom privacy setting."
-msgstr "Dieser Datensatz hat eine benutzerdefinierte Datenschutz-Einstellung."
+msgstr "Dieser Datensatz hat eine benutzerdefinierte Datenschutzeinstellung."
 
 #: src/Template/AdminTemplate.php:120
 msgid "You disabled the privacy options for this tree."
-msgstr "Sie haben die Datenschutz-Optionen für diesen Stammbaum deaktiviert."
+msgstr "Sie haben die Datenschutzoptionen für diesen Stammbaum deaktiviert."
 
 #: src/FancyPrivacyListClass.php:53 src/Template/AdminTemplate.php:118
 msgid "registered users only"
