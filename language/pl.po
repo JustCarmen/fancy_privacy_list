@@ -122,7 +122,7 @@ msgstr[2] "Osoba urodzona mniej niż %s lat temu."
 
 #: module.php:61
 msgid "This is a module for site admins only. With this module you easily can see the privacy settings for each individual in your tree."
-msgstr "Ten moduł przeznaczony jest tylko dla administratorów stron. Za pomocą tego modułu można z łatwością zobaczyć ustawienia prywatności dla każdej osoby w drzewie."
+msgstr "Ten moduł przeznaczony jest tylko dla administratorów strony. Za pomocą tego modułu można z łatwością zobaczyć ustawienia prywatności dla każdej osoby w drzewie."
 
 #: src/FancyPrivacyListClass.php:115
 msgid "This record has a custom privacy setting."
