@@ -2,25 +2,25 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Fancy Privacy List\n"
 "POT-Creation-Date: 2016-04-25 07:47+0200\n"
-"PO-Revision-Date: 2015-07-04 17:53+0200\n"
-"Last-Translator: Wooc\n"
-"Language-Team: \n"
+"PO-Revision-Date: 2016-05-05 12:36+0000\n"
+"Last-Translator: Łukasz Wileński <lukas.the.best@poczta.fm>\n"
+"Language-Team: Polish <https://translate.webtrees.net/projects/justcarmen/fancy-privacy-list/pl/>\n"
 "Language: pl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 1.8.2\n"
+"Plural-Forms: nplurals=3; plural=n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
+"X-Generator: Weblate 2.5\n"
 "X-Poedit-KeywordsList: translate;noop;plural:1,2\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Poedit-SourceCharset: UTF-8\n"
 
 #: src/FancyPrivacyListClass.php:263
-#, fuzzy, php-format
+#, php-format
 msgid "A child with a birth date of %s suggests this individual was born at least 15 years earlier than that."
 msgstr "Dziecko z datą urodzin %s sugeruje, że dana osoba urodziła się co najmniej 15 lat wcześniej."
 
 #: src/FancyPrivacyListClass.php:280
-#, fuzzy, php-format
+#, php-format
 msgid "A grandchild with a birth date of %s suggests this individual was born at least 30 years earlier than that."
 msgstr "Wnuczek z datą urodzin %s sugeruje, że dana osoba urodziła się co najmniej 30 lat wcześniej."
 
@@ -30,17 +30,16 @@ msgid "A marriage with a date of %s suggests they were born at least 10 years ea
 msgstr "Data ślubu %s sugeruje, że małżonkowie urodzili się co najmniej 10 lat wcześniej."
 
 #: src/FancyPrivacyListClass.php:211
-#, fuzzy, php-format
+#, php-format
 msgid "A parent with a birth date of %s is more than 45 years older than this individual."
 msgstr "Rodzic z datą urodzin %s jest więcej niż 45 lat starszy od tej osoby."
 
 #: src/FancyPrivacyListClass.php:246
-#, fuzzy, php-format
+#, php-format
 msgid "A spouse with a date of %s is more than 40 years older than this individual."
 msgstr "Małżonek z datą %s jest więcej niż 40 lat starszy od tej osoby."
 
 #: src/FancyPrivacyListClass.php:192
-#, fuzzy
 msgid "According to the privacy settings this individual is alive."
 msgstr "Zgodnie z ustawieniami prywatności ta osoba jest żyjąca."
 
@@ -51,11 +50,12 @@ msgid "An estimated death date has been calculated as %s"
 msgstr "Przybliżona data śmierci obliczona na %s"
 
 #: src/FancyPrivacyListClass.php:180
-#, fuzzy, php-format
+#, php-format
 msgid "An event occurred in the life of this individual more than %s year ago."
 msgid_plural "An event occurred in the life of this individual more than %s years ago."
-msgstr[0] "Występujące wydarzenie w życiu tej osoby więcej niż %s lat temu."
-msgstr[1] "Występujące wydarzenie w życiu tej osoby więcej niż %s lat temu."
+msgstr[0] "Występujące wydarzenie w życiu tej osoby więcej niż %s rok temu."
+msgstr[1] "Występujące wydarzenie w życiu tej osoby więcej niż %s lata temu."
+msgstr[2] "Występujące wydarzenie w życiu tej osoby więcej niż %s lat temu."
 
 #: src/FancyPrivacyListClass.php:107
 msgid "Confidential"
@@ -77,7 +77,7 @@ msgstr "Wyjaśnienie"
 
 #: module.php:56
 msgid "Fancy Privacy List"
-msgstr "Lista prywatności"
+msgstr "Ozdobna lista prywatności"
 
 #: src/Template/AdminTemplate.php:99
 msgid "ID"
@@ -100,24 +100,25 @@ msgstr "Ustawienia prywatności"
 
 #. I18N: %s is a number
 #: src/FancyPrivacyListClass.php:136
-#, fuzzy, php-format
+#, php-format
 msgid "That is less than %s year ago."
 msgid_plural "That is less than %s years ago."
-msgstr[0] "Jest to mniej niż %s lat temu."
-msgstr[1] "Jest to mniej niż %s lat temu."
+msgstr[0] "Jest to mniej niż %s rok temu."
+msgstr[1] "Jest to mniej niż %s lata temu."
+msgstr[2] "Jest to mniej niż %s lat temu."
 
 #: src/FancyPrivacyListClass.php:293
-#, fuzzy
 msgid "This individual is assumed to be alive because the privacy settings could not be calculated."
 msgstr "Osoba prawdopodobnie żyjąca, ustawienia prywatności nie mogą być obliczone."
 
 #. I18N: %s is a number
 #: src/FancyPrivacyListClass.php:139
-#, fuzzy, php-format
+#, php-format
 msgid "This individual was born less then %s year ago."
 msgid_plural "This individual was born less then %s years ago."
-msgstr[0] "Osoba urodzona mniej niż %s lat temu."
-msgstr[1] "Osoba urodzona mniej niż %s lat temu."
+msgstr[0] "Osoba urodzona mniej niż %s rok temu."
+msgstr[1] "Osoba urodzona mniej niż %s lata temu."
+msgstr[2] "Osoba urodzona mniej niż %s lat temu."
 
 #: module.php:61
 msgid "This is a module for site admins only. With this module you easily can see the privacy settings for each individual in your tree."
