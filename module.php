@@ -24,7 +24,7 @@ use Fisharebest\Webtrees\Module\AbstractModule;
 use Fisharebest\Webtrees\Module\ModuleConfigInterface;
 use JustCarmen\WebtreesAddOns\FancyPrivacyList\Template\AdminTemplate;
 
-define('FPL_VERSION', '1.7.4');
+define('FPL_VERSION', '1.7.5-dev');
 
 class FancyPrivacyListModule extends AbstractModule implements ModuleConfigInterface {
 
@@ -38,7 +38,7 @@ class FancyPrivacyListModule extends AbstractModule implements ModuleConfigInter
 
 		// register the namespaces
 		$loader = new ClassLoader();
-		$loader->addPsr4('JustCarmen\\WebtreesAddOns\\FancyPrivacyList\\', $this->directory . '/src');
+		$loader->addPsr4('JustCarmen\\WebtreesAddOns\\FancyPrivacyList\\', $this->directory . '/app');
 		$loader->register();
 	}
 
