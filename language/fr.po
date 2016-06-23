@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "POT-Creation-Date: 2016-04-25 07:47+0200\n"
-"PO-Revision-Date: 2016-06-23 21:08+0000\n"
+"PO-Revision-Date: 2016-06-23 21:15+0000\n"
 "Last-Translator: Michael <mike_jpr@outlook.com>\n"
 "Language-Team: French <https://translate.webtrees.net/projects/justcarmen/fancy-privacy-list/fr/>\n"
 "Language: fr\n"
@@ -40,7 +40,7 @@ msgstr "Un conjoint avec une date de %s est plus âgé de 40 années que cet ind
 
 #: src/FancyPrivacyListClass.php:192
 msgid "According to the privacy settings this individual is alive."
-msgstr "Conformément aux paramètres de confidentialité, cette personne est vivante."
+msgstr "Conformément aux paramètres de confidentialité cet individu est vivant."
 
 #. I18N: %s is a date
 #: src/FancyPrivacyListClass.php:156
@@ -61,7 +61,7 @@ msgstr "Confidentiel"
 
 #: src/FancyPrivacyListClass.php:167
 msgid "Death is recorded with an unknown date."
-msgstr "Décèdé avec une date inconnue."
+msgstr "Décédé avec une date inconnue."
 
 #. I18N: %s is date of death
 #: src/FancyPrivacyListClass.php:146
@@ -118,7 +118,7 @@ msgstr[1] "Cet individu est né il y a moins de %s ans."
 
 #: module.php:61
 msgid "This is a module for site admins only. With this module you easily can see the privacy settings for each individual in your tree."
-msgstr "C'est un module pour le site admin seulement. Avec ce module, vous pouvez facilement voir les paramètres de confidentialité pour chaque individu de votre arbre."
+msgstr "Ce module est uniquement pour les administrateurs de site web. Avec ce module, vous pouvez facilement voir les paramètres de confidentialité pour chaque individu de votre arbre."
 
 #: src/FancyPrivacyListClass.php:115
 msgid "This record has a custom privacy setting."
@@ -126,7 +126,7 @@ msgstr "Cet enregistrement a un paramètre de confidentialité personnalisé."
 
 #: src/Template/AdminTemplate.php:120
 msgid "You disabled the privacy options for this tree."
-msgstr "Vous avez désactivé les options de confidentialité pour cet arbre."
+msgstr "Vous avez désactivé les paramètres de confidentialité pour cet arbre."
 
 #: src/FancyPrivacyListClass.php:53 src/Template/AdminTemplate.php:118
 msgid "registered users only"
@@ -136,4 +136,4 @@ msgstr "Utilisateurs enregistrés seulement"
 #: src/FancyPrivacyListClass.php:63
 #, php-format
 msgid "the name is displayed to %s"
-msgstr "le nom est affiché aux %s"
+msgstr "le nom est affiché pour %s"
