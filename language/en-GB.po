@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Fancy Privacy List\n"
-"POT-Creation-Date: 2016-04-25 07:47+0200\n"
+"POT-Creation-Date: 2016-07-08 09:30+0200\n"
 "PO-Revision-Date: 2016-04-29 11:25+0000\n"
 "Last-Translator: Carmen Pijpers <carmen@justcarmen.nl>\n"
 "Language-Team: English (United Kingdom) <https://translate.webtrees.net/projects/justcarmen/fancy-privacy-list/en-GB/>\n"
@@ -16,127 +16,127 @@ msgstr ""
 "X-Poedit-KeywordsList: translate;noop;plural:1,2\n"
 "X-Poedit-SearchPath-0: .\n"
 
-#: src/FancyPrivacyListClass.php:263
+#: app/FancyPrivacyListClass.php:263
 #, php-format
 msgid "A child with a birth date of %s suggests this individual was born at least 15 years earlier than that."
 msgstr "A child with a birth date of %s suggests this individual was born at least 15 years earlier than that."
 
-#: src/FancyPrivacyListClass.php:280
+#: app/FancyPrivacyListClass.php:280
 #, php-format
 msgid "A grandchild with a birth date of %s suggests this individual was born at least 30 years earlier than that."
 msgstr "A grandchild with a birth date of %s suggests this individual was born at least 30 years earlier than that."
 
-#: src/FancyPrivacyListClass.php:229
+#: app/FancyPrivacyListClass.php:229
 #, php-format
 msgid "A marriage with a date of %s suggests they were born at least 10 years earlier than that."
 msgstr "A marriage with a date of %s suggests they were born at least 10 years earlier than that."
 
-#: src/FancyPrivacyListClass.php:211
+#: app/FancyPrivacyListClass.php:211
 #, php-format
 msgid "A parent with a birth date of %s is more than 45 years older than this individual."
 msgstr "A parent with a birth date of %s is more than 45 years older than this individual."
 
-#: src/FancyPrivacyListClass.php:246
+#: app/FancyPrivacyListClass.php:246
 #, php-format
 msgid "A spouse with a date of %s is more than 40 years older than this individual."
 msgstr "A spouse with a date of %s is more than 40 years older than this individual."
 
-#: src/FancyPrivacyListClass.php:192
+#: app/FancyPrivacyListClass.php:192
 msgid "According to the privacy settings this individual is alive."
 msgstr "According to the privacy settings this individual is alive."
 
 #. I18N: %s is a date
-#: src/FancyPrivacyListClass.php:156
+#: app/FancyPrivacyListClass.php:156
 #, php-format
 msgid "An estimated death date has been calculated as %s"
 msgstr "An estimated death date has been calculated as %s"
 
-#: src/FancyPrivacyListClass.php:180
+#: app/FancyPrivacyListClass.php:180
 #, php-format
 msgid "An event occurred in the life of this individual more than %s year ago."
 msgid_plural "An event occurred in the life of this individual more than %s years ago."
 msgstr[0] "An event occurred in the life of this individual more than %s year ago."
 msgstr[1] "An event occurred in the life of this individual more than %s years ago."
 
-#: src/FancyPrivacyListClass.php:107
+#: app/FancyPrivacyListClass.php:107
 msgid "Confidential"
 msgstr "Confidential"
 
-#: src/FancyPrivacyListClass.php:167
+#: app/FancyPrivacyListClass.php:167
 msgid "Death is recorded with an unknown date."
 msgstr "Death is recorded with an unknown date."
 
 #. I18N: %s is date of death
-#: src/FancyPrivacyListClass.php:146
+#: app/FancyPrivacyListClass.php:146
 #, php-format
 msgid "Died: %s"
 msgstr "Died: %s"
 
-#: src/Template/AdminTemplate.php:104
+#: app/Template/AdminTemplate.php:104
 msgid "Explanation"
 msgstr "Explanation"
 
-#: module.php:56
+#: module.php:57
 msgid "Fancy Privacy List"
 msgstr "Fancy Privacy List"
 
-#: src/Template/AdminTemplate.php:99
+#: app/Template/AdminTemplate.php:99
 msgid "ID"
 msgstr "ID"
 
-#: src/FancyPrivacyListClass.php:291
+#: app/FancyPrivacyListClass.php:291
 msgid "Presumably still alive"
 msgstr "Presumably still alive"
 
-#: src/FancyPrivacyListClass.php:154 src/FancyPrivacyListClass.php:178
-#: src/FancyPrivacyListClass.php:209 src/FancyPrivacyListClass.php:227
-#: src/FancyPrivacyListClass.php:244 src/FancyPrivacyListClass.php:261
-#: src/FancyPrivacyListClass.php:278
+#: app/FancyPrivacyListClass.php:154 app/FancyPrivacyListClass.php:178
+#: app/FancyPrivacyListClass.php:209 app/FancyPrivacyListClass.php:227
+#: app/FancyPrivacyListClass.php:244 app/FancyPrivacyListClass.php:261
+#: app/FancyPrivacyListClass.php:278
 msgid "Presumed death"
 msgstr "Presumed death"
 
-#: src/Template/AdminTemplate.php:103
+#: app/Template/AdminTemplate.php:103
 msgid "Privacy settings"
 msgstr "Privacy settings"
 
 #. I18N: %s is a number
-#: src/FancyPrivacyListClass.php:136
+#: app/FancyPrivacyListClass.php:136
 #, php-format
 msgid "That is less than %s year ago."
 msgid_plural "That is less than %s years ago."
 msgstr[0] "That is less than %s year ago."
 msgstr[1] "That is less than %s years ago."
 
-#: src/FancyPrivacyListClass.php:293
+#: app/FancyPrivacyListClass.php:293
 msgid "This individual is assumed to be alive because the privacy settings could not be calculated."
 msgstr "This individual is assumed to be alive because the privacy settings could not be calculated."
 
 #. I18N: %s is a number
-#: src/FancyPrivacyListClass.php:139
+#: app/FancyPrivacyListClass.php:139
 #, php-format
 msgid "This individual was born less then %s year ago."
 msgid_plural "This individual was born less then %s years ago."
 msgstr[0] "This individual was born less then %s year ago."
 msgstr[1] "This individual was born less then %s years ago."
 
-#: module.php:61
+#: module.php:62
 msgid "This is a module for site admins only. With this module you easily can see the privacy settings for each individual in your tree."
 msgstr "This is a module for site admins only. With this module you easily can see the privacy settings for each individual in your tree."
 
-#: src/FancyPrivacyListClass.php:115
+#: app/FancyPrivacyListClass.php:115
 msgid "This record has a custom privacy setting."
 msgstr "This record has a custom privacy setting."
 
-#: src/Template/AdminTemplate.php:120
+#: app/Template/AdminTemplate.php:120
 msgid "You disabled the privacy options for this tree."
 msgstr "You disabled the privacy options for this tree."
 
-#: src/FancyPrivacyListClass.php:53 src/Template/AdminTemplate.php:118
+#: app/FancyPrivacyListClass.php:53 app/Template/AdminTemplate.php:118
 msgid "registered users only"
 msgstr "registered users only"
 
-#: src/FancyPrivacyListClass.php:57 src/FancyPrivacyListClass.php:60
-#: src/FancyPrivacyListClass.php:63
+#: app/FancyPrivacyListClass.php:57 app/FancyPrivacyListClass.php:60
+#: app/FancyPrivacyListClass.php:63
 #, php-format
 msgid "the name is displayed to %s"
 msgstr "the name is displayed to %s"
