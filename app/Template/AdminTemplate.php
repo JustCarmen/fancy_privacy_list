@@ -96,14 +96,14 @@ class AdminTemplate extends FancyPrivacyListClass {
 		<table id="privacy_list" class="table table-condensed table-bordered table-striped" style="width:100%">
 			<thead>
 				<tr>
-					<th><span style="float:left"><?php echo I18N::translate('ID') ?></span></th>
-					<th><span style="float:left"><?php echo I18N::translate('Surname') ?></span></th>
-					<th><span style="float:left"><?php echo I18N::translate('Given name') ?></span></th>
-					<th><span style="float:left"><?php echo I18N::translate('Status') ?></span></th>
-					<th><span style="float:left"><?php echo I18N::translate('Privacy settings') ?></span></th>
-					<th><span style="float:left"><?php echo I18N::translate('Explanation') ?></span></th>
-					<th>SURN</th>
-					<th>NUMBER</th>
+					<th><?php echo I18N::translate('ID') ?></th>
+					<th><?php echo I18N::translate('Surname') ?></th>
+					<th><?php echo I18N::translate('Given name') ?></th>
+					<th><?php echo I18N::translate('Status') ?></th>
+					<th><?php echo I18N::translate('Privacy settings') ?></th>
+					<th><?php echo I18N::translate('Explanation') ?></th>
+					<th></th>
+					<th></th>
 				</tr>
 			</thead>
 
