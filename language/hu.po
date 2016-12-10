@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Fancy Privacy List\n"
 "POT-Creation-Date: 2016-07-08 09:30+0200\n"
-"PO-Revision-Date: 2016-12-10 21:20+0000\n"
+"PO-Revision-Date: 2016-12-10 21:27+0000\n"
 "Last-Translator: Gyönyör János <gyj@centrum.sk>\n"
 "Language-Team: Hungarian <https://translate.webtrees.net/projects/justcarmen/fancy-privacy-list/hu/>\n"
 "Language: hu\n"
@@ -64,7 +64,7 @@ msgstr "Bizalmas"
 
 #: app/FancyPrivacyListClass.php:167
 msgid "Death is recorded with an unknown date."
-msgstr "Az elhalálozás ismeretlen keltezéssel van elmentve."
+msgstr "Az elhalálozás napja ismeretlen."
 
 #. I18N: %s is date of death
 #: app/FancyPrivacyListClass.php:146
