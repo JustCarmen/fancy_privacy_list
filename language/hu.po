@@ -2,15 +2,15 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Fancy Privacy List\n"
 "POT-Creation-Date: 2016-07-08 09:30+0200\n"
-"PO-Revision-Date: 2015-07-04 17:10+0200\n"
-"Last-Translator: Automatically generated\n"
-"Language-Team: none\n"
+"PO-Revision-Date: 2016-12-10 21:20+0000\n"
+"Last-Translator: Gyönyör János <gyj@centrum.sk>\n"
+"Language-Team: Hungarian <https://translate.webtrees.net/projects/justcarmen/fancy-privacy-list/hu/>\n"
 "Language: hu\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Poedit 1.8.8\n"
+"X-Generator: Weblate 2.8\n"
 "X-Poedit-Basepath: ..\n"
 "X-Poedit-SourceCharset: UTF-8\n"
 "X-Poedit-KeywordsList: translate;noop;plural:1,2\n"
@@ -19,124 +19,124 @@ msgstr ""
 #: app/FancyPrivacyListClass.php:263
 #, php-format
 msgid "A child with a birth date of %s suggests this individual was born at least 15 years earlier than that."
-msgstr ""
+msgstr "%s volt a gyermeke születése, ami szerint ez a személy legalább 15 évvel korábban született."
 
 #: app/FancyPrivacyListClass.php:280
 #, php-format
 msgid "A grandchild with a birth date of %s suggests this individual was born at least 30 years earlier than that."
-msgstr ""
+msgstr "%s volt az unokája születése, ami szerint ez a személy legalább 30 évvel korábban született."
 
 #: app/FancyPrivacyListClass.php:229
 #, php-format
 msgid "A marriage with a date of %s suggests they were born at least 10 years earlier than that."
-msgstr ""
+msgstr "%s házasodtak, ami szerint ők legalább 10 évvel korábban születettek."
 
 #: app/FancyPrivacyListClass.php:211
 #, php-format
 msgid "A parent with a birth date of %s is more than 45 years older than this individual."
-msgstr ""
+msgstr "A szülő születése %s több, mint 45 évvel korábbi az ő születésénél."
 
 #: app/FancyPrivacyListClass.php:246
 #, php-format
 msgid "A spouse with a date of %s is more than 40 years older than this individual."
-msgstr ""
+msgstr "A hitves születése %s több, mint 40 évvel korábbi az ő születésénél."
 
 #: app/FancyPrivacyListClass.php:192
 msgid "According to the privacy settings this individual is alive."
-msgstr ""
+msgstr "Az adatvédelmi beállítások szerint ő élő személy."
 
 #. I18N: %s is a date
 #: app/FancyPrivacyListClass.php:156
 #, php-format
 msgid "An estimated death date has been calculated as %s"
-msgstr ""
+msgstr "A becsült elhalálozási a következő napra lett kiszámolva %s"
 
 #: app/FancyPrivacyListClass.php:180
 #, php-format
 msgid "An event occurred in the life of this individual more than %s year ago."
 msgid_plural "An event occurred in the life of this individual more than %s years ago."
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Több mint %s éve egy esemény történt az illető életében."
+msgstr[1] "Több mint %s éve egy esemény történt az illető életében."
 
 #: app/FancyPrivacyListClass.php:107
 msgid "Confidential"
-msgstr ""
+msgstr "Bizalmas"
 
 #: app/FancyPrivacyListClass.php:167
 msgid "Death is recorded with an unknown date."
-msgstr ""
+msgstr "Az elhalálozás ismeretlen keltezéssel van elmentve."
 
 #. I18N: %s is date of death
 #: app/FancyPrivacyListClass.php:146
 #, php-format
 msgid "Died: %s"
-msgstr ""
+msgstr "Elhunyt: %s"
 
 #: app/Template/AdminTemplate.php:104
 msgid "Explanation"
-msgstr ""
+msgstr "Indokolás"
 
 #: module.php:57
 msgid "Fancy Privacy List"
-msgstr ""
+msgstr "Fancy Személyes Felsorolás"
 
 #: app/Template/AdminTemplate.php:99
 msgid "ID"
-msgstr ""
+msgstr "ID"
 
 #: app/FancyPrivacyListClass.php:291
 msgid "Presumably still alive"
-msgstr ""
+msgstr "Valószínűleg még él"
 
 #: app/FancyPrivacyListClass.php:154 app/FancyPrivacyListClass.php:178
 #: app/FancyPrivacyListClass.php:209 app/FancyPrivacyListClass.php:227
 #: app/FancyPrivacyListClass.php:244 app/FancyPrivacyListClass.php:261
 #: app/FancyPrivacyListClass.php:278
 msgid "Presumed death"
-msgstr ""
+msgstr "Valószínűleg elhunyt"
 
 #: app/Template/AdminTemplate.php:103
 msgid "Privacy settings"
-msgstr ""
+msgstr "Adatvédelmi beállítások"
 
 #. I18N: %s is a number
 #: app/FancyPrivacyListClass.php:136
 #, php-format
 msgid "That is less than %s year ago."
 msgid_plural "That is less than %s years ago."
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Ez kevesebb mint %s éve."
+msgstr[1] "Ez kevesebb mint %s éve."
 
 #: app/FancyPrivacyListClass.php:293
 msgid "This individual is assumed to be alive because the privacy settings could not be calculated."
-msgstr ""
+msgstr "Ez a személy élőnek feltételezve, mivel az adatvédelmi beállítások nem számíthatóak ki."
 
 #. I18N: %s is a number
 #: app/FancyPrivacyListClass.php:139
 #, php-format
 msgid "This individual was born less then %s year ago."
 msgid_plural "This individual was born less then %s years ago."
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Ez a személy kevesebb, mint %s éve született."
+msgstr[1] "Ez a személy kevesebb, mint %s éve született."
 
 #: module.php:62
 msgid "This is a module for site admins only. With this module you easily can see the privacy settings for each individual in your tree."
-msgstr ""
+msgstr "Ez a modul csak a rendszergazdáké, melynek segítségével könnyen ellenőrizhető a családfában szereplő személyek biztonsági beállításai."
 
 #: app/FancyPrivacyListClass.php:115
 msgid "This record has a custom privacy setting."
-msgstr ""
+msgstr "Ennek a bejegyzésnek egyedi biztonsági beállítása van."
 
 #: app/Template/AdminTemplate.php:120
 msgid "You disabled the privacy options for this tree."
-msgstr ""
+msgstr "Ennek fának a biztonsági beállítása ki van kapcsolva."
 
 #: app/FancyPrivacyListClass.php:53 app/Template/AdminTemplate.php:118
 msgid "registered users only"
-msgstr ""
+msgstr "csak regisztrált felhasználók"
 
 #: app/FancyPrivacyListClass.php:57 app/FancyPrivacyListClass.php:60
 #: app/FancyPrivacyListClass.php:63
 #, php-format
 msgid "the name is displayed to %s"
-msgstr ""
+msgstr "a név a következőknek látható %s"
