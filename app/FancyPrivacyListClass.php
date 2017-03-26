@@ -31,17 +31,17 @@ class FancyPrivacyListClass extends FancyPrivacyListModule {
 	protected function getAllNames(Tree $tree) {
 
 		$sql	 = "SELECT SQL_CACHE n_id, n_surn, n_surname, n_givn FROM `##name` WHERE n_num = 0 AND n_file = :tree_id AND n_type = 'NAME' AND n_surn IS NOT NULL ORDER BY n_sort ASC";
-		$args	 = array(
+		$args	 = [
 			'tree_id' => $tree->getTreeId()
-		);
+		];
 
 		foreach (Database::prepare($sql)->execute($args)->fetchAll() as $row) {
-			$list[] = array(
+			$list[] = [
 				'ID'		 => $row->n_id,
 				'SURN'		 => $row->n_surn,
 				'SURNAME'	 => $row->n_surname,
 				'GIVN'		 => $row->n_givn
-			);
+			];
 		}
 		return $list;
 	}
@@ -66,12 +66,12 @@ class FancyPrivacyListClass extends FancyPrivacyListModule {
 				$show_name_to	 = '';
 		}
 
-		$ACCESS_LEVEL = array(
+		$ACCESS_LEVEL = [
 			Auth::PRIV_PRIVATE	 => I18N::translate('Show to visitors') . $auth,
 			Auth::PRIV_USER		 => I18N::translate('Show to members'),
 			Auth::PRIV_NONE		 => I18N::translate('Show to managers'),
 			Auth::PRIV_HIDE		 => I18N::translate('Hide from everyone')
-		);
+		];
 
 		$keep_alive			 = false; $keep_alive_birth	 = false; $keep_alive_death	 = false;
 		if ($record->getTree()->getPreference('KEEP_ALIVE_YEARS_BIRTH')) {
@@ -101,19 +101,19 @@ class FancyPrivacyListClass extends FancyPrivacyListModule {
 		$facts = $record->getFacts();
 		foreach ($facts as $fact) {
 			if ($fact->getTag() == 'RESN' && $fact->getValue() != 'locked') {
-				$RESN = array(
-					'none'			 => array(I18N::translate('None'), $ACCESS_LEVEL[Auth::PRIV_PRIVATE]),
-					'privacy'		 => array(I18N::translate('Private'), $ACCESS_LEVEL[Auth::PRIV_USER]),
-					'confidential'	 => array(I18N::translate('Confidential'), $ACCESS_LEVEL[Auth::PRIV_NONE])
-				);
+				$RESN = [
+					'none'			 => [I18N::translate('None'), $ACCESS_LEVEL[Auth::PRIV_PRIVATE]],
+					'privacy'		 => [I18N::translate('Private'), $ACCESS_LEVEL[Auth::PRIV_USER]],
+					'confidential'	 => [I18N::translate('Confidential'), $ACCESS_LEVEL[Auth::PRIV_NONE]]
+				];
 				foreach ($RESN as $key => $value) {
 					if ($key == $fact->getValue()) {
-						$settings = array(
+						$settings = [
 							'RESN'	 => 1,
 							'STAT'	 => $value[0],
 							'PRIV'	 => $value[1],
 							'TEXT'	 => I18N::translate('This record has a custom privacy setting.')
-						);
+						];
 						return $settings;
 					}
 				}
@@ -139,33 +139,33 @@ class FancyPrivacyListClass extends FancyPrivacyListModule {
 					$keep_alive_msg = ' ' . I18N::plural /* I18N: %s is a number */('This individual was born less then %s year ago.', 'This individual was born less then %s years ago.', $record->getTree()->getPreference('KEEP_ALIVE_YEARS_BIRTH'), $record->getTree()->getPreference('KEEP_ALIVE_YEARS_BIRTH'));
 				}
 			}
-			$settings = array(
+			$settings = [
 				'RESN'	 => 0,
 				'STAT'	 => I18N::translate('Death'),
 				'PRIV'	 => $keep_alive ? I18N::translate('Private') : $ACCESS_LEVEL[$record->getTree()->getPreference('SHOW_DEAD_PEOPLE')],
 				'TEXT'	 => I18N::translate/* I18N: %s is date of death */('Died: %s', $dates) . '.' . $keep_alive_msg
-			);
+			];
 			return $settings;
 		}
 
 		if (!$record->getEstimatedDeathDate() && $record->getTree()->getPreference('SHOW_EST_LIST_DATES')) {
-			$settings = array(
+			$settings = [
 				'RESN'	 => 0,
 				'STAT'	 => I18N::translate('Presumed death'),
 				'PRIV'	 => $keep_alive ? I18N::translate('Private') : $ACCESS_LEVEL[$record->getTree()->getPreference('SHOW_DEAD_PEOPLE')],
 				'TEXT'	 => I18N::translate /* I18N: %s is a date */('An estimated death date has been calculated as %s', $record->getEstimatedDeathDate()->Display()) . '.' . $keep_alive_msg
-			);
+			];
 			return $settings;
 		}
 
 		// "1 DEAT Y" or "1 DEAT/2 DATE" or "1 DEAT/2 PLAC"
 		if (preg_match('/\n1 (?:' . WT_EVENTS_DEAT . ')(?: Y|(?:\n[2-9].+)*\n2 (DATE|PLAC) )/', $record->getGedcom())) {
-			$settings = array(
+			$settings = [
 				'RESN'	 => 0,
 				'STAT'	 => I18N::translate('Death'),
 				'PRIV'	 => $ACCESS_LEVEL[$record->getTree()->getPreference('SHOW_DEAD_PEOPLE')],
 				'TEXT'	 => I18N::translate('Death is recorded with an unknown date.'),
-			);
+			];
 			return $settings;
 		}
 		// If any event occured more than $record->getTree()->getPreference('MAX_ALIVE_AGE') years ago, then assume the individual is dead
@@ -173,24 +173,24 @@ class FancyPrivacyListClass extends FancyPrivacyListModule {
 			foreach ($date_matches[1] as $date_match) {
 				$date = new Date($date_match);
 				if ($date->isOK() && $date->maximumJulianDay() <= WT_CLIENT_JD - 365 * $record->getTree()->getPreference('MAX_ALIVE_AGE')) {
-					$settings = array(
+					$settings = [
 						'RESN'	 => 0,
 						'STAT'	 => I18N::translate('Presumed death'),
 						'PRIV'	 => $ACCESS_LEVEL[$record->getTree()->getPreference('SHOW_DEAD_PEOPLE')],
 						'TEXT'	 => I18N::plural /* %s is a number */('An event occurred in the life of this individual more than %s year ago.', 'An event occurred in the life of this individual more than %s years ago.', $record->getTree()->getPreference('MAX_ALIVE_AGE'), $record->getTree()->getPreference('MAX_ALIVE_AGE')),
-					);
+					];
 					return $settings;
 				}
 			}
 			// The individual has one or more dated events.  All are less than $record->getTree()->getPreference('MAX_ALIVE_AGE') years ago.
 			// If one of these is a birth, the individual must be alive.
 			if (preg_match('/\n1 BIRT(?:\n[2-9].+)*\n2 DATE /', $record->getGedcom())) {
-				$settings = array(
+				$settings = [
 					'RESN'	 => 0,
 					'STAT'	 => I18N::translate('Living'),
 					'PRIV'	 => I18N::translate('Private') . $show_name_to,
 					'TEXT'	 => I18N::translate('According to the privacy settings this individual is alive.'),
-				);
+				];
 				return $settings;
 			}
 		}
@@ -204,12 +204,12 @@ class FancyPrivacyListClass extends FancyPrivacyListModule {
 				foreach ($date_matches[1] as $date_match) {
 					$date = new Date($date_match);
 					if ($date->isOK() && $date->maximumJulianDay() <= WT_CLIENT_JD - 365 * ($record->getTree()->getPreference('MAX_ALIVE_AGE') + 45)) {
-						$settings = array(
+						$settings = [
 							'RESN'	 => 0,
 							'STAT'	 => I18N::translate('Presumed death'),
 							'PRIV'	 => $ACCESS_LEVEL[$record->getTree()->getPreference('SHOW_DEAD_PEOPLE')],
 							'TEXT'	 => I18N::translate('A parent with a birth date of %s is more than 45 years older than this individual.', $date->Display())
-						);
+						];
 						return $settings;
 					}
 				}
@@ -222,12 +222,12 @@ class FancyPrivacyListClass extends FancyPrivacyListModule {
 				$date = new Date($date_match);
 				// Assume marriage occurs after age of 10
 				if ($date->isOK() && $date->maximumJulianDay() <= WT_CLIENT_JD - 365 * ($record->getTree()->getPreference('MAX_ALIVE_AGE') - 10)) {
-					$settings = array(
+					$settings = [
 						'RESN'	 => 0,
 						'STAT'	 => I18N::translate('Presumed death'),
 						'PRIV'	 => $ACCESS_LEVEL[$record->getTree()->getPreference('SHOW_DEAD_PEOPLE')],
 						'TEXT'	 => I18N::translate('A marriage with a date of %s suggests they were born at least 10 years earlier than that.', $date->Display())
-					);
+					];
 					return $settings;
 				}
 			}
@@ -239,12 +239,12 @@ class FancyPrivacyListClass extends FancyPrivacyListModule {
 					$date = new Date($date_match);
 					// Assume max age difference between spouses of 40 years
 					if ($date->isOK() && $date->maximumJulianDay() <= WT_CLIENT_JD - 365 * ($record->getTree()->getPreference('MAX_ALIVE_AGE') + 40)) {
-						$settings = array(
+						$settings = [
 							'RESN'	 => 0,
 							'STAT'	 => I18N::translate('Presumed death'),
 							'PRIV'	 => $ACCESS_LEVEL[$record->getTree()->getPreference('SHOW_DEAD_PEOPLE')],
 							'TEXT'	 => I18N::translate('A spouse with a date of %s is more than 40 years older than this individual.', $date->Display())
-						);
+						];
 						return $settings;
 					}
 				}
@@ -256,12 +256,12 @@ class FancyPrivacyListClass extends FancyPrivacyListModule {
 				foreach ($date_matches[1] as $date_match) {
 					$date = new Date($date_match);
 					if ($date->isOK() && $date->maximumJulianDay() <= WT_CLIENT_JD - 365 * ($record->getTree()->getPreference('MAX_ALIVE_AGE') - 15)) {
-						$settings = array(
+						$settings = [
 							'RESN'	 => 0,
 							'STAT'	 => I18N::translate('Presumed death'),
 							'PRIV'	 => $ACCESS_LEVEL[$record->getTree()->getPreference('SHOW_DEAD_PEOPLE')],
 							'TEXT'	 => I18N::translate('A child with a birth date of %s suggests this individual was born at least 15 years earlier than that.', $date->Display())
-						);
+						];
 						return $settings;
 					}
 				}
@@ -273,12 +273,12 @@ class FancyPrivacyListClass extends FancyPrivacyListModule {
 						foreach ($date_matches[1] as $date_match) {
 							$date = new Date($date_match);
 							if ($date->isOK() && $date->maximumJulianDay() <= WT_CLIENT_JD - 365 * ($record->getTree()->getPreference('MAX_ALIVE_AGE') - 30)) {
-								$settings = array(
+								$settings = [
 									'RESN'	 => 0,
 									'STAT'	 => I18N::translate('Presumed death'),
 									'PRIV'	 => $ACCESS_LEVEL[$record->getTree()->getPreference('SHOW_DEAD_PEOPLE')],
 									'TEXT'	 => I18N::translate('A grandchild with a birth date of %s suggests this individual was born at least 30 years earlier than that.', $date->Display())
-								);
+								];
 								return $settings;
 							}
 						}
@@ -286,12 +286,12 @@ class FancyPrivacyListClass extends FancyPrivacyListModule {
 				}
 			}
 		}
-		$settings = array(
+		$settings = [
 			'RESN'	 => 0,
 			'STAT'	 => I18N::translate('Presumably still alive'),
 			'PRIV'	 => I18N::translate('Private') . $show_name_to,
 			'TEXT'	 => I18N::translate('This individual is assumed to be alive because the privacy settings could not be calculated.')
-		);
+		];
 		return $settings;
 	}
 
