@@ -34,7 +34,7 @@ class FancyPrivacyListModule extends AbstractModule implements ModuleConfigInter
 	public function __construct() {
 		parent::__construct('fancy_privacy_list');
 
-		$this->directory = WT_MODULES_DIR . $this->getName();
+		$this->directory = WT_STATIC_URL . WT_MODULES_DIR . $this->getName();
 
 		// register the namespaces
 		$loader = new ClassLoader();
@@ -88,6 +88,25 @@ class FancyPrivacyListModule extends AbstractModule implements ModuleConfigInter
 	public function getConfigLink() {
 		return 'module.php?mod=' . $this->getName() . '&amp;mod_action=admin_config';
 	}
+
+  /**
+   * Default Fancy script to load a module stylesheet
+   *
+   * The code to place the stylesheet in the header renders quicker than the default webtrees solution
+   * because we do not have to wait until the page is fully loaded
+   *
+   * @return javascript
+   */
+  protected function includeCss() {
+    return
+        '<script>
+          var newSheet=document.createElement("link");
+          newSheet.setAttribute("rel","stylesheet");
+          newSheet.setAttribute("type","text/css");
+          newSheet.setAttribute("href","' . $this->directory . '/css/style.css");
+          document.getElementsByTagName("head")[0].appendChild(newSheet);
+        </script>';
+  }
 
 }
 

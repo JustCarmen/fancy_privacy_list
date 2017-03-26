@@ -16,6 +16,7 @@
 namespace JustCarmen\WebtreesAddOns\FancyPrivacyList\Template;
 
 use Fisharebest\Webtrees\Auth;
+use Fisharebest\Webtrees\Bootstrap4;
 use Fisharebest\Webtrees\Controller\PageController;
 use Fisharebest\Webtrees\I18N;
 use Fisharebest\Webtrees\Individual;
@@ -35,7 +36,7 @@ class AdminTemplate extends FancyPrivacyListClass {
 			->restrictAccess(Auth::isAdmin())
 			->setPageTitle($this->getTitle())
 			->pageHeader()
-			->addExternalJavascript(WT_JQUERY_DATATABLES_JS_URL)
+			->addExternalJavascript(WT_DATATABLES_BOOTSTRAP_JS_URL)
 			->addExternalJavascript(WT_DATATABLES_BOOTSTRAP_JS_URL)
 			->addInlineJavascript('
 			var oTable;
@@ -54,23 +55,21 @@ class AdminTemplate extends FancyPrivacyListClass {
 			});
 
 			var oldStart = 0;
+      var layout = "d-flex justify-content-between";
 			oTable = jQuery("table#privacy_list").dataTable({
-				sDom: \'<"top"<"pull-left"li>fp>rt\',
+				sDom: \'<"\' + layout + \'"lf><"\' + layout + \'"ip>t<"\' + layout + \'"ip>\',
 				' . I18N::datatablesI18N() . ',
 				autoWidth:false,
 				processing: true,
 				filter: true,
-				columns: [
-					/* 0-ID */              {dataSort: 7, width: "5%"},
-					/* 1-Surname */         {dataSort: 6, width: "15%"},
-					/* 2-Given name */      {width: "15%"},
-					/* 3-Status */          {width: "15%"},
-					/* 4-Privacy settings */{width: "15%"},
-					/* 5-Explanation */     {width: "35%"},
-					/* 6-SURN */            {type: "unicode", visible: false},
-					/* 7-NUMBER */          {visible: false}
+				columns: [					
+					/* 0-Name */            {dataSort: 4, width: "20%"},
+					/* 1-Status */          {width: "20%"},
+					/* 2-Privacy settings */{width: "20%"},
+					/* 3-Explanation */     {width: "40%"},
+					/* 4-SURN */            {type: "unicode", visible: false},
 				],
-				sorting: [[' . ('6, "asc"') . '], [' . ('7, "asc"') . ']],
+				sorting: [' . ('4, "asc"') . '],
 				pageLength: 20,
 				pagingType: "full_numbers"
 			});
@@ -78,35 +77,33 @@ class AdminTemplate extends FancyPrivacyListClass {
 			// correction - turn selectbox into a bootstrap selectbox
 			jQuery("select").addClass("form-control");
 		');
-		echo $this->getStylesheet();
+
+		echo $this->includeCss();
 	}
 
 	private function pageBody(PageController $controller) {
 		global $WT_TREE;
-		$names = $this->getAllNames($WT_TREE);
+
+		echo Bootstrap4::breadcrumbs([
+			'admin.php'			 => I18N::translate('Control panel'),
+			'admin_modules.php'	 => I18N::translate('Module administration'),
+			], $controller->getPageTitle());
 		?>
-		<!-- ADMIN PAGE CONTENT -->
-		<ol class="breadcrumb small">
-			<li><a href="admin.php"><?= I18N::translate('Control panel') ?></a></li>
-			<li><a href="admin_modules.php"><?= I18N::translate('Module administration') ?></a></li>
-			<li class="active"><?= $controller->getPageTitle() ?></li>
-		</ol>
-		<h2><?= $this->getTitle(); ?> <small><?= $WT_TREE->getTitleHtml() ?></small></h2>
+
+		<h1><?= $controller->getPageTitle() ?></h1>
+		<p><?= $WT_TREE->getTitle() ?></p>
 		<table id="privacy_list" class="table table-condensed table-bordered table-striped" style="width:100%">
 			<thead>
 				<tr>
-					<th><?= I18N::translate('ID') ?></th>
-					<th><?= I18N::translate('Surname') ?></th>
-					<th><?= I18N::translate('Given name') ?></th>
+					<th><?= I18N::translate('Name') ?></th>
 					<th><?= I18N::translate('Status') ?></th>
 					<th><?= I18N::translate('Privacy settings') ?></th>
 					<th><?= I18N::translate('Explanation') ?></th>
-					<th></th>
-					<th></th>
+          <th class="sr-only"></th>
 				</tr>
 			</thead>
 
-			<?php foreach ($names as $name): ?>
+			<?php foreach ($this->getAllNames($WT_TREE) as $name): ?>
 				<?php
 				$xref	 = $name['ID'];
 				$record	 = Individual::getInstance($xref, $WT_TREE);
@@ -120,16 +117,16 @@ class AdminTemplate extends FancyPrivacyListClass {
 					}
 
 					$i = substr($xref, 1);
+          
+          $searchname = str_replace('@N.N.', 'AAAA', $name['SURN']) . str_replace('@P.N.', 'AAAA', $name['GIVN']);
+          $fullname = str_replace(['@N.N.', '@P.N.'], [I18N::translateContext('Unknown surname', '…'), I18N::translateContext('Unknown given name', '…')], $name['SURNAME'] . ", " . $name['GIVN'])
 					?>
 					<tr data-xref="<?= $xref ?>">
-						<td><?= $xref ?></td>
-						<td><?= $name['SURNAME'] ?></td>
-						<td><?= $name['GIVN'] ?></td>
+						<td><?= $fullname ?></td>
 						<td><?= $settings['STAT'] ?></td>
 						<td><?= $settings['PRIV'] ?></td>
 						<td><?= $settings['TEXT'] ?></td>
-						<td><?= /* hidden by datables code */ $name['SURN'] ?></td>
-						<td><?= /* hidden by datables code */ $i ?></td>
+            <td class="sr-only"><?= /* hidden by datables code */ $searchname ?></td>
 					</tr>
 				<?php endif; ?>
 			<?php endforeach; ?>

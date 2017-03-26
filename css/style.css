@@ -14,11 +14,12 @@
  */
 
 #privacy_list tbody tr:hover {
-	background-color: #d9edf7 !important;
-	cursor: pointer;
+  background-color: #d9edf7 !important;
+  cursor: pointer;
+}
+#privacy_list tbody tr.gedcom-data:hover {
+  background-color: transparent !important;
+  cursor: auto;
 }
 
-#privacy_list tbody tr.gedcom-data:hover {
-	background-color: transparent !important;
-	cursor: auto;
-}
+/*# sourceMappingURL=style.css.map */

@@ -36,7 +36,7 @@ class FancyPrivacyListClass extends FancyPrivacyListModule {
 
 		foreach (Database::prepare($sql)->execute($args)->fetchAll() as $row) {
 			$list[] = [
-				'ID'		 => $row->n_id,
+				'ID'       => $row->n_id,
 				'SURN'		 => $row->n_surn,
 				'SURNAME'	 => $row->n_surname,
 				'GIVN'		 => $row->n_givn
@@ -300,22 +300,6 @@ class FancyPrivacyListClass extends FancyPrivacyListModule {
 		return preg_replace(
 			"/@([^#@\n]+)@/m", '<a href="#" onclick="return edit_raw(\'\\1\');">@\\1@</a>', $gedrec
 		);
-	}
-
-	protected function getStylesheet() {
-		return $this->includeCss($this->directory . '/css/style.css');
-	}
-
-	private function includeCss($css) {
-		return
-			'<script class="fancy-privacy-list-script">
-				var newSheet=document.createElement("link");
-				newSheet.setAttribute("href","' . $css . '");
-				newSheet.setAttribute("type","text/css");
-				newSheet.setAttribute("rel","stylesheet");
-				newSheet.setAttribute("media","all");
-				document.getElementsByTagName("head")[0].appendChild(newSheet);
-			</script>';
 	}
 
 }
