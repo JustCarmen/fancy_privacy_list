@@ -58,24 +58,23 @@ class AdminTemplate extends FancyPrivacyListClass {
       var layout = "d-flex justify-content-between";
 			oTable = jQuery("table#privacy_list").dataTable({
 				sDom: \'<"\' + layout + \'"lf><"\' + layout + \'"ip>t<"\' + layout + \'"ip>\',
-				' . I18N::datatablesI18N() . ',
+				' . I18N::datatablesI18N([10, 20, 50, 100, 500, 1000, -1]) . ',
 				autoWidth:false,
-				processing: true,
+        processing: true,
+				serverSide: true,
+				ajax: "module.php?mod=' . $this->getName() . '&mod_action=load_json",
 				filter: true,
-				columns: [					
-					/* 0-Name */            {dataSort: 4, width: "20%"},
-					/* 1-Status */          {width: "20%"},
-					/* 2-Privacy settings */{width: "20%"},
-					/* 3-Explanation */     {width: "40%"},
-					/* 4-SURN */            {type: "unicode", visible: false},
+				columns: [
+        	/* 0-ID */              {type: "unicode", visible: false},
+					/* 1-Name */            {dataSort: 5, width: "20%"},
+					/* 2-Status */          {width: "20%"},
+					/* 3-Privacy settings */{width: "35%"},
+					/* 4-Explanation */     {width: "25%"},
+					/* 5-SURN */            {type: "unicode", visible: false},
 				],
-				sorting: [' . ('4, "asc"') . '],
-				pageLength: 20,
-				pagingType: "full_numbers"
+				sorting: [' . ('5, "asc"') . '],
+				pageLength: 20
 			});
-
-			// correction - turn selectbox into a bootstrap selectbox
-			jQuery("select").addClass("form-control");
 		');
 
 		echo $this->includeCss();
@@ -95,6 +94,7 @@ class AdminTemplate extends FancyPrivacyListClass {
 		<table id="privacy_list" class="table table-condensed table-bordered table-striped" style="width:100%">
 			<thead>
 				<tr>
+          <th class="sr-only"></th>
 					<th><?= I18N::translate('Name') ?></th>
 					<th><?= I18N::translate('Status') ?></th>
 					<th><?= I18N::translate('Privacy settings') ?></th>
@@ -102,36 +102,8 @@ class AdminTemplate extends FancyPrivacyListClass {
           <th class="sr-only"></th>
 				</tr>
 			</thead>
-
-			<?php foreach ($this->getAllNames($WT_TREE) as $name): ?>
-				<?php
-				$xref	 = $name['ID'];
-				$record	 = Individual::getInstance($xref, $WT_TREE);
-				if ($record):
-					$settings = $this->getPrivacySettings($record);
-
-					if (!$record->getTree()->getPreference('HIDE_LIVE_PEOPLE') && !$settings['RESN']) {
-						$auth				 = $record->getTree()->getPreference('REQUIRE_AUTHENTICATION') ? '(' . I18N::translate('registered users only') . ')' : '';
-						$settings['PRIV']	 = I18N::translate('Show to visitors') . $auth;
-						$settings['TEXT']	 = I18N::translate('You disabled the privacy options for this tree.');
-					}
-
-					$i = substr($xref, 1);
-          
-          $searchname = str_replace('@N.N.', 'AAAA', $name['SURN']) . str_replace('@P.N.', 'AAAA', $name['GIVN']);
-          $fullname = str_replace(['@N.N.', '@P.N.'], [I18N::translateContext('Unknown surname', '…'), I18N::translateContext('Unknown given name', '…')], $name['SURNAME'] . ", " . $name['GIVN'])
-					?>
-					<tr data-xref="<?= $xref ?>">
-						<td><?= $fullname ?></td>
-						<td><?= $settings['STAT'] ?></td>
-						<td><?= $settings['PRIV'] ?></td>
-						<td><?= $settings['TEXT'] ?></td>
-            <td class="sr-only"><?= /* hidden by datables code */ $searchname ?></td>
-					</tr>
-				<?php endif; ?>
-			<?php endforeach; ?>
-
-		</table>
+      <tbody></tbody>
+    </table>
 		<?php
 	}
 

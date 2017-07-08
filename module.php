@@ -69,6 +69,8 @@ class FancyPrivacyListModule extends AbstractModule implements ModuleConfigInter
 			case 'admin_config':
 				$template	 = new AdminTemplate;
 				return $template->pageContent();
+      case 'load_json':
+        return $this->module()->loadJson();
 			case 'load_data':
 				// Generate an AJAX response for datatables to load expanded row
 				$xref		 = Filter::get('id');
