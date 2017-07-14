@@ -278,10 +278,11 @@ class FancyPrivacyListClass extends FancyPrivacyListModule {
 	}
 
 	protected function getRecordData($record) {
+    global $WT_TREE;
 		$lines	 = preg_split('/[\n]+/', $record->getGedcom());
 		$gedrec	 = implode("\n", $lines);
 		return preg_replace(
-			"/@([^#@\n]+)@/m", '<a href="#" onclick="return edit_raw(\'\\1\');">@\\1@</a>', $gedrec
+			"/@([^#@\n]+)@/m", '<a href="edit_interface.php?action=editraw&ged=' . $WT_TREE->getName() . '&xref=\\1">@\\1@</a>', $gedrec
 		);
 	}
 
