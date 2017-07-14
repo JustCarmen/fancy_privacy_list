@@ -25,71 +25,71 @@ use JustCarmen\WebtreesAddOns\FancyPrivacyList\Template\AdminTemplate;
 
 class FancyPrivacyListModule extends AbstractModule implements ModuleConfigInterface {
 
-	const CUSTOM_VERSION	 = '1.7.11';
-	const CUSTOM_WEBSITE	 = 'http://www.justcarmen.nl/fancy-modules/fancy-privacy-list/';
+  const CUSTOM_VERSION = '1.8.0-dev';
+  const CUSTOM_WEBSITE = 'http://www.justcarmen.nl/fancy-modules/fancy-privacy-list/';
 
-	/** @var string location of the fancy Privacy List module files */
-	var $directory;
+  /** @var string location of the fancy Privacy List module files */
+  var $directory;
 
-	public function __construct() {
-		parent::__construct('fancy_privacy_list');
+  public function __construct() {
+    parent::__construct('fancy_privacy_list');
 
-		$this->directory = WT_STATIC_URL . WT_MODULES_DIR . $this->getName();
+    $this->directory = WT_STATIC_URL . WT_MODULES_DIR . $this->getName();
 
-		// register the namespaces
-		$loader = new ClassLoader();
-		$loader->addPsr4('JustCarmen\\WebtreesAddOns\\FancyPrivacyList\\', $this->directory . '/app');
-		$loader->register();
-	}
+    // register the namespaces
+    $loader = new ClassLoader();
+    $loader->addPsr4('JustCarmen\\WebtreesAddOns\\FancyPrivacyList\\', $this->directory . '/app');
+    $loader->register();
+  }
 
-	/**
-	 * Get the module class.
-	 * 
-	 * Class functions are called with $this inside the source directory.
-	 */
-	private function module() {
-		return new FancyPrivacyListClass;
-	}
+  /**
+   * Get the module class.
+   *
+   * Class functions are called with $this inside the source directory.
+   */
+  private function module() {
+    return new FancyPrivacyListClass;
+  }
 
-	// Extend Module
-	public function getTitle() {
-		return I18N::translate('Fancy Privacy List');
-	}
+  // Extend Module
+  public function getTitle() {
+    return I18N::translate('Fancy Privacy List');
+  }
 
-	// Extend Module
-	public function getDescription() {
-		return I18N::translate('This is a module for site admins only. With this module you easily can see the privacy settings for each individual in your tree.');
-	}
+  // Extend Module
+  public function getDescription() {
+    return I18N::translate('This is a module for site admins only. With this module you easily can see the privacy settings for each individual in your tree.');
+  }
 
-	// Extend Module
-	public function modAction($mod_action) {
-		global $WT_TREE;
+  // Extend Module
+  public function modAction($mod_action) {
+    global $WT_TREE;
 
-		switch ($mod_action) {
-			case 'admin_config':
-				$template	 = new AdminTemplate;
-				return $template->pageContent();
+    switch ($mod_action) {
+      case 'admin_config':
+        $template = new AdminTemplate;
+        return $template->pageContent();
       case 'load_json':
         return $this->module()->loadJson();
-			case 'load_data':
-				// Generate an AJAX response for datatables to load expanded row
-				$xref		 = Filter::get('id');
-				$record		 = Individual::getInstance($xref, $WT_TREE);
+      case 'load_data':
+        // Generate an AJAX response for datatables to load expanded row
+        $xref     = Filter::get('id');
+        $record   = Individual::getInstance($xref, $WT_TREE);
 
-				header('Content-type: text/html; charset=UTF-8');
-				echo '<pre>' . $this->module()->getRecordData($record) . '</pre>';
-				break;
+        header('Content-type: text/html; charset=UTF-8');
+        echo '<pre>' . $this->module()->getRecordData($record) . '</pre>';
+        break;
 
-			default:
-				http_response_code(404);
-				break;
-		}
-	}
+      default:
+        http_response_code(404);
+        break;
+    }
+  }
 
-	// Implement ModuleConfigInterface
-	public function getConfigLink() {
-		return 'module.php?mod=' . $this->getName() . '&amp;mod_action=admin_config';
-	}
+  // Implement ModuleConfigInterface
+  public function getConfigLink() {
+    return 'module.php?mod=' . $this->getName() . '&amp;mod_action=admin_config';
+  }
 
   /**
    * Default Fancy script to load a module stylesheet

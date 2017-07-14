@@ -18,13 +18,13 @@
 
 // Privacy list configuration page
 #privacy_list tbody tr {
-	&:hover {
-		background-color: $lightblue !important;
-		cursor: pointer;
-	}
+  &:hover {
+    background-color: $lightblue !important;
+    cursor: pointer;
+  }
 
-	&.gedcom-data:hover {
-		background-color: transparent !important;
-		cursor: auto;
-	}
+  &.gedcom-data:hover {
+    background-color: transparent !important;
+    cursor: auto;
+  }
 }
