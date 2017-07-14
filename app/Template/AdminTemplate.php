@@ -39,25 +39,10 @@ class AdminTemplate extends FancyPrivacyListClass {
 			->addExternalJavascript(WT_DATATABLES_BOOTSTRAP_JS_URL)
 			->addExternalJavascript(WT_DATATABLES_BOOTSTRAP_JS_URL)
 			->addInlineJavascript('
-			var oTable;
-			// open a row with the gedcom data of this individual when the row is clicked on
-			jQuery("#privacy-list tbody tr").click( function () {
-				var xref = jQuery(this).data("xref");
-				var rowClass = jQuery(this).attr("class");
-				var nTr = this;
-				if (oTable.fnIsOpen(nTr)) {
-					oTable.fnClose(nTr);
-				} else {
-					jQuery.get("module.php?mod=' . $this->getName() . '&mod_action=load_data&id=" + xref, function(data) {
-						oTable.fnOpen(nTr, data, "gedcom-data " + rowClass);
-					});
-				}
-			});
-
       // Notice DataTable with uppercase to use newest API (lowercase d for older API)
       // See: https://stackoverflow.com/questions/35311380/uncaught-typeerror-cannot-read-property-url-of-undefined-in-datatables
       var layout = "d-flex justify-content-between";
-			var oTable = jQuery("table#privacy-list").DataTable({
+			oTable = $("#privacy-list").DataTable({
 				sDom: \'<"\' + layout + \'"lf><"\' + layout + \'"ip>t<"\' + layout + \'"ip>\',
 				' . I18N::datatablesI18N([10, 20, 50, 100, 500, 1000, -1]) . ',
 				autoWidth:false,
@@ -65,6 +50,10 @@ class AdminTemplate extends FancyPrivacyListClass {
 				serverSide: true,
 				ajax: "module.php?mod=' . $this->getName() . '&mod_action=load_json&ged=" + $("#tree").val(),
 				filter: true,
+        stateSave: true,
+        createdRow: function(row, data) {
+          $(row).attr("data-xref", data[0]);
+        },
 				columns: [
         	/* 0-ID */              {type: "unicode", visible: false},
 					/* 1-Name */            {dataSort: 5, width: "20%"},
@@ -75,6 +64,24 @@ class AdminTemplate extends FancyPrivacyListClass {
 				],
 				sorting: [' . ('5, "asc"') . '],
 				pageLength: 20
+			});
+
+			// open a row with the gedcom data of this individual when the row is clicked on
+			$("#privacy-list").on("click", "tbody tr", function () {
+      
+        var tr = $(this);
+				var row = oTable.row(tr);
+        var xref = tr.data("xref");
+				
+				if (row.child.isShown()) {
+					row.child.hide();
+          tr.removeClass("shown");
+				} else {
+					$.get("module.php?mod=' . $this->getName() . '&mod_action=load_data&id=" + xref, function(data) {
+            row.child(data).show();
+            tr.addClass("shown");
+					});
+				}
 			});
 
       $("#tree").on("change", function() {
