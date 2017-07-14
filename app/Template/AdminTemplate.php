@@ -19,7 +19,7 @@ use Fisharebest\Webtrees\Auth;
 use Fisharebest\Webtrees\Bootstrap4;
 use Fisharebest\Webtrees\Controller\PageController;
 use Fisharebest\Webtrees\I18N;
-use Fisharebest\Webtrees\Individual;
+use Fisharebest\Webtrees\Tree;
 use JustCarmen\WebtreesAddOns\FancyPrivacyList\FancyPrivacyListClass;
 
 class AdminTemplate extends FancyPrivacyListClass {
@@ -41,7 +41,7 @@ class AdminTemplate extends FancyPrivacyListClass {
 			->addInlineJavascript('
 			var oTable;
 			// open a row with the gedcom data of this individual when the row is clicked on
-			jQuery("#privacy_list tbody tr").click( function () {
+			jQuery("#privacy-list tbody tr").click( function () {
 				var xref = jQuery(this).data("xref");
 				var rowClass = jQuery(this).attr("class");
 				var nTr = this;
@@ -54,15 +54,16 @@ class AdminTemplate extends FancyPrivacyListClass {
 				}
 			});
 
-			var oldStart = 0;
+      // Notice DataTable with uppercase to use newest API (lowercase d for older API)
+      // See: https://stackoverflow.com/questions/35311380/uncaught-typeerror-cannot-read-property-url-of-undefined-in-datatables
       var layout = "d-flex justify-content-between";
-			oTable = jQuery("table#privacy_list").dataTable({
+			var oTable = jQuery("table#privacy-list").DataTable({
 				sDom: \'<"\' + layout + \'"lf><"\' + layout + \'"ip>t<"\' + layout + \'"ip>\',
 				' . I18N::datatablesI18N([10, 20, 50, 100, 500, 1000, -1]) . ',
 				autoWidth:false,
         processing: true,
 				serverSide: true,
-				ajax: "module.php?mod=' . $this->getName() . '&mod_action=load_json",
+				ajax: "module.php?mod=' . $this->getName() . '&mod_action=load_json&ged=" + $("#tree").val(),
 				filter: true,
 				columns: [
         	/* 0-ID */              {type: "unicode", visible: false},
@@ -75,6 +76,10 @@ class AdminTemplate extends FancyPrivacyListClass {
 				sorting: [' . ('5, "asc"') . '],
 				pageLength: 20
 			});
+
+      $("#tree").on("change", function() {
+        oTable.ajax.url("module.php?mod=' . $this->getName() . '&mod_action=load_json&ged=" + $(this).val()).load();
+      });
 		');
 
 		echo $this->includeCss();
@@ -88,22 +93,29 @@ class AdminTemplate extends FancyPrivacyListClass {
 			'admin_modules.php'	 => I18N::translate('Module administration'),
 			], $controller->getPageTitle());
 		?>
-
-		<h1><?= $controller->getPageTitle() ?></h1>
-		<p><?= $WT_TREE->getTitle() ?></p>
-		<table id="privacy_list" class="table table-condensed table-bordered table-striped" style="width:100%">
-			<thead>
-				<tr>
-          <th class="sr-only"></th>
-					<th><?= I18N::translate('Name') ?></th>
-					<th><?= I18N::translate('Status') ?></th>
-					<th><?= I18N::translate('Privacy settings') ?></th>
-					<th><?= I18N::translate('Explanation') ?></th>
-          <th class="sr-only"></th>
-				</tr>
-			</thead>
-      <tbody></tbody>
-    </table>
+    <div class="fancy-privacylist-admin">
+      <div class="d-inline-flex justify-content-between align-items-center mb-5 mt-3 w-100">
+        <h1><?= $controller->getPageTitle() ?></h1>
+        <?php if (count(Tree::getAll()) > 1): ?>
+        <div class="col-sm-4">
+          <?= Bootstrap4::select(Tree::getNameList(), $WT_TREE->getName(), ['id' => 'tree', 'name' => 'NEW_FIB_TREE']) ?>
+        </div>
+        <?php endif ?>
+      </div>
+      <table id="privacy-list" class="table table-condensed table-bordered table-striped" style="width:100%">
+        <thead>
+          <tr>
+            <th class="sr-only"></th>
+            <th><?= I18N::translate('Name') ?></th>
+            <th><?= I18N::translate('Status') ?></th>
+            <th><?= I18N::translate('Privacy settings') ?></th>
+            <th><?= I18N::translate('Explanation') ?></th>
+            <th class="sr-only"></th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+    </div>
 		<?php
 	}
 
