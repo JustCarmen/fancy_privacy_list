@@ -34,7 +34,7 @@ class FancyPrivacyListModule extends AbstractModule implements ModuleConfigInter
   public function __construct() {
     parent::__construct('fancy_privacy_list');
 
-    $this->directory = WT_STATIC_URL . WT_MODULES_DIR . $this->getName();
+    $this->directory = WT_MODULES_DIR . $this->getName();
 
     // register the namespaces
     $loader = new ClassLoader();
