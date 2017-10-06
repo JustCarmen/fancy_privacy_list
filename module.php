@@ -25,7 +25,7 @@ use JustCarmen\WebtreesAddOns\FancyPrivacyList\Template\AdminTemplate;
 
 class FancyPrivacyListModule extends AbstractModule implements ModuleConfigInterface {
 
-  const CUSTOM_VERSION = '1.8.0-dev';
+  const CUSTOM_VERSION = '2.0.0-dev';
   const CUSTOM_WEBSITE = 'http://www.justcarmen.nl/fancy-modules/fancy-privacy-list/';
 
   /** @var string location of the fancy Privacy List module files */
