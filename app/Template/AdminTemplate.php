@@ -95,32 +95,33 @@ class AdminTemplate extends FancyPrivacyListClass {
 		global $WT_TREE;
 
 		echo Bootstrap4::breadcrumbs([
-		'admin.php'         => I18N::translate('Control panel'),
-		'admin_modules.php' => I18N::translate('Module administration'),
+			route('admin-control-panel')                                      => I18N::translate('Control panel'),
+			route('admin-modules')                                            => I18N::translate('Module administration'),
+			'module.php?mod=' . $this->getName() . '&mod_action=admin_config' => $this->getTitle(),
 		], $controller->getPageTitle()); ?>
-    <div class="fancy-privacylist-admin">
-      <div class="d-inline-flex justify-content-between align-items-center mb-5 mt-3 w-100">
-        <h1><?= $controller->getPageTitle() ?></h1>
-        <?php if (count(Tree::getAll()) > 1): ?>
-          <div class="col-sm-4">
-            <?= Bootstrap4::select(Tree::getNameList(), $WT_TREE->getName(), ['id' => 'tree', 'name' => 'NEW_FIB_TREE']) ?>
-          </div>
-        <?php endif ?>
-      </div>
-      <table id="privacy-list" class="table table-condensed table-bordered table-striped" style="width:100%">
-        <thead>
-          <tr>
-            <th class="sr-only"></th>
-            <th><?= I18N::translate('Name') ?></th>
-            <th><?= I18N::translate('Status') ?></th>
-            <th><?= I18N::translate('Privacy settings') ?></th>
-            <th><?= I18N::translate('Explanation') ?></th>
-            <th class="sr-only"></th>
-          </tr>
-        </thead>
-        <tbody></tbody>
-      </table>
-    </div>
-    <?php
+		<div class="fancy-privacylist-admin">
+		  <div class="d-inline-flex justify-content-between align-items-center mb-5 mt-3 w-100">
+			<h1><?= $controller->getPageTitle() ?></h1>
+			<?php if (count(Tree::getAll()) > 1): ?>
+			  <div class="col-sm-4">
+				<?= Bootstrap4::select(Tree::getNameList(), $WT_TREE->getName(), ['id' => 'tree', 'name' => 'NEW_FIB_TREE']) ?>
+			  </div>
+			<?php endif ?>
+		  </div>
+		  <table id="privacy-list" class="table table-condensed table-bordered table-striped" style="width:100%">
+			<thead>
+			  <tr>
+				<th class="sr-only"></th>
+				<th><?= I18N::translate('Name') ?></th>
+				<th><?= I18N::translate('Status') ?></th>
+				<th><?= I18N::translate('Privacy settings') ?></th>
+				<th><?= I18N::translate('Explanation') ?></th>
+				<th class="sr-only"></th>
+			  </tr>
+			</thead>
+			<tbody></tbody>
+		  </table>
+		</div>
+		<?php
 	}
 }
