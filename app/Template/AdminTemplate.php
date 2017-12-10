@@ -23,22 +23,21 @@ use Fisharebest\Webtrees\Tree;
 use JustCarmen\WebtreesAddOns\FancyPrivacyList\FancyPrivacyListClass;
 
 class AdminTemplate extends FancyPrivacyListClass {
+	protected function pageContent() {
+		$controller = new PageController;
+		return
+		$this->pageHeader($controller) .
+		$this->pageBody($controller);
+	}
 
-  protected function pageContent() {
-    $controller = new PageController;
-    return
-        $this->pageHeader($controller) .
-        $this->pageBody($controller);
-  }
-
-  private function pageHeader(PageController $controller) {
-    $controller
-        ->restrictAccess(Auth::isAdmin())
-        ->setPageTitle($this->getTitle())
-        ->pageHeader()
-        ->addExternalJavascript(WT_DATATABLES_BOOTSTRAP_JS_URL)
-        ->addExternalJavascript(WT_DATATABLES_BOOTSTRAP_JS_URL)
-        ->addInlineJavascript('
+	private function pageHeader(PageController $controller) {
+		$controller
+		->restrictAccess(Auth::isAdmin())
+		->setPageTitle($this->getTitle())
+		->pageHeader()
+		->addExternalJavascript(WT_DATATABLES_BOOTSTRAP_JS_URL)
+		->addExternalJavascript(WT_DATATABLES_BOOTSTRAP_JS_URL)
+		->addInlineJavascript('
       // Notice DataTable with uppercase to use newest API (lowercase d for older API)
       // See: https://stackoverflow.com/questions/35311380/uncaught-typeerror-cannot-read-property-url-of-undefined-in-datatables
       var layout = "d-flex justify-content-between";
@@ -89,17 +88,16 @@ class AdminTemplate extends FancyPrivacyListClass {
       });
 		');
 
-    echo $this->includeCss();
-  }
+		echo $this->includeCss();
+	}
 
-  private function pageBody(PageController $controller) {
-    global $WT_TREE;
+	private function pageBody(PageController $controller) {
+		global $WT_TREE;
 
-    echo Bootstrap4::breadcrumbs([
-        'admin.php'         => I18N::translate('Control panel'),
-        'admin_modules.php' => I18N::translate('Module administration'),
-        ], $controller->getPageTitle());
-    ?>
+		echo Bootstrap4::breadcrumbs([
+		'admin.php'         => I18N::translate('Control panel'),
+		'admin_modules.php' => I18N::translate('Module administration'),
+		], $controller->getPageTitle()); ?>
     <div class="fancy-privacylist-admin">
       <div class="d-inline-flex justify-content-between align-items-center mb-5 mt-3 w-100">
         <h1><?= $controller->getPageTitle() ?></h1>
@@ -124,6 +122,5 @@ class AdminTemplate extends FancyPrivacyListClass {
       </table>
     </div>
     <?php
-  }
-
+	}
 }
