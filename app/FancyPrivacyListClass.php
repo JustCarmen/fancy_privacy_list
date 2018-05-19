@@ -284,7 +284,7 @@ class FancyPrivacyListClass extends FancyPrivacyListModule {
 		$gedrec = implode("\n", $lines);
 		return preg_replace(
 		"/@([^#@\n]+)@/m",
-		'<a href="edit_interface.php?action=editraw&ged=' . $WT_TREE->getName() . '&xref=\\1">@\\1@</a>',
+		'<a class="editraw" href="edit_interface.php?action=editraw&ged=' . $WT_TREE->getName() . '&xref=\\1">@\\1@</a>',
 		$gedrec
 	);
 	}

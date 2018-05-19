@@ -83,9 +83,18 @@ class AdminTemplate extends FancyPrivacyListClass {
 				}
 			});
 
-      $("#tree").on("change", function() {
-        oTable.ajax.url("module.php?mod=' . $this->getName() . '&mod_action=load_json&ged=" + $(this).val()).load();
-      });
+			$("#tree").on("change", function() {
+			  oTable.ajax.url("module.php?mod=' . $this->getName() . '&mod_action=load_json&ged=" + $(this).val()).load();
+			});
+
+			$("#privacy-list").on("click", ".editraw", function(e){
+				e.preventDefault();
+				var url = $(this).attr("href");
+				$(".modal-title").load(url + " .wt-main-container h2");
+				$(".modal-body").load(url + " .wt-main-container form",function(){
+					$("#modal-edit-raw").modal({show:true});
+				});
+			});
 		');
 
 		echo $this->includeCss();
@@ -121,6 +130,24 @@ class AdminTemplate extends FancyPrivacyListClass {
 			</thead>
 			<tbody></tbody>
 		  </table>
+		  <!-- Modal -->
+			<div class="modal fade" id="modal-edit-raw" role="dialog">
+				<div class="modal-dialog modal-lg">
+					<!-- Modal content-->
+					<div class="modal-content">
+						<div class="modal-header">
+							<h4 class="modal-title d-flex flex-column">Modal with Dynamic Content</h4>
+							<button type="button" class="close" data-dismiss="modal">&times;</button>
+						</div>
+						<div class="modal-body">
+
+						</div>
+						<div class="modal-footer">
+							<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+						</div>
+					</div>
+				</div>
+			</div>
 		</div>
 		<?php
 	}

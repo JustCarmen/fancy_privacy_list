@@ -1,4 +1,4 @@
-/**
+/*!
  * webtrees: online genealogy
  * Copyright (C) 2018 JustCarmen (http://justcarmen.nl)
  * This program is free software: you can redistribute it and/or modify
@@ -17,9 +17,8 @@
   background-color: #d9edf7 !important;
   cursor: pointer;
 }
+
 #privacy_list tbody tr.gedcom-data:hover {
   background-color: transparent !important;
   cursor: auto;
 }
-
-/*# sourceMappingURL=style.css.map */
