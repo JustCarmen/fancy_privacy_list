@@ -35,8 +35,6 @@ class AdminTemplate extends FancyPrivacyListClass {
 		->restrictAccess(Auth::isAdmin())
 		->setPageTitle($this->getTitle())
 		->pageHeader()
-		->addExternalJavascript(WT_DATATABLES_BOOTSTRAP_JS_URL)
-		->addExternalJavascript(WT_DATATABLES_BOOTSTRAP_JS_URL)
 		->addInlineJavascript('
       // Notice DataTable with uppercase to use newest API (lowercase d for older API)
       // See: https://stackoverflow.com/questions/35311380/uncaught-typeerror-cannot-read-property-url-of-undefined-in-datatables
