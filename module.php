@@ -52,12 +52,12 @@ class FancyPrivacyListModule extends AbstractModule implements ModuleConfigInter
 	}
 
 	// Extend Module
-	public function getTitle() {
+	public function getTitle(): string {
 		return I18N::translate('Fancy Privacy List');
 	}
 
 	// Extend Module
-	public function getDescription() {
+	public function getDescription(): string {
 		return I18N::translate('This is a module for site admins only. With this module you easily can see the privacy settings for each individual in your tree.');
 	}
 
@@ -87,7 +87,7 @@ class FancyPrivacyListModule extends AbstractModule implements ModuleConfigInter
 	}
 
 	/** {@inheritdoc} */
-	public function getConfigLink() {
+	public function getConfigLink(): string {
 		return Html::url('module.php', [
 			'mod'        => $this->getName(),
 			'mod_action' => 'admin_config',
